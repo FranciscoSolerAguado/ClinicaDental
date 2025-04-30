@@ -8,13 +8,27 @@ public class Paciente extends Persona{
     private String fechaNacimiento;
     private int edad;
     private List<Tratamiento> tratamientosPaciente;
+    private List<Paciente> pacientes;
 
+    public Paciente() {
+
+    }
     public Paciente(String nombre, String dni, int telefono, int idPaciente, String fechaNacimiento, int edad, List<Tratamiento> tratamientosPaciente) {
         super(nombre, dni, telefono);
         this.idPaciente = idPaciente;
         this.fechaNacimiento = fechaNacimiento;
         this.edad = edad;
         this.tratamientosPaciente = tratamientosPaciente;
+    }
+
+
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
     }
 
     public int getIdPaciente() {
