@@ -78,6 +78,9 @@ public class Paciente extends Persona{
     @Override
     public String toString() {
         return "Paciente{" +
+                "nombre='" + getNombre() + '\'' +
+                ", dni='" + getDni() + '\'' +
+                ", telefono=" + getTelefono() +
                 "idPaciente=" + idPaciente +
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 ", edad=" + edad +

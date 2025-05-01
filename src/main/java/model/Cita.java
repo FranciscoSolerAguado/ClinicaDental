@@ -5,21 +5,41 @@ import java.util.Objects;
 public class Cita {
     private int idCita;
     private int idPaciente;
-    private Paciente paciente;
     private int idDentista;
+    private String nombrePaciente;
+    private String nombreDentista;
+    private Paciente paciente;
     private Dentista dentista;
     private String fecha;
 
     public Cita() {
     }
 
-    public Cita(int idCita, int idPaciente, Paciente paciente, int idDentista, Dentista dentista, String fecha) {
+    public Cita(int idCita, int idPaciente, int idDentista, String nombrePaciente, String nombreDentista, Paciente paciente, Dentista dentista, String fecha) {
         this.idCita = idCita;
         this.idPaciente = idPaciente;
-        this.paciente = paciente;
         this.idDentista = idDentista;
+        this.nombrePaciente = nombrePaciente;
+        this.nombreDentista = nombreDentista;
+        this.paciente = paciente;
         this.dentista = dentista;
         this.fecha = fecha;
+    }
+
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public String getNombreDentista() {
+        return nombreDentista;
+    }
+
+    public void setNombreDentista(String nombreDentista) {
+        this.nombreDentista = nombreDentista;
     }
 
     public int getIdCita() {
@@ -87,8 +107,10 @@ public class Cita {
         return "Cita{" +
                 "idCita=" + idCita +
                 ", idPaciente=" + idPaciente +
-                ", paciente=" + paciente +
                 ", idDentista=" + idDentista +
+                ", nombrePaciente='" + nombrePaciente + '\'' +
+                ", nombreDentista='" + nombreDentista + '\'' +
+                ", paciente=" + paciente +
                 ", dentista=" + dentista +
                 ", fecha='" + fecha + '\'' +
                 '}';

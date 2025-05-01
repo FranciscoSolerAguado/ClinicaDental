@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Tratamiento {
     private int idTratamiento;
     private TipoTratamiento tipoTratamiento;
+    private String nombrePaciente;
     private List<Dentista> dentistas;
     private Paciente paciente;
     private String descripcion;
@@ -15,13 +16,22 @@ public class Tratamiento {
 
     }
 
-    public Tratamiento(int idTratamiento, TipoTratamiento tipoTratamiento, List<Dentista> dentistas, Paciente paciente, String descripcion, double precio) {
+    public Tratamiento(int idTratamiento, TipoTratamiento tipoTratamiento, String nombrePaciente, List<Dentista> dentistas, Paciente paciente, String descripcion, double precio) {
         this.idTratamiento = idTratamiento;
         this.tipoTratamiento = tipoTratamiento;
+        this.nombrePaciente = nombrePaciente;
         this.dentistas = dentistas;
         this.paciente = paciente;
         this.descripcion = descripcion;
         this.precio = precio;
+    }
+
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
     }
 
     public int getIdTratamiento() {
@@ -89,6 +99,7 @@ public class Tratamiento {
         return "Tratamiento{" +
                 "idTratamiento=" + idTratamiento +
                 ", tipoTratamiento=" + tipoTratamiento +
+                ", nombrePaciente='" + nombrePaciente + '\'' +
                 ", dentistas=" + dentistas +
                 ", paciente=" + paciente +
                 ", descripcion='" + descripcion + '\'' +

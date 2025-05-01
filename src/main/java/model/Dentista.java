@@ -34,8 +34,9 @@ public class Dentista extends Persona {
         return idDentista;
     }
 
-    public void setIdDentista(int idDentista) {
+    public int setIdDentista(int idDentista) {
         this.idDentista = idDentista;
+        return idDentista;
     }
 
     public String getFechaNacimiento() {
@@ -74,13 +75,17 @@ public class Dentista extends Persona {
         return Objects.hashCode(idDentista);
     }
 
-    @Override
+
     public String toString() {
         return "Dentista{" +
-                "idDentista=" + idDentista +
+                "nombre='" + getNombre() + '\'' +
+                ", dni='" + getDni() + '\'' +
+                ", telefono=" + getTelefono() +
+                ", idDentista=" + idDentista +
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 ", edad=" + edad +
                 ", tratamientosDentista=" + tratamientosDentista +
+                ", dentistas=" + dentistas +
                 '}';
     }
 }
