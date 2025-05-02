@@ -28,7 +28,7 @@ public class TratamientoDAO {
                     "FROM Tratamiento " +
                     "WHERE idTratamiento IN (" +
                     "    SELECT idTratamiento " +
-                    "    FROM TratamientoDentista " +
+                    "    FROM TratamientoPaciente " + // Cambiar a la tabla correcta
                     "    WHERE idPaciente = ?" +
                     ")";
 
