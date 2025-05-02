@@ -8,7 +8,6 @@ public class Dentista extends Persona {
     private String fechaNacimiento;
     private int edad;
     private List<Tratamiento> tratamientosDentista;
-    private List<Dentista> dentistas;
 
     public Dentista(){
         super();
@@ -22,13 +21,6 @@ public class Dentista extends Persona {
         this.edad = edad;
     }
 
-    public List<Dentista> getDentistas() {
-        return dentistas;
-    }
-
-    public void setDentistas(List<Dentista> dentistas) {
-        this.dentistas = dentistas;
-    }
 
     public int getIdDentista() {
         return idDentista;
@@ -85,7 +77,6 @@ public class Dentista extends Persona {
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 ", edad=" + edad +
                 ", tratamientosDentista=" + tratamientosDentista +
-                ", dentistas=" + dentistas +
                 '}';
     }
 }
