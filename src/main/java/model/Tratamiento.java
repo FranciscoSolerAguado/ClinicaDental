@@ -7,8 +7,7 @@ public class Tratamiento {
     private int idTratamiento;
     private TipoTratamiento tipoTratamiento;
     private String nombrePaciente;
-    private List<Dentista> dentistas;
-    private Paciente paciente;
+    private Dentista dentista;
     private String descripcion;
     private double precio;
 
@@ -16,12 +15,11 @@ public class Tratamiento {
 
     }
 
-    public Tratamiento(int idTratamiento, TipoTratamiento tipoTratamiento, String nombrePaciente, List<Dentista> dentistas, Paciente paciente, String descripcion, double precio) {
+    public Tratamiento(int idTratamiento, TipoTratamiento tipoTratamiento, String nombrePaciente, Dentista dentista,  String descripcion, double precio) {
         this.idTratamiento = idTratamiento;
         this.tipoTratamiento = tipoTratamiento;
         this.nombrePaciente = nombrePaciente;
-        this.dentistas = dentistas;
-        this.paciente = paciente;
+        this.dentista = dentista;
         this.descripcion = descripcion;
         this.precio = precio;
     }
@@ -50,20 +48,12 @@ public class Tratamiento {
         this.tipoTratamiento = tipoTratamiento;
     }
 
-    public List<Dentista> getDentistas() {
-        return dentistas;
+    public Dentista getDentista() {
+        return dentista;
     }
 
-    public void setDentistas(List<Dentista> dentistas) {
-        this.dentistas = dentistas;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setDentista(Dentista dentista) {
+        this.dentista = dentista;
     }
 
     public String getDescripcion() {
@@ -100,8 +90,7 @@ public class Tratamiento {
                 "idTratamiento=" + idTratamiento +
                 ", tipoTratamiento=" + tipoTratamiento +
                 ", nombrePaciente='" + nombrePaciente + '\'' +
-                ", dentistas=" + dentistas +
-                ", paciente=" + paciente +
+                ", dentista=" + dentista +
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
                 '}';
