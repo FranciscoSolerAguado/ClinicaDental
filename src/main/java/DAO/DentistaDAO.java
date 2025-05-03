@@ -19,8 +19,8 @@ public class DentistaDAO {
     private final static String SQL_UPDATE_TELEFONO = "UPDATE Dentista SET telefono = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Dentista SET fechaNacimiento = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_EDAD = "UPDATE Dentista SET edad = ? WHERE idDentista = ?";
-//    private final static String SQL_DELETE_BY_ID = "DELETE FROM Dentista WHERE idDentista = ?";
-//    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Dentista WHERE dni = ?";
+    private final static String SQL_DELETE_BY_ID = "DELETE FROM Dentista WHERE idDentista = ?";
+    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Dentista WHERE dni = ?";
     private final static String SQL_SELECT_BY_CITA =
             "SELECT * " +
                     "FROM Dentista " +
@@ -254,6 +254,26 @@ public class DentistaDAO {
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar la edad del dentista", e);
+        }
+    }
+
+    public static void deleteById(int idDentista) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+            pst.setInt(1, idDentista);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el dentista con id: " + idDentista, e);
+        }
+    }
+
+    public static void deleteByDni(String dni) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {
+            pst.setString(1, dni);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el dentista con DNI: " + dni, e);
         }
     }
 }

@@ -14,7 +14,7 @@ public class TratamientoDAO {
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Tratamiento WHERE nombrePaciente = ?";
     private final static String SQL_INSERT = "INSERT INTO Tratamiento (tipoTratamiento, nombrePaciente, descripcion, precio) VALUES(?, ?, ?, ?)";
     private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
-//    private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
+    private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_SELECT_BY_DENTISTA =
             "SELECT * " +
                     "FROM Tratamiento " +
@@ -208,6 +208,16 @@ public class TratamientoDAO {
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar la descripción del tratamiento", e);
+        }
+    }
+
+    public static void deleteById(int idTratamiento) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+            pst.setInt(1, idTratamiento);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el tratamiento con id: " + idTratamiento, e);
         }
     }
 }

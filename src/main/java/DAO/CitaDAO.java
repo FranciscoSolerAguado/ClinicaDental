@@ -14,7 +14,7 @@ public class CitaDAO {
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Cita WHERE nombrePaciente = ?";
     private final static String SQL_INSERT = "INSERT INTO Cita (idPaciente, idDentista, paciente, dentista, fecha) VALUES(?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE_PRECIO = "UPDATE INTO Cita SET precio = ? WHERE idCita = ?";
-//    private final static String SQL_DELETE_BY_ID = "DELETE FROM Cita WHERE idCita = ?";
+    private final static String SQL_DELETE_BY_ID = "DELETE FROM Cita WHERE idCita = ?";
 
     /**
      * Version lazy para obtener todas las citas en un list
@@ -152,6 +152,16 @@ public class CitaDAO {
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar el precio de la cita", e);
+        }
+    }
+
+    public static void deleteById(int idCita) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+            pst.setInt(1, idCita);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar la cita con id: " + idCita, e);
         }
     }
 }

@@ -6,19 +6,15 @@ Implementar las consultas siguientes, para cada DAO(Cita, Dentista, Paciente, Tr
 
 👍   SQL_ALL (Eager y lazy, junto con subconsultas necesarias)
 
-👍  SQL_FIND_BY_ID
+👍  SQL_FIND_BY_ID (Eager)
 
 👍  SQL_FIND_BY_NAME
 
-👎 SQL_FIND_BY_ID
+👍  SQL_INSERT (Testear)
 
-👎 SQL_INSERT
+👍  SQL_UPDATE (Testear)
 
-👎 SQL_UPDATE
-
-👎 SQL_DELETE_BY_ID
-
-👎 SQL_DELETE_BY_DNI
+👍  SQL_DELETE (Testear)
 
 Luego testearlo en los el paquete test
 
@@ -28,7 +24,7 @@ Luego testearlo en los el paquete test
 
 .
 
-TERMINADO (SI/NO): PENDIENTE
+TERMINADO (SI/NO): A FALTA DE TESTEO
 
 ## (3º) Objetivos-INTERFACES 😕
 

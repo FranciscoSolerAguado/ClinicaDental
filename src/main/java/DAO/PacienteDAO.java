@@ -18,9 +18,8 @@ public class PacienteDAO {
     private final static String SQL_UPDATE_TELEFONO = "UPDATE Paciente SET telefono = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Paciente SET fechaNacimiento = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_EDAD = "UPDATE Paciente SET edad = ? WHERE idPaciente = ?";
-
-//    private final static String SQL_DELETE_BY_ID = "DELETE FROM Paciente WHERE idPaciente = ?";
-//    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Paciente WHERE dni = ?";
+    private final static String SQL_DELETE_BY_ID = "DELETE FROM Paciente WHERE idPaciente = ?";
+    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Paciente WHERE dni = ?";
     private final static String SQL_SELECT_BY_CITA =
             "SELECT * " +
                     "FROM Paciente " +
@@ -256,6 +255,26 @@ public class PacienteDAO {
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar la edad del paciente", e);
+        }
+    }
+
+    public static void deleteById(int idPaciente) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+            pst.setInt(1, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el paciente con id: " + idPaciente, e);
+        }
+    }
+
+    public static void deleteByDni(String dni) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {
+            pst.setString(1, dni);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el paciente con DNI: " + dni, e);
         }
     }
 
