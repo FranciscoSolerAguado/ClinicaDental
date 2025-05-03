@@ -12,8 +12,8 @@ public class TratamientoDAO {
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Tratamiento WHERE nombrePaciente = ?";
-//    private final static String SQL_INSERT = "INSERT INTO Tratamiento (tipoTratamiento, nombrePaciente, descripcion, precio) VALUES(?)";
-//    private final static String SQL_UPDATE = "UPDATE INTO";
+    private final static String SQL_INSERT = "INSERT INTO Tratamiento (tipoTratamiento, nombrePaciente, descripcion, precio) VALUES(?, ?, ?, ?)";
+    private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
 //    private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_SELECT_BY_DENTISTA =
             "SELECT * " +
@@ -185,5 +185,29 @@ public class TratamientoDAO {
             throw new RuntimeException(e);
         }
         return tratamientos;
+    }
+
+    public static void insert(Tratamiento tratamiento) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
+            pst.setString(1, tratamiento.getTipoTratamiento().toString());
+            pst.setString(2, tratamiento.getNombrePaciente());
+            pst.setString(3, tratamiento.getDescripcion());
+            pst.setDouble(4, tratamiento.getPrecio());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al insertar el tratamiento", e);
+        }
+    }
+
+    public static void updateDescripcion(int idTratamiento, String descripcion) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DESCRIPCION)) {
+            pst.setString(1, descripcion);
+            pst.setInt(2, idTratamiento);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar la descripción del tratamiento", e);
+        }
     }
 }

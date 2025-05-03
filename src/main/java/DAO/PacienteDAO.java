@@ -12,8 +12,13 @@ public class PacienteDAO {
     private final static String SQL_ALL = "SELECT * FROM Paciente";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
-//    private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, fechaNacimiento, edad) VALUES(?)";
-//    private final static String SQL_UPDATE = "UPDATE INTO";
+    private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?)";
+    private final static String SQL_UPDATE_NAME = "UPDATE Paciente SET nombre = ? WHERE idPaciente = ?";
+    private final static String SQL_UPDATE_DNI = "UPDATE Paciente SET dni = ? WHERE idPaciente = ?";
+    private final static String SQL_UPDATE_TELEFONO = "UPDATE Paciente SET telefono = ? WHERE idPaciente = ?";
+    private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Paciente SET fechaNacimiento = ? WHERE idPaciente = ?";
+    private final static String SQL_UPDATE_EDAD = "UPDATE Paciente SET edad = ? WHERE idPaciente = ?";
+
 //    private final static String SQL_DELETE_BY_ID = "DELETE FROM Paciente WHERE idPaciente = ?";
 //    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Paciente WHERE dni = ?";
     private final static String SQL_SELECT_BY_CITA =
@@ -102,7 +107,7 @@ public class PacienteDAO {
         try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_CITA)) {
             pst.setInt(1, idCita);
             ResultSet rs = pst.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 paciente = new Paciente();
                 paciente.setIdPaciente(rs.getInt("idPaciente"));
                 paciente.setNombre(rs.getString("nombre"));
@@ -122,7 +127,7 @@ public class PacienteDAO {
         try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_TRATAMIENTO)) {
             pst.setInt(1, idTratamiento);
             ResultSet rs = pst.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 paciente = new Paciente();
                 paciente.setIdPaciente(rs.getInt("idPaciente"));
                 paciente.setNombre(rs.getString("nombre"));
@@ -183,6 +188,75 @@ public class PacienteDAO {
             throw new RuntimeException(e);
         }
         return paciente;
+    }
+
+    public static void insert(Paciente paciente) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
+            pst.setString(1, paciente.getNombre());
+            pst.setString(2, paciente.getDni());
+            pst.setInt(3, paciente.getTelefono());
+            pst.setString(4, paciente.getFechaNacimiento());
+            pst.setInt(5, paciente.getEdad());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al insertar el paciente", e);
+        }
+    }
+
+    public static void updateNombre(int idPaciente, String nombre) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_NAME)) {
+            pst.setString(1, nombre);
+            pst.setInt(2, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el nombre del paciente", e);
+        }
+    }
+
+    public static void updateDni(int idPaciente, String dni) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DNI)) {
+            pst.setString(1, dni);
+            pst.setInt(2, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el DNI del paciente", e);
+        }
+    }
+
+    public static void updateTelefono(int idPaciente, int telefono) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_TELEFONO)) {
+            pst.setInt(1, telefono);
+            pst.setInt(2, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el teléfono del paciente", e);
+        }
+    }
+
+    public static void updateFechaNacimiento(int idPaciente, String fechaNacimiento) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
+            pst.setString(1, fechaNacimiento);
+            pst.setInt(2, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar la fecha de nacimiento del paciente", e);
+        }
+    }
+
+    public static void updateEdad(int idPaciente, int edad) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
+            pst.setInt(1, edad);
+            pst.setInt(2, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar la edad del paciente", e);
+        }
     }
 
 
