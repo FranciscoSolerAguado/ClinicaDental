@@ -1,11 +1,13 @@
+package findAll;
+
 import DAO.PacienteDAO;
 import model.Paciente;
 
 import java.util.List;
 
-public class TestLazyTodosLosPacientes {
+public class TestEagerTodosLosPacientes {
     public static void main(String[] args) {
-        List<Paciente> pacientes = PacienteDAO.findAll();
+        List<Paciente> pacientes = PacienteDAO.findAllEager();
 
         for (Paciente paciente : pacientes){
             System.out.println(paciente);

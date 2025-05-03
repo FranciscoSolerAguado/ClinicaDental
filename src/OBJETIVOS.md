@@ -6,9 +6,9 @@ Implementar las consultas siguientes, para cada DAO(Cita, Dentista, Paciente, Tr
 
 👍   SQL_ALL (Eager y lazy, junto con subconsultas necesarias)
 
-👎 SQL_FIND_BY_ID
+👍  SQL_FIND_BY_ID
 
-👎 SQL_FIND_BY_NAME
+👍  SQL_FIND_BY_NAME
 
 👎 SQL_FIND_BY_ID
 

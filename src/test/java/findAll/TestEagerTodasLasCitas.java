@@ -1,3 +1,5 @@
+package findAll;
+
 import DAO.CitaDAO;
 import model.Cita;
 

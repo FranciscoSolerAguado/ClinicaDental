@@ -5,40 +5,38 @@ import interfaces.CRUDGenericoBBDD;
 import model.Dentista;
 
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DentistaDAO {
     private final static String SQL_ALL = "SELECT * FROM Dentista";
-//    private final static String SQL_FIND_BY_ID = "SELECT * FROM Dentista WHERE idDentista = ?";
-//    private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
-//    private final static String SQL_INSERT = "INSERT INTO Dentista (nombre, dni, telefono, fechaNacimiento, edad) VALUES(?)";
+    private final static String SQL_FIND_BY_ID = "SELECT * FROM Dentista WHERE idDentista = ?";
+    private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
+    //    private final static String SQL_INSERT = "INSERT INTO Dentista (nombre, dni, telefono, fechaNacimiento, edad) VALUES(?)";
 //    private final static String SQL_UPDATE = "UPDATE INTO";
 //    private final static String SQL_DELETE_BY_ID = "DELETE FROM Dentista WHERE idDentista = ?";
 //    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Dentista WHERE dni = ?";
     private final static String SQL_SELECT_BY_CITA =
             "SELECT * " +
-            "FROM Dentista " +
-            "WHERE idDentista IN (" +
-            "    SELECT idDentista " +
-            "    FROM Cita " +
-            "    WHERE idCita = ?" +
-            ")";
+                    "FROM Dentista " +
+                    "WHERE idDentista IN (" +
+                    "    SELECT idDentista " +
+                    "    FROM Cita " +
+                    "    WHERE idCita = ?" +
+                    ")";
     private final static String SQL_SELECT_BY_TRATAMIENTO =
             "SELECT * " +
-            "FROM Dentista " +
-            "WHERE idDentista IN (" +
-            "    SELECT idDentista " +
-            "    FROM TratamientoDentista " +
-            "    WHERE idTratamiento = ?" +
-            ")";
+                    "FROM Dentista " +
+                    "WHERE idDentista IN (" +
+                    "    SELECT idDentista " +
+                    "    FROM TratamientoDentista " +
+                    "    WHERE idTratamiento = ?" +
+                    ")";
 
     /**
      * Version lazy para obtener todos los dentistas en un list
+     *
      * @return un list de dentistas
      */
     public static List<Dentista> findAll() {
@@ -67,6 +65,7 @@ public class DentistaDAO {
 
     /**
      * Version EAGER de obtener todos los dentistas, esta muestra los tratamientos de cada dentista
+     *
      * @return la lista de todos los dentistas de la BBDD.
      */
     public static List<Dentista> findAllEager() {
@@ -130,6 +129,54 @@ public class DentistaDAO {
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
                 dentista.setEdad(rs.getInt("edad"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return dentista;
+    }
+
+    public static Dentista findByIdEager(int idDentista) {
+        Dentista dentista = null;
+        try (Connection con = ConnectionDB.getConnection();
+             java.sql.PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
+            pst.setInt(1, idDentista);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                dentista = new Dentista();
+                dentista.setIdDentista(rs.getInt("idDentista"));
+                dentista.setNombre(rs.getString("nombre"));
+                dentista.setDni(rs.getString("dni"));
+                dentista.setTelefono(rs.getInt("telefono"));
+                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setEdad(rs.getInt("edad"));
+
+                // Cargar los tratamientos asociados (versión EAGER)
+                dentista.setTratamientosDentista(TratamientoDAO.findTratamientosByDentista(idDentista));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return dentista;
+    }
+
+    public static Dentista findByNameEager(String nombre) {
+        Dentista dentista = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
+            pst.setString(1, nombre);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                dentista = new Dentista();
+                dentista.setIdDentista(rs.getInt("idDentista"));
+                dentista.setNombre(rs.getString("nombre"));
+                dentista.setDni(rs.getString("dni"));
+                dentista.setTelefono(rs.getInt("telefono"));
+                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setEdad(rs.getInt("edad"));
+
+                // Cargar los tratamientos asociados (versión EAGER)
+                dentista.setTratamientosDentista(TratamientoDAO.findTratamientosByDentista(dentista.getIdDentista()));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

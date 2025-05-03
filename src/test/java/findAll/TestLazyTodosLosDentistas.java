@@ -1,14 +1,16 @@
+package findAll;
+
 import DAO.DentistaDAO;
 import model.Dentista;
 
 import java.util.List;
 
-public class TestEagerTodosLosDentistas {
+public class TestLazyTodosLosDentistas {
     public static void main(String[] args) {
-        List<Dentista> dentistas = DentistaDAO.findAllEager();
+        List<Dentista> dentistas = DentistaDAO.findAll();
 
         for (Dentista dentista : dentistas){
-            System.out.println(dentista);
+            System.out.println(dentista.toString());
         }
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
 
 public class TratamientoDAO {
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
-    //    private final static String SQL_FIND_BY_ID = "SELECT * FROM Tramiento WHERE idTratamiento = ?";
-//    private final static String SQL_FIND_BY_NAME = "SELECT * FROM Tratamiento WHERE nombrePaciente = ?";
+    private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
+    private final static String SQL_FIND_BY_NAME = "SELECT * FROM Tratamiento WHERE nombrePaciente = ?";
 //    private final static String SQL_INSERT = "INSERT INTO Tratamiento (tipoTratamiento, nombrePaciente, descripcion, precio) VALUES(?)";
 //    private final static String SQL_UPDATE = "UPDATE INTO";
 //    private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
@@ -130,6 +130,54 @@ public class TratamientoDAO {
                 tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
+
+                tratamientos.add(tratamiento);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tratamientos;
+    }
+
+    public static Tratamiento findByIdEager(int idTratamiento) {
+        Tratamiento tratamiento = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
+            pst.setInt(1, idTratamiento);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                tratamiento = new Tratamiento();
+                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
+                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
+                tratamiento.setDescripcion(rs.getString("descripcion"));
+                tratamiento.setPrecio(rs.getDouble("precio"));
+
+                // Cargar el dentista asociado (versión EAGER)
+                tratamiento.setDentista(DentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tratamiento;
+    }
+
+    public static List<Tratamiento> findByNameEager(String nombrePaciente) {
+        List<Tratamiento> tratamientos = new ArrayList<>();
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
+            pst.setString(1, nombrePaciente);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Tratamiento tratamiento = new Tratamiento();
+                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
+                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
+                tratamiento.setDescripcion(rs.getString("descripcion"));
+                tratamiento.setPrecio(rs.getDouble("precio"));
+
+                //Cargar el dentista asociado (versión EAGER)
+                tratamiento.setDentista(DentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
 
                 tratamientos.add(tratamiento);
             }

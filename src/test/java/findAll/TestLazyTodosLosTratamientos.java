@@ -1,3 +1,5 @@
+package findAll;
+
 import DAO.TratamientoDAO;
 import model.Tratamiento;
 
