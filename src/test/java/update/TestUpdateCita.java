@@ -4,7 +4,7 @@ import DAO.CitaDAO;
 
 public class TestUpdateCita {
     public static void main(String[] args) {
-        int idCita = 1;
+        int idCita = 22;
         String nuevaFecha = "2025-04-01";
 
         try {
