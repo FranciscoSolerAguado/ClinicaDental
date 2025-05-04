@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteDAO {
+    private final static String SQL_CHECK = "SELECT COUNT(*) FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_ALL = "SELECT * FROM Paciente";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
@@ -205,7 +206,16 @@ public class PacienteDAO {
 
     public static void updateNombre(int idPaciente, String nombre) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_NAME)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
             pst.setString(1, nombre);
             pst.setInt(2, idPaciente);
             pst.executeUpdate();
@@ -216,7 +226,16 @@ public class PacienteDAO {
 
     public static void updateDni(int idPaciente, String dni) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DNI)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
             pst.setString(1, dni);
             pst.setInt(2, idPaciente);
             pst.executeUpdate();
@@ -227,7 +246,16 @@ public class PacienteDAO {
 
     public static void updateTelefono(int idPaciente, int telefono) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_TELEFONO)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
             pst.setInt(1, telefono);
             pst.setInt(2, idPaciente);
             pst.executeUpdate();
@@ -238,7 +266,16 @@ public class PacienteDAO {
 
     public static void updateFechaNacimiento(int idPaciente, String fechaNacimiento) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
             pst.setString(1, fechaNacimiento);
             pst.setInt(2, idPaciente);
             pst.executeUpdate();
@@ -249,7 +286,16 @@ public class PacienteDAO {
 
     public static void updateEdad(int idPaciente, int edad) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
             pst.setInt(1, edad);
             pst.setInt(2, idPaciente);
             pst.executeUpdate();
@@ -260,7 +306,16 @@ public class PacienteDAO {
 
     public static void deleteById(int idPaciente) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
             pst.setInt(1, idPaciente);
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -270,13 +325,20 @@ public class PacienteDAO {
 
     public static void deleteByDni(String dni) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {
+
+            checkStmt.setString(1, dni);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El paciente con DNI " + dni + " no existe.");
+                }
+            }
+
             pst.setString(1, dni);
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar el paciente con DNI: " + dni, e);
         }
     }
-
-
 }

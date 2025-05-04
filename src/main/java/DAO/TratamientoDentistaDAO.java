@@ -19,5 +19,4 @@ public class TratamientoDentistaDAO {
             throw new RuntimeException("Error al insertar en tratamientodentista", e);
         }
     }
-    // Implement the methods to interact with the database here
 }

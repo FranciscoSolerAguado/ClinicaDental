@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TratamientoDAO {
+    private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Tratamiento WHERE nombrePaciente = ?";
@@ -203,6 +204,9 @@ public class TratamientoDAO {
     public static void updateDescripcion(int idTratamiento, String descripcion) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DESCRIPCION)) {
+
+
+
             pst.setString(1, descripcion);
             pst.setInt(2, idTratamiento);
             pst.executeUpdate();
@@ -213,7 +217,16 @@ public class TratamientoDAO {
 
     public static void deleteById(int idTratamiento) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+
+            checkStmt.setInt(1, idTratamiento);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new SQLException("No existe un tratamiento con id: " + idTratamiento);
+                }
+            }
+
             pst.setInt(1, idTratamiento);
             pst.executeUpdate();
         } catch (SQLException e) {

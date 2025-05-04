@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DentistaDAO {
+    private final static String SQL_CHECK = "SELECT COUNT(*) FROM Dentista WHERE idDentista = ?";
     private final static String SQL_ALL = "SELECT * FROM Dentista";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Dentista WHERE idDentista = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
@@ -203,7 +204,16 @@ public class DentistaDAO {
 
     public static void updateNombre(int idDentista, String nombre) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_NAME)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
             pst.setString(1, nombre);
             pst.setInt(2, idDentista);
             pst.executeUpdate();
@@ -214,7 +224,16 @@ public class DentistaDAO {
 
     public static void updateDni(int idDentista, String dni) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DNI)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
             pst.setString(1, dni);
             pst.setInt(2, idDentista);
             pst.executeUpdate();
@@ -225,7 +244,16 @@ public class DentistaDAO {
 
     public static void updateTelefono(int idDentista, int telefono) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_TELEFONO)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
             pst.setInt(1, telefono);
             pst.setInt(2, idDentista);
             pst.executeUpdate();
@@ -236,7 +264,16 @@ public class DentistaDAO {
 
     public static void updateFechaNacimiento(int idDentista, String fechaNacimiento) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
             pst.setString(1, fechaNacimiento);
             pst.setInt(2, idDentista);
             pst.executeUpdate();
@@ -247,7 +284,16 @@ public class DentistaDAO {
 
     public static void updateEdad(int idDentista, int edad) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
             pst.setInt(1, edad);
             pst.setInt(2, idDentista);
             pst.executeUpdate();
@@ -258,7 +304,16 @@ public class DentistaDAO {
 
     public static void deleteById(int idDentista) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
             pst.setInt(1, idDentista);
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -268,7 +323,16 @@ public class DentistaDAO {
 
     public static void deleteByDni(String dni) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {
+
+            checkStmt.setString(1, dni);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("El dentista con DNI " + dni + " no existe.");
+                }
+            }
+
             pst.setString(1, dni);
             pst.executeUpdate();
         } catch (SQLException e) {

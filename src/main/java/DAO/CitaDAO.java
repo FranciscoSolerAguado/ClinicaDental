@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CitaDAO {
+    private final static String SQL_CHECK = "SELECT COUNT(*) FROM Cita WHERE idCita = ?";
     private final static String SQL_ALL = "SELECT * FROM Cita";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Cita WHERE idCita = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Cita WHERE nombrePaciente = ?";
-    private final static String SQL_INSERT = "INSERT INTO Cita (idPaciente, idDentista, paciente, dentista, fecha) VALUES(?, ?, ?, ?, ?)";
+    private final static String SQL_INSERT = "INSERT INTO Cita (idPaciente, idCita, paciente, dentista, fecha) VALUES(?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE_FECHA = "UPDATE Cita SET fecha = ? WHERE idCita = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Cita WHERE idCita = ?";
 
@@ -31,7 +32,7 @@ public class CitaDAO {
                 Cita cita = new Cita();
                 cita.setIdCita(rs.getInt("idCita"));
                 cita.setIdPaciente(rs.getInt("idPaciente"));
-                cita.setIdDentista(rs.getInt("idDentista"));
+                cita.setIdDentista(rs.getInt("idCita"));
                 cita.setNombrePaciente(rs.getString("nombrePaciente"));
                 cita.setNombreDentista(rs.getString("nombreDentista"));
                 cita.setFecha(rs.getString("fecha"));
@@ -59,7 +60,7 @@ public class CitaDAO {
                 Cita cita = new Cita();
                 int idCita = rs.getInt("idCita");
                 cita.setIdPaciente(rs.getInt("idPaciente"));
-                cita.setIdDentista(rs.getInt("idDentista"));
+                cita.setIdDentista(rs.getInt("idCita"));
                 cita.setNombrePaciente(rs.getString("nombrePaciente"));
                 cita.setNombreDentista(rs.getString("nombreDentista"));
                 cita.setFecha(rs.getString("fecha"));
@@ -86,7 +87,7 @@ public class CitaDAO {
                 cita = new Cita();
                 cita.setIdCita(rs.getInt("idCita"));
                 cita.setIdPaciente(rs.getInt("idPaciente"));
-                cita.setIdDentista(rs.getInt("idDentista"));
+                cita.setIdDentista(rs.getInt("idCita"));
                 cita.setNombrePaciente(rs.getString("nombrePaciente"));
                 cita.setNombreDentista(rs.getString("nombreDentista"));
                 cita.setFecha(rs.getString("fecha"));
@@ -112,7 +113,7 @@ public class CitaDAO {
                 int idCita = rs.getInt("idCita");
                 cita.setIdCita(idCita);
                 cita.setIdPaciente(rs.getInt("idPaciente"));
-                cita.setIdDentista(rs.getInt("idDentista"));
+                cita.setIdDentista(rs.getInt("idCita"));
                 cita.setNombrePaciente(rs.getString("nombrePaciente"));
                 cita.setNombreDentista(rs.getString("nombreDentista"));
                 cita.setFecha(rs.getString("fecha"));
@@ -143,11 +144,18 @@ public class CitaDAO {
         }
     }
 
-
-
     public static void deleteById(int idCita) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
+
+            checkStmt.setInt(1, idCita);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("La cita con id " + idCita + " no existe.");
+                }
+            }
+
             pst.setInt(1, idCita);
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -157,7 +165,16 @@ public class CitaDAO {
 
     public static void updateFecha(int idCita, String nuevaFecha) {
         try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA)) {
+
+            checkStmt.setInt(1, idCita);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new RuntimeException("La cita con id " + idCita + " no existe.");
+                }
+            }
+
             pst.setString(1, nuevaFecha);
             pst.setInt(2, idCita);
             pst.executeUpdate();
