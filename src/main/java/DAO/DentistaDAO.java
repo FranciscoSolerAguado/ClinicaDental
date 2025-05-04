@@ -1,7 +1,6 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
-import interfaces.CRUDGenericoBBDD;
 import model.Dentista;
 
 

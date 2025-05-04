@@ -13,7 +13,7 @@ public class CitaDAO {
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Cita WHERE idCita = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Cita WHERE nombrePaciente = ?";
     private final static String SQL_INSERT = "INSERT INTO Cita (idPaciente, idDentista, paciente, dentista, fecha) VALUES(?, ?, ?, ?, ?)";
-    private final static String SQL_UPDATE_PRECIO = "UPDATE INTO Cita SET precio = ? WHERE idCita = ?";
+    private final static String SQL_UPDATE_FECHA = "UPDATE Cita SET fecha = ? WHERE idCita = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Cita WHERE idCita = ?";
 
     /**
@@ -144,16 +144,6 @@ public class CitaDAO {
     }
 
 
-    public static void updatePrecio(int idCita, double precio) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_PRECIO)) {
-            pst.setDouble(1, precio);
-            pst.setInt(2, idCita);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el precio de la cita", e);
-        }
-    }
 
     public static void deleteById(int idCita) {
         try (Connection con = ConnectionDB.getConnection();
@@ -162,6 +152,17 @@ public class CitaDAO {
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar la cita con id: " + idCita, e);
+        }
+    }
+
+    public static void updateFecha(int idCita, String nuevaFecha) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA)) {
+            pst.setString(1, nuevaFecha);
+            pst.setInt(2, idCita);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar la fecha de la cita con id: " + idCita, e);
         }
     }
 }

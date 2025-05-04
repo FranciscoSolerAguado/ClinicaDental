@@ -1,6 +1,6 @@
 # OBJETIVOS
 
-## (1º) Objetivos-DAO 😕
+## (1º) Objetivos-DAO 🎉️ 
 
 Implementar las consultas siguientes, para cada DAO(Cita, Dentista, Paciente, Tratamiento):
 
@@ -50,11 +50,12 @@ Implementar una interfaz gráfic con JavaFX y Scene builder
 
 TERMINADO (SI/NO): SIN EMPEZAR
 
-## (5º) Objetivos-
 
-## (6º) Objetivos-
+## (5º) Comentar el codigo 😕 
 
-## Objetivos hechos
+
+
+# Objetivos hechos
 
 ### (2º) Objetivos-BBDD 🎉️
 
