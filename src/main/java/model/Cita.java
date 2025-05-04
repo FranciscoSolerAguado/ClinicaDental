@@ -15,14 +15,12 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(int idCita, int idPaciente, int idDentista, String nombrePaciente, String nombreDentista, Paciente paciente, Dentista dentista, String fecha) {
+    public Cita(int idCita, int idPaciente, int idDentista, String nombrePaciente, String nombreDentista, String fecha) {
         this.idCita = idCita;
         this.idPaciente = idPaciente;
         this.idDentista = idDentista;
         this.nombrePaciente = nombrePaciente;
         this.nombreDentista = nombreDentista;
-        this.paciente = paciente;
-        this.dentista = dentista;
         this.fecha = fecha;
     }
 
