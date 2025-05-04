@@ -1,6 +1,7 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import exceptions.TratamientoNoEncontradoException;
 import model.TipoTratamiento;
 import model.Tratamiento;
 
@@ -223,7 +224,7 @@ public class TratamientoDAO {
             checkStmt.setInt(1, idTratamiento);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new SQLException("No existe un tratamiento con id: " + idTratamiento);
+                    throw new TratamientoNoEncontradoException("No existe un tratamiento con id: " + idTratamiento);
                 }
             }
 

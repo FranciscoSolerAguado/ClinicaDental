@@ -1,6 +1,7 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import exceptions.DentistaNoEncontradoException;
 import model.Dentista;
 
 
@@ -210,7 +211,7 @@ public class DentistaDAO {
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
 
@@ -230,7 +231,7 @@ public class DentistaDAO {
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
 
@@ -250,7 +251,7 @@ public class DentistaDAO {
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
 
@@ -270,7 +271,7 @@ public class DentistaDAO {
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
 
@@ -290,7 +291,7 @@ public class DentistaDAO {
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
 
@@ -310,7 +311,7 @@ public class DentistaDAO {
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con id " + idDentista + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
 
@@ -329,7 +330,7 @@ public class DentistaDAO {
             checkStmt.setString(1, dni);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El dentista con DNI " + dni + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con DNI " + dni + " no existe.");
                 }
             }
 

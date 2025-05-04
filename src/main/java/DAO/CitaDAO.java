@@ -1,6 +1,7 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import exceptions.CitaNoEncontradaException;
 import model.Cita;
 import model.Paciente;
 
@@ -152,7 +153,7 @@ public class CitaDAO {
             checkStmt.setInt(1, idCita);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("La cita con id " + idCita + " no existe.");
+                    throw new CitaNoEncontradaException("La cita con id " + idCita + " no existe.");
                 }
             }
 
@@ -171,7 +172,7 @@ public class CitaDAO {
             checkStmt.setInt(1, idCita);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("La cita con id " + idCita + " no existe.");
+                    throw new CitaNoEncontradaException("La cita con id " + idCita + " no existe.");
                 }
             }
 

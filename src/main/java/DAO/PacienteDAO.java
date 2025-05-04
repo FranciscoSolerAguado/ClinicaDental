@@ -1,6 +1,7 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import exceptions.PacienteNoEncontradoException;
 import model.Paciente;
 import model.Paciente;
 
@@ -212,7 +213,7 @@ public class PacienteDAO {
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
 
@@ -232,7 +233,7 @@ public class PacienteDAO {
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
 
@@ -252,7 +253,7 @@ public class PacienteDAO {
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
 
@@ -272,7 +273,7 @@ public class PacienteDAO {
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
 
@@ -292,7 +293,7 @@ public class PacienteDAO {
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
 
@@ -312,7 +313,7 @@ public class PacienteDAO {
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con idPaciente " + idPaciente + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
 
@@ -331,7 +332,7 @@ public class PacienteDAO {
             checkStmt.setString(1, dni);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new RuntimeException("El paciente con DNI " + dni + " no existe.");
+                    throw new PacienteNoEncontradoException("El paciente con DNI " + dni + " no existe.");
                 }
             }
 
