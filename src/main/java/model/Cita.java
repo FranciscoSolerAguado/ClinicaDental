@@ -1,44 +1,26 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Cita {
     private int idCita;
     private int idPaciente;
     private int idDentista;
-    private String nombrePaciente;
-    private String nombreDentista;
     private Paciente paciente;
     private Dentista dentista;
-    private String fecha;
+    private LocalDate fecha;
 
     public Cita() {
     }
 
-    public Cita(int idCita, int idPaciente, int idDentista, String nombrePaciente, String nombreDentista, String fecha) {
+    public Cita(int idCita, int idPaciente, int idDentista, LocalDate fecha) {
         this.idCita = idCita;
         this.idPaciente = idPaciente;
         this.idDentista = idDentista;
-        this.nombrePaciente = nombrePaciente;
-        this.nombreDentista = nombreDentista;
         this.fecha = fecha;
     }
 
-    public String getNombrePaciente() {
-        return nombrePaciente;
-    }
-
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
-    }
-
-    public String getNombreDentista() {
-        return nombreDentista;
-    }
-
-    public void setNombreDentista(String nombreDentista) {
-        this.nombreDentista = nombreDentista;
-    }
 
     public int getIdCita() {
         return idCita;
@@ -80,11 +62,11 @@ public class Cita {
         this.dentista = dentista;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -105,10 +87,8 @@ public class Cita {
         return "Cita{" +
                 "idCita=" + idCita +
                 ", idPaciente=" + idPaciente +
-                ", idDentista=" + idDentista +
-                ", nombrePaciente='" + nombrePaciente + '\'' +
-                ", nombreDentista='" + nombreDentista + '\'' +
                 ", paciente=" + paciente +
+                ", idDentista=" + idDentista +
                 ", dentista=" + dentista +
                 ", fecha='" + fecha + '\'' +
                 '}';

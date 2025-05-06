@@ -3,15 +3,15 @@ package insert;
 import DAO.CitaDAO;
 import model.Cita;
 
+import java.time.LocalDate;
+
 public class TestInsertCita {
     public static void main(String[] args) {
         // Crear una nueva cita
         Cita nuevaCita = new Cita();
-        nuevaCita.setIdPaciente(23);
+        nuevaCita.setIdPaciente(21);
         nuevaCita.setIdDentista(15);
-        nuevaCita.setNombrePaciente("Jhon Doe");
-        nuevaCita.setNombreDentista("Juan Perez Garcia");
-        nuevaCita.setFecha("2023-10-01");
+        nuevaCita.setFecha(LocalDate.of(2023, 10, 1));
 
 
         if (nuevaCita != null) {

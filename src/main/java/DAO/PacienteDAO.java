@@ -56,7 +56,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setFechaNacimiento("fechaNacimiento");
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
                 paciente.setPacientes(new ArrayList<Paciente>());
@@ -88,7 +88,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Versión EAGER
@@ -114,7 +114,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
@@ -134,7 +134,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
@@ -155,7 +155,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Versión EAGER
@@ -179,7 +179,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Cargar los tratamientos asociados (versión EAGER)
@@ -197,7 +197,7 @@ public class PacienteDAO {
             pst.setString(1, paciente.getNombre());
             pst.setString(2, paciente.getDni());
             pst.setInt(3, paciente.getTelefono());
-            pst.setString(4, paciente.getFechaNacimiento());
+            pst.setString(4, java.sql.Date.valueOf(paciente.getFechaNacimiento()).toString());
             pst.setInt(5, paciente.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {

@@ -1,11 +1,12 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 public class Dentista extends Persona {
     private int idDentista;
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private int edad;
     private List<Tratamiento> tratamientosDentista;
 
@@ -14,7 +15,7 @@ public class Dentista extends Persona {
 
     }
 
-    public Dentista(String nombre, String dni, int telefono, int idDentista, String fechaNacimiento, int edad) {
+    public Dentista(String nombre, String dni, int telefono, int idDentista, LocalDate fechaNacimiento, int edad) {
         super(nombre, dni, telefono);
         this.idDentista = idDentista;
         this.fechaNacimiento = fechaNacimiento;
@@ -31,11 +32,11 @@ public class Dentista extends Persona {
         return idDentista;
     }
 
-    public String getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

@@ -13,8 +13,8 @@ public class CitaDAO {
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Cita WHERE idCita = ?";
     private final static String SQL_ALL = "SELECT * FROM Cita";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Cita WHERE idCita = ?";
-    private final static String SQL_FIND_BY_NAME = "SELECT * FROM Cita WHERE nombrePaciente = ?";
-    private final static String SQL_INSERT = "INSERT INTO Cita (idPaciente, idCita, paciente, dentista, fecha) VALUES(?, ?, ?, ?, ?)";
+    private final static String SQL_FIND_BY_IDPACIENTE = "SELECT * FROM Cita WHERE idPaciente = ?";
+    private final static String SQL_INSERT = "INSERT INTO Cita (idPaciente, idDentista, fecha) VALUES(?, ?, ?)";
     private final static String SQL_UPDATE_FECHA = "UPDATE Cita SET fecha = ? WHERE idCita = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Cita WHERE idCita = ?";
 
@@ -34,9 +34,7 @@ public class CitaDAO {
                 cita.setIdCita(rs.getInt("idCita"));
                 cita.setIdPaciente(rs.getInt("idPaciente"));
                 cita.setIdDentista(rs.getInt("idCita"));
-                cita.setNombrePaciente(rs.getString("nombrePaciente"));
-                cita.setNombreDentista(rs.getString("nombreDentista"));
-                cita.setFecha(rs.getString("fecha"));
+                cita.setFecha(rs.getDate("fecha").toLocalDate());
 
                 citas.add(cita);
             }
@@ -62,9 +60,7 @@ public class CitaDAO {
                 int idCita = rs.getInt("idCita");
                 cita.setIdPaciente(rs.getInt("idPaciente"));
                 cita.setIdDentista(rs.getInt("idCita"));
-                cita.setNombrePaciente(rs.getString("nombrePaciente"));
-                cita.setNombreDentista(rs.getString("nombreDentista"));
-                cita.setFecha(rs.getString("fecha"));
+                cita.setFecha(rs.getDate("fecha").toLocalDate());
 
                 // Cargar el paciente y el dentista asociados (versión EAGER)
                 cita.setDentista(DentistaDAO.findDentistaByCita(idCita));
@@ -89,9 +85,7 @@ public class CitaDAO {
                 cita.setIdCita(rs.getInt("idCita"));
                 cita.setIdPaciente(rs.getInt("idPaciente"));
                 cita.setIdDentista(rs.getInt("idCita"));
-                cita.setNombrePaciente(rs.getString("nombrePaciente"));
-                cita.setNombreDentista(rs.getString("nombreDentista"));
-                cita.setFecha(rs.getString("fecha"));
+                cita.setFecha(rs.getDate("fecha").toLocalDate());
 
                 // Cargar el paciente y el dentista asociados (versión EAGER)
                 cita.setDentista(DentistaDAO.findDentistaByCita(idCita));
@@ -103,11 +97,11 @@ public class CitaDAO {
         return cita;
     }
 
-    public static List<Cita> findByNameEager(String nombrePaciente) {
+    public static List<Cita> findCitasByIdPacienteEager(int idPaciente) {
         List<Cita> citas = new ArrayList<>();
         try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
-            pst.setString(1, nombrePaciente);
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_IDPACIENTE)) {
+            pst.setInt(1, idPaciente);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Cita cita = new Cita();
@@ -115,9 +109,7 @@ public class CitaDAO {
                 cita.setIdCita(idCita);
                 cita.setIdPaciente(rs.getInt("idPaciente"));
                 cita.setIdDentista(rs.getInt("idCita"));
-                cita.setNombrePaciente(rs.getString("nombrePaciente"));
-                cita.setNombreDentista(rs.getString("nombreDentista"));
-                cita.setFecha(rs.getString("fecha"));
+                cita.setFecha(rs.getDate("fecha").toLocalDate());
 
                 // Cargar el paciente y el dentista asociados (versión EAGER)
                 cita.setDentista(DentistaDAO.findDentistaByCita(idCita));
@@ -136,9 +128,7 @@ public class CitaDAO {
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
             pst.setInt(1, cita.getIdPaciente());
             pst.setInt(2, cita.getIdDentista());
-            pst.setString(3, cita.getNombrePaciente());
-            pst.setString(4, cita.getNombreDentista());
-            pst.setString(5, cita.getFecha());
+            pst.setDate(3, java.sql.Date.valueOf(cita.getFecha()));
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al insertar la cita", e);

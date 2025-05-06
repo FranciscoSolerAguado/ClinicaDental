@@ -56,7 +56,7 @@ public class DentistaDAO {
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
                 dentista.setTelefono(rs.getInt("telefono"));
-                dentista.setFechaNacimiento("fechaNacimiento");
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
 
                 //Version LAZY
@@ -87,7 +87,7 @@ public class DentistaDAO {
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
                 dentista.setTelefono(rs.getInt("telefono"));
-                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
 
                 // Versión EAGER
@@ -112,7 +112,7 @@ public class DentistaDAO {
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
                 dentista.setTelefono(rs.getInt("telefono"));
-                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
@@ -132,7 +132,7 @@ public class DentistaDAO {
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
                 dentista.setTelefono(rs.getInt("telefono"));
-                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
@@ -153,7 +153,7 @@ public class DentistaDAO {
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
                 dentista.setTelefono(rs.getInt("telefono"));
-                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
 
                 // Cargar los tratamientos asociados (versión EAGER)
@@ -177,7 +177,7 @@ public class DentistaDAO {
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
                 dentista.setTelefono(rs.getInt("telefono"));
-                dentista.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
 
                 // Cargar los tratamientos asociados (versión EAGER)
@@ -195,7 +195,7 @@ public class DentistaDAO {
             pst.setString(1, dentista.getNombre());
             pst.setString(2, dentista.getDni());
             pst.setInt(3, dentista.getTelefono());
-            pst.setString(4, dentista.getFechaNacimiento());
+            pst.setString(4, java.sql.Date.valueOf(dentista.getFechaNacimiento()).toString());
             pst.setInt(5, dentista.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {

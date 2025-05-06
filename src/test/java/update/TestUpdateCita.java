@@ -1,6 +1,7 @@
 package update;
 
 import DAO.CitaDAO;
+import exceptions.CitaNoEncontradaException;
 
 public class TestUpdateCita {
     public static void main(String[] args) {
@@ -10,9 +11,10 @@ public class TestUpdateCita {
         try {
             CitaDAO.updateFecha(idCita, nuevaFecha);
             System.out.println("Cita actualizada correctamente.");
+        } catch (CitaNoEncontradaException e) {
+            System.out.println("Error: " + e.getMessage());
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error inesperado: " + e.getMessage());
         }
-
     }
 }
