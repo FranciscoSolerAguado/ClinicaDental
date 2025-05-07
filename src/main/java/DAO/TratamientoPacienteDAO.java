@@ -1,7 +1,6 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
-import model.TratamientoDentista;
 import model.TratamientoPaciente;
 
 import java.sql.*;
@@ -12,7 +11,7 @@ public class TratamientoPacienteDAO {
     private final static String SQL_ALL = "SELECT * FROM tratamientopaciente";
     private final static String SQL_INSERT = "INSERT INTO tratamientopaciente (idTratamiento, idPaciente) VALUES (?, ?)";
 
-    public static void insert(int idTratamiento, int idPaciente) {
+    public void insert(int idTratamiento, int idPaciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
             pst.setInt(1, idTratamiento);
@@ -23,7 +22,7 @@ public class TratamientoPacienteDAO {
         }
     }
 
-    public static List<TratamientoPaciente> findAll(){
+    public List<TratamientoPaciente> findAll(){
         List<TratamientoPaciente> tratamientosPacientes = new ArrayList<TratamientoPaciente>();
         Connection con = ConnectionDB.getConnection();
         try {

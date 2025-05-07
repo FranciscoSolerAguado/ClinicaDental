@@ -34,13 +34,15 @@ public class TratamientoDAO {
                     "    WHERE idPaciente = ?" +
                     ")";
 
+    private DentistaDAO dentistaDAO;
+
     /**
      * Version lazy para obtener todos los tratamientos en un list
      *
      * @return un list de citas
      */
 
-    public static List<Tratamiento> findAll() {
+    public List<Tratamiento> findAll() {
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -62,7 +64,7 @@ public class TratamientoDAO {
         return tratamientos;
     }
 
-    public static List<Tratamiento> findAllEager(){
+    public List<Tratamiento> findAllEager(){
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -77,7 +79,7 @@ public class TratamientoDAO {
                 tratamiento.setPrecio(rs.getDouble("precio"));
 
                 //Version EAGER
-                tratamiento.setDentista(DentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
+                tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
 
                 tratamientos.add(tratamiento);
             }
@@ -93,7 +95,7 @@ public class TratamientoDAO {
      * @param idDentistaBuscado
      * @return tratamientos
      */
-    public static List<Tratamiento> findTratamientosByDentista(int idDentistaBuscado) {
+    public List<Tratamiento> findTratamientosByDentista(int idDentistaBuscado) {
         List<Tratamiento> tratamientos = new ArrayList<>();
         try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_DENTISTA)) {
             pst.setInt(1, idDentistaBuscado);
@@ -120,7 +122,7 @@ public class TratamientoDAO {
      * @param idPacienteBuscado
      * @return tratamientos
      */
-    public static List<Tratamiento> findTratamientosByPaciente(int idPacienteBuscado) {
+    public List<Tratamiento> findTratamientosByPaciente(int idPacienteBuscado) {
         List<Tratamiento> tratamientos = new ArrayList<>();
         try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_PACIENTE)) {
             pst.setInt(1, idPacienteBuscado);
@@ -141,7 +143,7 @@ public class TratamientoDAO {
         return tratamientos;
     }
 
-    public static Tratamiento findByIdEager(int idTratamiento) {
+    public Tratamiento findByIdEager(int idTratamiento) {
         Tratamiento tratamiento = null;
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
@@ -156,7 +158,7 @@ public class TratamientoDAO {
                 tratamiento.setPrecio(rs.getDouble("precio"));
 
                 // Cargar el dentista asociado (versión EAGER)
-                tratamiento.setDentista(DentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
+                tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -164,7 +166,7 @@ public class TratamientoDAO {
         return tratamiento;
     }
 
-    public static List<Tratamiento> findByNameEager(String nombrePaciente) {
+    public List<Tratamiento> findByNameEager(String nombrePaciente) {
         List<Tratamiento> tratamientos = new ArrayList<>();
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
@@ -179,7 +181,7 @@ public class TratamientoDAO {
                 tratamiento.setPrecio(rs.getDouble("precio"));
 
                 //Cargar el dentista asociado (versión EAGER)
-                tratamiento.setDentista(DentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
+                tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
 
                 tratamientos.add(tratamiento);
             }
@@ -189,7 +191,7 @@ public class TratamientoDAO {
         return tratamientos;
     }
 
-    public static void insert(Tratamiento tratamiento) {
+    public void insert(Tratamiento tratamiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
             pst.setString(1, tratamiento.getTipoTratamiento().toString());
@@ -202,7 +204,7 @@ public class TratamientoDAO {
         }
     }
 
-    public static void updateDescripcion(int idTratamiento, String descripcion) {
+    public void updateDescripcion(int idTratamiento, String descripcion) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DESCRIPCION)) {
 
@@ -216,7 +218,7 @@ public class TratamientoDAO {
         }
     }
 
-    public static void deleteById(int idTratamiento) {
+    public void deleteById(int idTratamiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {

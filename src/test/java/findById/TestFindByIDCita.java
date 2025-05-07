@@ -1,8 +1,5 @@
 package findById;
 
-import DAO.CitaDAO;
-import model.Cita;
-
 public class TestFindByIDCita {
     public static void main(String[] args) {
         int id = 1;

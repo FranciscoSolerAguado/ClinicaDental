@@ -1,6 +1,5 @@
 package update;
 
-import DAO.CitaDAO;
 import exceptions.CitaNoEncontradaException;
 
 public class TestUpdateCita {

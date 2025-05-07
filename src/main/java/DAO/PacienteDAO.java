@@ -38,13 +38,14 @@ public class PacienteDAO {
                     "    FROM TratamientoDentista " +
                     "    WHERE idTratamiento = ?" +
                     ")";
+    private TratamientoDAO tratamientoDAO;
 
     /**
      * Version lazy para obtener todos los pacientes en un list
      *
      * @return un list de pacientes
      */
-    public static List<Paciente> findAll() {
+    public List<Paciente> findAll() {
         List<Paciente> pacientes = new ArrayList<Paciente>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -74,7 +75,7 @@ public class PacienteDAO {
      * @return la lista de todos los pacientes de la BBDD.
      */
 
-    public static List<Paciente> findAllEager() {
+    public List<Paciente> findAllEager() {
         List<Paciente> pacientes = new ArrayList<>();
 
         Connection con = ConnectionDB.getConnection();
@@ -92,7 +93,7 @@ public class PacienteDAO {
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Versión EAGER
-                paciente.setTratamientosPaciente(TratamientoDAO.findTratamientosByPaciente(idPaciente));
+                paciente.setTratamientosPaciente(tratamientoDAO.findTratamientosByPaciente(idPaciente));
                 pacientes.add(paciente);
             }
 
@@ -103,7 +104,7 @@ public class PacienteDAO {
 
     }
 
-    public static Paciente findPacienteByCita(int idCita) {
+    public Paciente findPacienteByCita(int idCita) {
         Paciente paciente = null;
         try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_CITA)) {
             pst.setInt(1, idCita);
@@ -123,7 +124,7 @@ public class PacienteDAO {
         return paciente;
     }
 
-    public static Paciente findPacienteByTratamiento(int idTratamiento) {
+    public Paciente findPacienteByTratamiento(int idTratamiento) {
         Paciente paciente = null;
         try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_TRATAMIENTO)) {
             pst.setInt(1, idTratamiento);
@@ -143,7 +144,7 @@ public class PacienteDAO {
         return paciente;
     }
 
-    public static Paciente findByIdEager(int idPaciente) {
+    public Paciente findByIdEager(int idPaciente) {
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
              java.sql.PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
@@ -159,7 +160,7 @@ public class PacienteDAO {
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Versión EAGER
-                paciente.setTratamientosPaciente(TratamientoDAO.findTratamientosByPaciente(idPaciente));
+                paciente.setTratamientosPaciente(tratamientoDAO.findTratamientosByPaciente(idPaciente));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -167,7 +168,7 @@ public class PacienteDAO {
         return paciente;
     }
 
-    public static Paciente findByNameEager(String nombre) {
+    public Paciente findByNameEager(String nombre) {
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
@@ -183,7 +184,7 @@ public class PacienteDAO {
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Cargar los tratamientos asociados (versión EAGER)
-                paciente.setTratamientosPaciente(TratamientoDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
+                paciente.setTratamientosPaciente(tratamientoDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -191,7 +192,7 @@ public class PacienteDAO {
         return paciente;
     }
 
-    public static void insert(Paciente paciente) {
+    public void insert(Paciente paciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
             pst.setString(1, paciente.getNombre());
@@ -205,7 +206,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void updateNombre(int idPaciente, String nombre) {
+    public void updateNombre(int idPaciente, String nombre) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_NAME)) {
@@ -225,7 +226,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void updateDni(int idPaciente, String dni) {
+    public void updateDni(int idPaciente, String dni) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DNI)) {
@@ -245,7 +246,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void updateTelefono(int idPaciente, int telefono) {
+    public void updateTelefono(int idPaciente, int telefono) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_TELEFONO)) {
@@ -265,7 +266,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void updateFechaNacimiento(int idPaciente, String fechaNacimiento) {
+    public void updateFechaNacimiento(int idPaciente, String fechaNacimiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
@@ -285,7 +286,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void updateEdad(int idPaciente, int edad) {
+    public void updateEdad(int idPaciente, int edad) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
@@ -305,7 +306,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void deleteById(int idPaciente) {
+    public void deleteById(int idPaciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
@@ -324,7 +325,7 @@ public class PacienteDAO {
         }
     }
 
-    public static void deleteByDni(String dni) {
+    public void deleteByDni(String dni) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {

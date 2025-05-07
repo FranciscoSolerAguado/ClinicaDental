@@ -1,8 +1,5 @@
 package insert;
 
-import DAO.CitaDAO;
-import model.Cita;
-
 import java.time.LocalDate;
 
 public class TestInsertCita {

@@ -5,31 +5,19 @@ import java.util.Objects;
 
 public class Tratamiento {
     private int idTratamiento;
-    private TipoTratamiento tipoTratamiento;
-    private String nombrePaciente;
-    private Dentista dentista;
     private String descripcion;
     private double precio;
+    private int idDentista;
 
     public Tratamiento() {
 
     }
 
-    public Tratamiento(int idTratamiento, TipoTratamiento tipoTratamiento, String nombrePaciente, Dentista dentista,  String descripcion, double precio) {
+    public Tratamiento(int idTratamiento, String descripcion, double precio, int idDentista) {
         this.idTratamiento = idTratamiento;
-        this.tipoTratamiento = tipoTratamiento;
-        this.nombrePaciente = nombrePaciente;
-        this.dentista = dentista;
         this.descripcion = descripcion;
         this.precio = precio;
-    }
-
-    public String getNombrePaciente() {
-        return nombrePaciente;
-    }
-
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
+        this.idDentista = idDentista;
     }
 
     public int getIdTratamiento() {
@@ -38,22 +26,6 @@ public class Tratamiento {
 
     public void setIdTratamiento(int idTratamiento) {
         this.idTratamiento = idTratamiento;
-    }
-
-    public TipoTratamiento getTipoTratamiento() {
-        return tipoTratamiento;
-    }
-
-    public void setTipoTratamiento(TipoTratamiento tipoTratamiento) {
-        this.tipoTratamiento = tipoTratamiento;
-    }
-
-    public Dentista getDentista() {
-        return dentista;
-    }
-
-    public void setDentista(Dentista dentista) {
-        this.dentista = dentista;
     }
 
     public String getDescripcion() {
@@ -88,11 +60,9 @@ public class Tratamiento {
     public String toString() {
         return "Tratamiento{" +
                 "idTratamiento=" + idTratamiento +
-                ", tipoTratamiento=" + tipoTratamiento +
-                ", nombrePaciente='" + nombrePaciente + '\'' +
-                ", dentista=" + dentista +
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
+                ", idDentista=" + idDentista +
                 '}';
     }
 }

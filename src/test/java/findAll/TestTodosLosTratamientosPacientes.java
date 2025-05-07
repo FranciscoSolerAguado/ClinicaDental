@@ -7,7 +7,9 @@ import java.util.List;
 
 public class TestTodosLosTratamientosPacientes {
     public static void main(String[] args) {
-         List<TratamientoPaciente> tratamientos = TratamientoPacienteDAO.findAll();
+        TratamientoPacienteDAO tratamientoPacienteDAO = new TratamientoPacienteDAO();
+
+         List<TratamientoPaciente> tratamientos = tratamientoPacienteDAO.findAll();
          for (TratamientoPaciente t : tratamientos) {
              System.out.println(t);
         }

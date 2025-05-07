@@ -1,8 +1,5 @@
 package findAll;
 
-import DAO.CitaDAO;
-import model.Cita;
-
 import java.util.List;
 
 public class TestEagerTodasLasCitas {

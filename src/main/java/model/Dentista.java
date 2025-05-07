@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Dentista extends Persona {
     private int idDentista;
+    private String nColegiado;
+    private String especialidad;
     private LocalDate fechaNacimiento;
     private int edad;
     private List<Tratamiento> tratamientosDentista;
@@ -56,6 +58,22 @@ public class Dentista extends Persona {
         this.tratamientosDentista = tratamientosDentista;
     }
 
+    public String getnColegiado() {
+        return nColegiado;
+    }
+
+    public void setnColegiado(String nColegiado) {
+        this.nColegiado = nColegiado;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -69,13 +87,13 @@ public class Dentista extends Persona {
     }
 
 
+    @Override
     public String toString() {
         return "Dentista{" +
-                "nombre='" + getNombre() + '\'' +
-                ", dni='" + getDni() + '\'' +
-                ", telefono=" + getTelefono() +
-                ", idDentista=" + idDentista +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                "idDentista=" + idDentista +
+                ", nColegiado='" + nColegiado + '\'' +
+                ", especialidad='" + especialidad + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
                 ", edad=" + edad +
                 ", tratamientosDentista=" + tratamientosDentista +
                 '}';
