@@ -7,7 +7,8 @@ import java.util.List;
 
 public class TestLazyTodosLosDentistas {
     public static void main(String[] args) {
-        List<Dentista> dentistas = DentistaDAO.findAll();
+        DentistaDAO dentistaDAO = DentistaDAO.getInstance();
+        List<Dentista> dentistas = dentistaDAO.findAll();
 
         for (Dentista dentista : dentistas){
             System.out.println(dentista.toString());

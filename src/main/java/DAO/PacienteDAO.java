@@ -3,20 +3,36 @@ package DAO;
 import baseDatos.ConnectionDB;
 import exceptions.PacienteNoEncontradoException;
 import model.Paciente;
-import model.Paciente;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteDAO {
+    private static PacienteDAO instance;
+    private TratamientoDAO tratamientoDAO;
+    private TratamientoPacienteDAO tratamientoPacienteDAO;
+
+    private PacienteDAO() {
+        this.tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
+    }
+
+    public static PacienteDAO getInstance() {
+        if (instance == null) {
+            instance = new PacienteDAO();
+        }
+        return instance;
+    }
+
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_ALL = "SELECT * FROM Paciente";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
-    private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?)";
+    private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, alergias, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?)";
+    private final static String SQL_UPDATE = "UPDATE Paciente SET nombre = ?, dni = ?, telefono = ?, alergias = ?, fechaNacimiento = ?, edad = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_NAME = "UPDATE Paciente SET nombre = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_DNI = "UPDATE Paciente SET dni = ? WHERE idPaciente = ?";
+    private final static String SQL_UPDATE_ALERGIAS = "UPDATE Paciente SET alergias = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_TELEFONO = "UPDATE Paciente SET telefono = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Paciente SET fechaNacimiento = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_EDAD = "UPDATE Paciente SET edad = ? WHERE idPaciente = ?";
@@ -38,7 +54,6 @@ public class PacienteDAO {
                     "    FROM TratamientoDentista " +
                     "    WHERE idTratamiento = ?" +
                     ")";
-    private TratamientoDAO tratamientoDAO;
 
     /**
      * Version lazy para obtener todos los pacientes en un list
@@ -57,10 +72,11 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
-                paciente.setPacientes(new ArrayList<Paciente>());
+                //VERSION LAZY
                 pacientes.add(paciente);
             }
         } catch (SQLException e) {
@@ -78,22 +94,26 @@ public class PacienteDAO {
     public List<Paciente> findAllEager() {
         List<Paciente> pacientes = new ArrayList<>();
 
+
         Connection con = ConnectionDB.getConnection();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(SQL_ALL);
+
             while (rs.next()) {
                 Paciente paciente = new Paciente();
-                int idPaciente = rs.getInt("idPaciente");
-                paciente.setIdPaciente(idPaciente);
+                paciente.setIdPaciente(rs.getInt("idPaciente"));
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
+                int idPaciente = paciente.getIdPaciente();
+
                 // Versión EAGER
-                paciente.setTratamientosPaciente(tratamientoDAO.findTratamientosByPaciente(idPaciente));
+                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(idPaciente));
                 pacientes.add(paciente);
             }
 
@@ -115,6 +135,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
             }
@@ -135,6 +156,7 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
             }
@@ -156,11 +178,12 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Versión EAGER
-                paciente.setTratamientosPaciente(tratamientoDAO.findTratamientosByPaciente(idPaciente));
+                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(idPaciente));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -180,11 +203,12 @@ public class PacienteDAO {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setDni(rs.getString("dni"));
                 paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
                 // Cargar los tratamientos asociados (versión EAGER)
-                paciente.setTratamientosPaciente(tratamientoDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
+                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -198,8 +222,9 @@ public class PacienteDAO {
             pst.setString(1, paciente.getNombre());
             pst.setString(2, paciente.getDni());
             pst.setInt(3, paciente.getTelefono());
-            pst.setString(4, java.sql.Date.valueOf(paciente.getFechaNacimiento()).toString());
-            pst.setInt(5, paciente.getEdad());
+            pst.setString(4, paciente.getAlergias());
+            pst.setString(5, java.sql.Date.valueOf(paciente.getFechaNacimiento()).toString());
+            pst.setInt(6, paciente.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al insertar el paciente", e);
@@ -240,6 +265,26 @@ public class PacienteDAO {
 
             pst.setString(1, dni);
             pst.setInt(2, idPaciente);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el DNI del paciente", e);
+        }
+    }
+
+    public void updateAlergias (int idPaciente, String alergias){
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_ALERGIAS)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+
+            pst.setInt(1, idPaciente);
+            pst.setString(2, alergias);
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar el DNI del paciente", e);

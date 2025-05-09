@@ -5,10 +5,10 @@ import model.Paciente;
 
 public class TestFindByIDPaciente {
     public static void main(String[] args) {
-
+        PacienteDAO pacienteDAO = PacienteDAO.getInstance();
         int id = 1;
 
-        Paciente paciente = PacienteDAO.findByIdEager(id);
+        Paciente paciente = pacienteDAO.findByIdEager(id);
 
         if (paciente != null) {
             System.out.println("Paciente encontrado: " + paciente);

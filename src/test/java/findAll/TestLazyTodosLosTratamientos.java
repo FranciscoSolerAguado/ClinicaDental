@@ -7,7 +7,8 @@ import java.util.List;
 
 public class TestLazyTodosLosTratamientos {
     public static void main(String[] args) {
-        List<Tratamiento> tratamientos = TratamientoDAO.findAll();
+        TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
+        List<Tratamiento> tratamientos = tratamientoDAO.findAll();
 
         for (Tratamiento tratamiento : tratamientos){
             System.out.println(tratamiento);

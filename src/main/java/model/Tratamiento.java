@@ -1,6 +1,5 @@
 package model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Tratamiento {
@@ -8,16 +7,18 @@ public class Tratamiento {
     private String descripcion;
     private double precio;
     private int idDentista;
+    private Dentista dentista;
 
     public Tratamiento() {
 
     }
 
-    public Tratamiento(int idTratamiento, String descripcion, double precio, int idDentista) {
+    public Tratamiento(int idTratamiento, String descripcion, double precio, int idDentista, Dentista dentista) {
         this.idTratamiento = idTratamiento;
         this.descripcion = descripcion;
         this.precio = precio;
         this.idDentista = idDentista;
+        this.dentista = dentista;
     }
 
     public int getIdTratamiento() {
@@ -44,6 +45,22 @@ public class Tratamiento {
         this.precio = precio;
     }
 
+    public Dentista getDentista() {
+        return dentista;
+    }
+
+    public void setDentista(Dentista dentista) {
+        this.dentista = dentista;
+    }
+
+    public int getIdDentista() {
+        return idDentista;
+    }
+
+    public void setIdDentista(int idDentista) {
+        this.idDentista = idDentista;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -63,6 +80,7 @@ public class Tratamiento {
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
                 ", idDentista=" + idDentista +
+                ", dentista=" + dentista +
                 '}';
     }
 }

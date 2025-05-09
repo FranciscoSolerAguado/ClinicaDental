@@ -7,7 +7,8 @@ import java.util.List;
 
 public class TestEagerTodosLosDentistas {
     public static void main(String[] args) {
-        List<Dentista> dentistas = DentistaDAO.findAllEager();
+        DentistaDAO dentistaDAO = DentistaDAO.getInstance();
+        List<Dentista> dentistas = dentistaDAO.findAllEager();
 
         for (Dentista dentista : dentistas){
             System.out.println(dentista);

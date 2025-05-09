@@ -9,13 +9,13 @@ public class Paciente extends Persona{
     private String alergias;
     private LocalDate fechaNacimiento;
     private int edad;
-    private List<Tratamiento> tratamientosPaciente;
+    private List<TratamientoPaciente> tratamientosPaciente;
 
     public Paciente() {
 
     }
 
-    public Paciente(String nombre, String dni, int telefono, int idPaciente, String alergias, LocalDate fechaNacimiento, int edad, List<Tratamiento> tratamientosPaciente) {
+    public Paciente(String nombre, String dni, int telefono, int idPaciente, String alergias, LocalDate fechaNacimiento, int edad, List<TratamientoPaciente> tratamientosPaciente) {
         super(nombre, dni, telefono);
         this.idPaciente = idPaciente;
         this.alergias = alergias;
@@ -56,15 +56,13 @@ public class Paciente extends Persona{
         this.edad = edad;
     }
 
-    public List<Tratamiento> getTratamientosPaciente() {
+    public List<TratamientoPaciente> getTratamientosPaciente() {
         return tratamientosPaciente;
     }
 
-    public void setTratamientosPaciente(List<Tratamiento> tratamientosPaciente) {
+    public void setTratamientosPaciente(List<TratamientoPaciente> tratamientosPaciente) {
         this.tratamientosPaciente = tratamientosPaciente;
     }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -81,7 +79,10 @@ public class Paciente extends Persona{
     @Override
     public String toString() {
         return "Paciente{" +
-                "idPaciente=" + idPaciente +
+                ", nombre='" + getNombre() + '\'' +
+                ", dni='" + getDni() + '\'' +
+                ", telefono=" + getTelefono() +
+                ", idPaciente=" + idPaciente +
                 ", alergias='" + alergias + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", edad=" + edad +

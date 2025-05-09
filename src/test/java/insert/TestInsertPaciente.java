@@ -7,17 +7,20 @@ import java.time.LocalDate;
 
 public class TestInsertPaciente {
     public static void main(String[] args) {
+        PacienteDAO pacienteDAO = PacienteDAO.getInstance();
+
         // Crear un objeto Paciente con datos de prueba
         Paciente paciente = new Paciente();
-        paciente.setNombre("Juan Vaquero Perez");
-        paciente.setDni("23957923A");
-        paciente.setTelefono(638088251);
-        paciente.setFechaNacimiento(LocalDate.of(1990, 1, 1));
-        paciente.setEdad(35);
+        paciente.setNombre("María González Ruiz");
+        paciente.setDni("45678912B");
+        paciente.setTelefono(647892345);
+        paciente.setAlergias("Penicilina");
+        paciente.setFechaNacimiento(LocalDate.of(1987, 3, 12));
+        paciente.setEdad(36);
 
         // Insertar el paciente en la base de datos
         try {
-            PacienteDAO.insert(paciente);
+            pacienteDAO.insert(paciente);
             System.out.println("Paciente insertado correctamente.");
         } catch (RuntimeException e) {
             System.err.println("Error al insertar el paciente: " + e.getMessage());

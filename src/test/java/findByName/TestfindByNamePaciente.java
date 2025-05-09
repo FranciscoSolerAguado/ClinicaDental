@@ -6,7 +6,9 @@ import model.Paciente;
 
 public class TestfindByNamePaciente {
     public static void main(String[] args) {
-        Paciente paciente = PacienteDAO.findByNameEager("Nuria Delgado Varela");
+        PacienteDAO pacienteDAO = PacienteDAO.getInstance();
+
+        Paciente paciente = pacienteDAO.findByNameEager("Nuria Delgado Varela");
 
         if (paciente != null) {
             System.out.println(paciente);

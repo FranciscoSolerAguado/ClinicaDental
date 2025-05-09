@@ -4,13 +4,14 @@ import DAO.DentistaDAO;
 
 public class TestDeleteDentista {
     public static void main(String[] args) {
+        DentistaDAO dentistaDAO = DentistaDAO.getInstance();
         int idDentista = 16 ;
 
         try {
-            DentistaDAO.deleteById(idDentista);
+            dentistaDAO.deleteById(idDentista);
             System.out.println("Dentista eliminado correctamente.");
         } catch (RuntimeException e) {
-            System.out.println("Error al eliminar el dentista: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -10,13 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DentistaDAO {
+    private static DentistaDAO instance;
+    private TratamientoDAO tratamientoDAO;
+
+    private DentistaDAO() {
+
+    }
+
+    public static DAO.DentistaDAO getInstance() {
+        if (instance == null) {
+            instance = new DAO.DentistaDAO();
+        }
+        return instance;
+    }
+
+    public TratamientoDAO getTratamientoDAO() {
+        if (tratamientoDAO == null) {
+            tratamientoDAO = TratamientoDAO.getInstance();
+        }
+        return tratamientoDAO;
+    }
+
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Dentista WHERE idDentista = ?";
     private final static String SQL_ALL = "SELECT * FROM Dentista";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Dentista WHERE idDentista = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
-    private final static String SQL_INSERT = "INSERT INTO Dentista (nombre, dni, telefono, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?)";
+    private final static String SQL_INSERT = "INSERT INTO Dentista (nombre, dni,nColegiado, especialidad, telefono, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private final static String SQL_UPDATE = "UPDATE Dentista SET nombre = ?, dni = ?, telefono = ?, fechaNacimiento = ?, edad = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_NAME = "UPDATE Dentista SET nombre = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_DNI = "UPDATE Dentista SET dni = ? WHERE idDentista = ?";
+    private final static String SQL_UPDATE_ESPECIALIDAD = "UPDATE Dentista SET especialidad = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_TELEFONO = "UPDATE Dentista SET telefono = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Dentista SET fechaNacimiento = ? WHERE idDentista = ?";
     private final static String SQL_UPDATE_EDAD = "UPDATE Dentista SET edad = ? WHERE idDentista = ?";
@@ -35,10 +58,9 @@ public class DentistaDAO {
                     "FROM Dentista " +
                     "WHERE idDentista IN (" +
                     "    SELECT idDentista " +
-                    "    FROM TratamientoDentista " +
+                    "    FROM Tratamiento " +
                     "    WHERE idTratamiento = ?" +
                     ")";
-    private TratamientoDAO tratamientoDAO;
 
     /**
      * Version lazy para obtener todos los dentistas en un list
@@ -56,6 +78,8 @@ public class DentistaDAO {
                 dentista.setIdDentista(rs.getInt("idDentista"));
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
@@ -75,6 +99,11 @@ public class DentistaDAO {
      * @return la lista de todos los dentistas de la BBDD.
      */
     public List<Dentista> findAllEager() {
+
+        if (tratamientoDAO == null) {
+            tratamientoDAO = getTratamientoDAO();
+        }
+
         List<Dentista> dentistas = new ArrayList<>();
 
         Connection con = ConnectionDB.getConnection();
@@ -83,15 +112,18 @@ public class DentistaDAO {
             ResultSet rs = stmt.executeQuery(SQL_ALL);
             while (rs.next()) {
                 Dentista dentista = new Dentista();
-                int idDentista = rs.getInt("idDentista");
-                dentista.setIdDentista(idDentista);
+                dentista.setIdDentista(rs.getInt("idDentista"));
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
 
+
                 // Versión EAGER
+                int idDentista = dentista.getIdDentista();
                 dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(idDentista));
                 dentistas.add(dentista);
             }
@@ -112,6 +144,8 @@ public class DentistaDAO {
                 dentista.setIdDentista(rs.getInt("idDentista"));
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
@@ -132,6 +166,8 @@ public class DentistaDAO {
                 dentista.setIdDentista(rs.getInt("idDentista"));
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
@@ -143,6 +179,11 @@ public class DentistaDAO {
     }
 
     public Dentista findByIdEager(int idDentista) {
+
+        if (tratamientoDAO == null) {
+            tratamientoDAO = getTratamientoDAO();
+        }
+
         Dentista dentista = null;
         try (Connection con = ConnectionDB.getConnection();
              java.sql.PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
@@ -153,6 +194,8 @@ public class DentistaDAO {
                 dentista.setIdDentista(rs.getInt("idDentista"));
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
@@ -167,6 +210,9 @@ public class DentistaDAO {
     }
 
     public Dentista findByNameEager(String nombre) {
+        if (tratamientoDAO == null) {
+            tratamientoDAO = getTratamientoDAO();
+        }
         Dentista dentista = null;
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
@@ -177,6 +223,8 @@ public class DentistaDAO {
                 dentista.setIdDentista(rs.getInt("idDentista"));
                 dentista.setNombre(rs.getString("nombre"));
                 dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
                 dentista.setTelefono(rs.getInt("telefono"));
                 dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 dentista.setEdad(rs.getInt("edad"));
@@ -195,12 +243,38 @@ public class DentistaDAO {
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
             pst.setString(1, dentista.getNombre());
             pst.setString(2, dentista.getDni());
-            pst.setInt(3, dentista.getTelefono());
-            pst.setString(4, java.sql.Date.valueOf(dentista.getFechaNacimiento()).toString());
-            pst.setInt(5, dentista.getEdad());
+            pst.setString(3, dentista.getnColegiado());
+            pst.setString(4, dentista.getEspecialidad());
+            pst.setInt(5, dentista.getTelefono());
+            pst.setString(6, java.sql.Date.valueOf(dentista.getFechaNacimiento()).toString());
+            pst.setInt(7, dentista.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al insertar el dentista", e);
+        }
+    }
+
+    public void update (Dentista dentista) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE)) {
+
+            checkStmt.setInt(1, dentista.getIdDentista());
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new DentistaNoEncontradoException("El dentista con id " + dentista.getIdDentista() + " no existe.");
+                }
+            }
+            pst.setString(1, dentista.getNombre());
+            pst.setString(2, dentista.getDni());
+            pst.setInt(3, dentista.getTelefono());
+            pst.setString(4, dentista.getnColegiado());
+            pst.setString(5, dentista.getEspecialidad());
+            pst.setString(6, java.sql.Date.valueOf(dentista.getFechaNacimiento()).toString());
+            pst.setInt(7, dentista.getEdad());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el dentista", e);
         }
     }
 
@@ -244,6 +318,26 @@ public class DentistaDAO {
         }
     }
 
+    public void updateEspecialidad(int idDentista, String especialidad) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_ESPECIALIDAD)) {
+
+            checkStmt.setInt(1, idDentista);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
+                }
+            }
+
+            pst.setString(1, especialidad);
+            pst.setInt(2, idDentista);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar la especialidad del dentista", e);
+        }
+    }
+
     public void updateTelefono(int idDentista, int telefono) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
@@ -264,7 +358,7 @@ public class DentistaDAO {
         }
     }
 
-    public static void updateFechaNacimiento(int idDentista, String fechaNacimiento) {
+    public void updateFechaNacimiento(int idDentista, String fechaNacimiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
@@ -284,7 +378,7 @@ public class DentistaDAO {
         }
     }
 
-    public static void updateEdad(int idDentista, int edad) {
+    public void updateEdad(int idDentista, int edad) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
@@ -304,7 +398,7 @@ public class DentistaDAO {
         }
     }
 
-    public static void deleteById(int idDentista) {
+    public void deleteById(int idDentista) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_ID)) {
@@ -323,7 +417,7 @@ public class DentistaDAO {
         }
     }
 
-    public static void deleteByDni(String dni) {
+    public void deleteByDni(String dni) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {
@@ -341,4 +435,5 @@ public class DentistaDAO {
             throw new RuntimeException("Error al eliminar el dentista con DNI: " + dni, e);
         }
     }
+
 }

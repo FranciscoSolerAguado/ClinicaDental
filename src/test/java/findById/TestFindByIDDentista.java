@@ -5,8 +5,9 @@ import model.Dentista;
 
 public class TestFindByIDDentista {
     public static void main(String[] args) {
-        int id = 1;
-        Dentista dentista = DentistaDAO.findByIdEager(id);
+        DentistaDAO dentistaDAO = DentistaDAO.getInstance();
+        int id = 10;
+        Dentista dentista = dentistaDAO.findByIdEager(id);
 
         if (dentista != null) {
             System.out.println("Dentista encontrado: " + dentista);

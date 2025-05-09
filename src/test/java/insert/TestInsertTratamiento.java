@@ -1,21 +1,21 @@
 package insert;
 
 import DAO.TratamientoDAO;
-import model.TipoTratamiento;
 import model.Tratamiento;
 
 public class TestInsertTratamiento {
     public static void main(String[] args) {
+        TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
+
         // Crear un objeto Tratamiento con datos de prueba
         Tratamiento tratamiento = new Tratamiento();
-        tratamiento.setTipoTratamiento(TipoTratamiento.LIMPIEZA_DENTAL);
-        tratamiento.setNombrePaciente("Jhon Doe");
-        tratamiento.setDescripcion("Limpieza dental completa");
-        tratamiento.setPrecio(50.0);
+        tratamiento.setDescripcion("Blanqueamiento dental avanzado");
+        tratamiento.setPrecio(120.0);
+        tratamiento.setIdDentista(16);
 
         // Insertar el tratamiento en la base de datos
         try {
-            TratamientoDAO.insert(tratamiento);
+            tratamientoDAO.insert(tratamiento);
             System.out.println("Tratamiento insertado correctamente.");
         } catch (RuntimeException e) {
             System.err.println("Error al insertar el tratamiento: " + e.getMessage());

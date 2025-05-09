@@ -2,7 +2,6 @@ package DAO;
 
 import baseDatos.ConnectionDB;
 import exceptions.TratamientoNoEncontradoException;
-import model.TipoTratamiento;
 import model.Tratamiento;
 
 import java.sql.*;
@@ -10,31 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TratamientoDAO {
+    private static TratamientoDAO instance;
+    private final DentistaDAO dentistaDAO;
+
+    private TratamientoDAO() {
+        this.dentistaDAO = DentistaDAO.getInstance();
+    }
+
+    public static TratamientoDAO getInstance() {
+        if (instance == null) {
+            instance = new TratamientoDAO();
+        }
+        return instance;
+    }
+
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
-    private final static String SQL_FIND_BY_NAME = "SELECT * FROM Tratamiento WHERE nombrePaciente = ?";
-    private final static String SQL_INSERT = "INSERT INTO Tratamiento (tipoTratamiento, nombrePaciente, descripcion, precio) VALUES(?, ?, ?, ?)";
+    private final static String SQL_INSERT = "INSERT INTO Tratamiento (descripcion, precio, idDentista) VALUES(?, ?, ?)";
     private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
-    private final static String SQL_SELECT_BY_DENTISTA =
-            "SELECT * " +
-                    "FROM Tratamiento " +
-                    "WHERE idTratamiento IN (" +
-                    "    SELECT idTratamiento " +
-                    "    FROM TratamientoDentista " +
-                    "    WHERE idDentista = ?" +
-                    ")";
-    private final static String SQL_SELECT_BY_PACIENTE =
-            "SELECT * " +
-                    "FROM Tratamiento " +
-                    "WHERE idTratamiento IN (" +
-                    "    SELECT idTratamiento " +
-                    "    FROM TratamientoPaciente " + // Cambiar a la tabla correcta
-                    "    WHERE idPaciente = ?" +
-                    ")";
-
-    private DentistaDAO dentistaDAO;
+    private final static String SQL_SELECT_BY_DENTISTA = "SELECT * FROM Tratamiento WHERE idDentista = ?";
+    private final static String SQL_SELECT_BY_PACIENTE = "SELECT * FROM TratamientoPaciente WHERE idPaciente = ?";
 
     /**
      * Version lazy para obtener todos los tratamientos en un list
@@ -51,10 +47,9 @@ public class TratamientoDAO {
             while (rs.next()) {
                 Tratamiento tratamiento = new Tratamiento();
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
-                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
+                tratamiento.setIdDentista(rs.getInt("idDentista"));
 
                 tratamientos.add(tratamiento);
             }
@@ -64,7 +59,7 @@ public class TratamientoDAO {
         return tratamientos;
     }
 
-    public List<Tratamiento> findAllEager(){
+    public List<Tratamiento> findAllEager() {
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -73,10 +68,9 @@ public class TratamientoDAO {
             while (rs.next()) {
                 Tratamiento tratamiento = new Tratamiento();
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
-                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
+                tratamiento.setIdDentista(rs.getInt("idDentista"));
 
                 //Version EAGER
                 tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
@@ -103,10 +97,9 @@ public class TratamientoDAO {
             while (rs.next()) {
                 Tratamiento tratamiento = new Tratamiento();
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
-                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
+                tratamiento.setIdDentista(rs.getInt("idDentista"));
 
                 tratamientos.add(tratamiento);
             }
@@ -130,10 +123,9 @@ public class TratamientoDAO {
             while (rs.next()) {
                 Tratamiento tratamiento = new Tratamiento();
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
-                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
+                tratamiento.setIdDentista(rs.getInt("idDentista"));
 
                 tratamientos.add(tratamiento);
             }
@@ -152,10 +144,9 @@ public class TratamientoDAO {
             if (rs.next()) {
                 tratamiento = new Tratamiento();
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
-                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
+                tratamiento.setIdDentista(rs.getInt("idDentista"));
 
                 // Cargar el dentista asociado (versión EAGER)
                 tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
@@ -166,38 +157,13 @@ public class TratamientoDAO {
         return tratamiento;
     }
 
-    public List<Tratamiento> findByNameEager(String nombrePaciente) {
-        List<Tratamiento> tratamientos = new ArrayList<>();
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
-            pst.setString(1, nombrePaciente);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                Tratamiento tratamiento = new Tratamiento();
-                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setTipoTratamiento(TipoTratamiento.valueOf(rs.getString("tipoTratamiento")));
-                tratamiento.setNombrePaciente(rs.getString("nombrePaciente"));
-                tratamiento.setDescripcion(rs.getString("descripcion"));
-                tratamiento.setPrecio(rs.getDouble("precio"));
-
-                //Cargar el dentista asociado (versión EAGER)
-                tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
-
-                tratamientos.add(tratamiento);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return tratamientos;
-    }
 
     public void insert(Tratamiento tratamiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
-            pst.setString(1, tratamiento.getTipoTratamiento().toString());
-            pst.setString(2, tratamiento.getNombrePaciente());
-            pst.setString(3, tratamiento.getDescripcion());
-            pst.setDouble(4, tratamiento.getPrecio());
+            pst.setString(1, tratamiento.getDescripcion());
+            pst.setDouble(2, tratamiento.getPrecio());
+            pst.setInt(3, tratamiento.getIdDentista());
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al insertar el tratamiento", e);
@@ -207,7 +173,6 @@ public class TratamientoDAO {
     public void updateDescripcion(int idTratamiento, String descripcion) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DESCRIPCION)) {
-
 
 
             pst.setString(1, descripcion);

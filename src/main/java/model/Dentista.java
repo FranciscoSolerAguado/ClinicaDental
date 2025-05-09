@@ -17,13 +17,24 @@ public class Dentista extends Persona {
 
     }
 
-    public Dentista(String nombre, String dni, int telefono, int idDentista, LocalDate fechaNacimiento, int edad) {
+    public Dentista(String nombre, String dni, int telefono, int idDentista, String nColegiado, String especialidad, LocalDate fechaNacimiento, int edad, List<Tratamiento> tratamientosDentista) {
         super(nombre, dni, telefono);
         this.idDentista = idDentista;
+        this.nColegiado = nColegiado;
+        this.especialidad = especialidad;
         this.fechaNacimiento = fechaNacimiento;
         this.edad = edad;
+        this.tratamientosDentista = tratamientosDentista;
     }
 
+    public Dentista(int idDentista, String nColegiado, String especialidad, LocalDate fechaNacimiento, int edad, List<Tratamiento> tratamientosDentista) {
+        this.idDentista = idDentista;
+        this.nColegiado = nColegiado;
+        this.especialidad = especialidad;
+        this.fechaNacimiento = fechaNacimiento;
+        this.edad = edad;
+        this.tratamientosDentista = tratamientosDentista;
+    }
 
     public int getIdDentista() {
         return idDentista;
@@ -33,6 +44,8 @@ public class Dentista extends Persona {
         this.idDentista = idDentista;
         return idDentista;
     }
+
+
 
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
@@ -90,7 +103,10 @@ public class Dentista extends Persona {
     @Override
     public String toString() {
         return "Dentista{" +
-                "idDentista=" + idDentista +
+                "nombre='" + getNombre() + '\'' +
+                ", dni='" + getDni() + '\'' +
+                ", telefono=" + getTelefono() +
+                ", idDentista=" + idDentista +
                 ", nColegiado='" + nColegiado + '\'' +
                 ", especialidad='" + especialidad + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +

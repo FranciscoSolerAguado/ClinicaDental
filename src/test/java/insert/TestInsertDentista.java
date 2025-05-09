@@ -7,17 +7,21 @@ import java.time.LocalDate;
 
 public class TestInsertDentista {
     public static void main(String[] args) {
+        DentistaDAO dentistaDAO = DentistaDAO.getInstance();
+
         // Crear un objeto Dentista con datos de prueba
         Dentista dentista = new Dentista();
-        dentista.setNombre("Juan Perez Garcia");
-        dentista.setDni("87654321A");
-        dentista.setTelefono(621541321);
-        dentista.setFechaNacimiento(LocalDate.of(1991, 1, 1));
-        dentista.setEdad(33);
+        dentista.setNombre("Ana María López");
+        dentista.setDni("12345678Z");
+        dentista.setTelefono(612345678);
+        dentista.setnColegiado("12345-X");
+        dentista.setEspecialidad("Implantología y cirugía oral");
+        dentista.setFechaNacimiento(LocalDate.of(1985, 5, 15));
+        dentista.setEdad(38);
 
         // Insertar el dentista en la base de datos
         try {
-            DentistaDAO.insert(dentista);
+            dentistaDAO.insert(dentista);
             System.out.println("Dentista insertado correctamente.");
         } catch (RuntimeException e) {
             System.err.println("Error al insertar el dentista: " + e.getMessage());

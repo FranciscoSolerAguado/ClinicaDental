@@ -1,12 +1,19 @@
 package insert;
 
+import DAO.TratamientoPacienteDAO;
+
+import java.time.LocalDate;
+
 public class TestInsertTratamientoPaciente {
     public static void main(String[] args) {
+        TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
 
-        int idTratamiento = 11;
-        int idPaciente = 23;
+        int idTratamiento = 14;
+        int idPaciente = 24;
+        LocalDate fechaTratamientoNueva = LocalDate.now();
+        String detallesNuevos = "Blanqueamiento dental avanzado con láser, buenos resultados";
 
-        DAO.TratamientoPacienteDAO.insert(idTratamiento, idPaciente);
+        tratamientoPacienteDAO.insert(idPaciente, idTratamiento, String.valueOf(fechaTratamientoNueva), detallesNuevos);
 
         System.out.println("Inserción exitosa en la tabla tratamientopaciente");
     }
