@@ -7,10 +7,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utilidades {
     // Instancia del Scanner para leer la entrada del usuario
     public static Scanner sc = new Scanner(System.in);
+    private static final String REGEX_DNI = "^[0-9]{8}[A-HJ-NP-TV-Z]$";
+    private static final String REGEX_N_COLEGIADO = "^[0-9]{5}-[A-Z]$";
+    private static final String REGEX_TELEFONO = "^[67][0-9]{8}$";
 
     /**
      * Lee un número entero desde la consola con validación.
@@ -105,4 +110,62 @@ public class Utilidades {
         return fecha;
     }
 
+    public static String pideDNI(String msn) {
+        String dni = null;
+        Pattern pattern = Pattern.compile(REGEX_DNI);
+        boolean valido = false;
+
+        do {
+            System.out.print(msn);
+            dni = sc.nextLine().toUpperCase(); // Convertir a mayúsculas por si escriben en minúscula
+            Matcher matcher = pattern.matcher(dni);
+
+            if (matcher.matches()) {
+                valido = true;
+            } else {
+                System.out.println("❌ DNI incorrecto. Debe tener 8 dígitos seguidos de una letra válida (ej: 12345678Z).");
+            }
+
+        } while (!valido);
+
+        return dni;
+    }
+
+    public static String pideNColegiado(String mensaje) {
+        String numero;
+        boolean valido = false;
+
+        do {
+            System.out.print(mensaje);
+            numero = sc.nextLine().toUpperCase(); // Convertir a mayúsculas por si escriben minúscula
+
+            if (numero.matches(REGEX_N_COLEGIADO)) {
+                valido = true;
+            } else {
+                System.out.println("❌ Formato incorrecto. Debe ser 5 dígitos seguidos de '-' y una letra mayúscula. Ejemplo: 12345-X");
+            }
+        } while (!valido);
+
+        return numero;
+    }
+
+    public static int pideTelefono(String mensaje) {
+        Scanner teclado = new Scanner(System.in);
+        String telefono;
+        boolean valido = false;
+
+        do {
+            System.out.print(mensaje);
+            telefono = teclado.nextLine();
+
+            if (telefono.matches("^[67][0-9]{8}$")) {
+                valido = true;
+            } else {
+                System.out.println("❌ Teléfono incorrecto. Debe tener 9 cifras y comenzar por 6 o 7.");
+            }
+        } while (!valido);
+
+        return Integer.parseInt(telefono);
+    }
 }
+
