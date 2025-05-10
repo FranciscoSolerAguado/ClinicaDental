@@ -1,6 +1,5 @@
 package findByName;
 
-import DAO.DentistaDAO;
 import DAO.PacienteDAO;
 import model.Paciente;
 
