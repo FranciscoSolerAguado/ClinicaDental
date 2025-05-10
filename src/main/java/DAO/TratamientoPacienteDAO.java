@@ -1,7 +1,6 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
-import model.Tratamiento;
 import model.TratamientoPaciente;
 
 import java.sql.*;

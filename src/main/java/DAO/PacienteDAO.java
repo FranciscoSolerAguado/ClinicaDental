@@ -27,6 +27,7 @@ public class PacienteDAO {
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_ALL = "SELECT * FROM Paciente";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
+    private final static String SQL_FIND_BY_DNI = "SELECT * FROM Paciente WHERE dni = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
     private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, alergias, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Paciente SET nombre = ?, dni = ?, telefono = ?, alergias = ?, fechaNacimiento = ?, edad = ? WHERE idPaciente = ?";
@@ -196,6 +197,31 @@ public class PacienteDAO {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
             pst.setString(1, nombre);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                paciente = new Paciente();
+                paciente.setIdPaciente(rs.getInt("idPaciente"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setDni(rs.getString("dni"));
+                paciente.setTelefono(rs.getInt("telefono"));
+                paciente.setAlergias(rs.getString("alergias"));
+                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                paciente.setEdad(rs.getInt("edad"));
+
+                // Cargar los tratamientos asociados (versión EAGER)
+                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return paciente;
+    }
+
+    public Paciente findByDNIEager (String dni) {
+        Paciente paciente = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_DNI)) {
+            pst.setString(1, dni);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 paciente = new Paciente();

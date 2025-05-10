@@ -17,9 +17,9 @@ public class DentistaDAO {
 
     }
 
-    public static DAO.DentistaDAO getInstance() {
+    public static DentistaDAO getInstance() {
         if (instance == null) {
-            instance = new DAO.DentistaDAO();
+            instance = new DentistaDAO();
         }
         return instance;
     }
@@ -34,6 +34,8 @@ public class DentistaDAO {
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Dentista WHERE idDentista = ?";
     private final static String SQL_ALL = "SELECT * FROM Dentista";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Dentista WHERE idDentista = ?";
+    private final static String SQL_FIND_BY_DNI = "SELECT * FROM Dentista WHERE dni = ?";
+    private final static String SQL_FIND_BY_NCOLEGIADO = "SELECT * FROM Dentista WHERE nColegiado = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
     private final static String SQL_INSERT = "INSERT INTO Dentista (nombre, dni,nColegiado, especialidad, telefono, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Dentista SET nombre = ?, dni = ?, telefono = ?, fechaNacimiento = ?, edad = ? WHERE idDentista = ?";
@@ -217,6 +219,64 @@ public class DentistaDAO {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NAME)) {
             pst.setString(1, nombre);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                dentista = new Dentista();
+                dentista.setIdDentista(rs.getInt("idDentista"));
+                dentista.setNombre(rs.getString("nombre"));
+                dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
+                dentista.setTelefono(rs.getInt("telefono"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                dentista.setEdad(rs.getInt("edad"));
+
+                // Cargar los tratamientos asociados (versión EAGER)
+                dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(dentista.getIdDentista()));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return dentista;
+    }
+
+    public Dentista findByDNIEager (String dni) {
+        if (tratamientoDAO == null) {
+            tratamientoDAO = getTratamientoDAO();
+        }
+        Dentista dentista = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_DNI)) {
+            pst.setString(1, dni);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                dentista = new Dentista();
+                dentista.setIdDentista(rs.getInt("idDentista"));
+                dentista.setNombre(rs.getString("nombre"));
+                dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
+                dentista.setTelefono(rs.getInt("telefono"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                dentista.setEdad(rs.getInt("edad"));
+
+                // Cargar los tratamientos asociados (versión EAGER)
+                dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(dentista.getIdDentista()));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return dentista;
+    }
+
+    public Dentista findByNColegiadoEager (String nColegiado) {
+        if (tratamientoDAO == null) {
+            tratamientoDAO = getTratamientoDAO();
+        }
+        Dentista dentista = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_NCOLEGIADO)) {
+            pst.setString(1, nColegiado);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 dentista = new Dentista();
