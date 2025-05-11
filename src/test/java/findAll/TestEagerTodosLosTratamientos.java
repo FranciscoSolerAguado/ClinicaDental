@@ -8,9 +8,9 @@ import java.util.List;
 public class TestEagerTodosLosTratamientos {
     public static void main(String[] args) {
         TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
-        List<Tratamiento> tratamientos = tratamientoDAO.findAllEager();
+        List<Object> tratamientos = tratamientoDAO.findAllEager();
 
-        for (Tratamiento tratamiento : tratamientos) {
+        for (Object tratamiento : tratamientos) {
             System.out.println("Tratamiento: " + tratamiento);
         }
     }

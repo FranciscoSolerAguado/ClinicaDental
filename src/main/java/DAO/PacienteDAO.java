@@ -4,15 +4,18 @@ import baseDatos.ConnectionDB;
 import exceptions.PacienteNoEncontradoException;
 import interfaces.CRUDGenericoBBDD;
 import model.Paciente;
+import utils.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
     private static PacienteDAO instance;
     private TratamientoDAO tratamientoDAO;
     private TratamientoPacienteDAO tratamientoPacienteDAO;
+    private static final Logger logger = LoggerUtil.getLogger();
 
     private PacienteDAO() {
         this.tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
@@ -69,6 +72,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 pacientes.add(paciente);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los pacientes: " + e.getMessage());
             e.printStackTrace();
         }
         return new ArrayList<>(pacientes);
@@ -107,6 +111,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             }
 
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los pacientes: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return new ArrayList<>(pacientes);
@@ -128,6 +133,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 paciente.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener el paciente por cita: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return paciente;
@@ -149,6 +155,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 paciente.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener el paciente por tratamiento: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return paciente;
@@ -174,6 +181,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(idPaciente));
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener el paciente por ID: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return paciente;
@@ -199,6 +207,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener el paciente por nombre: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return paciente;
@@ -224,6 +233,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener el paciente por DNI: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return paciente;
@@ -265,6 +275,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             pst.setInt(7, paciente.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al actualizar el paciente: " + e.getMessage());
             throw new RuntimeException("Error al actualizar el paciente", e);
         }
     }
@@ -284,6 +295,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             pst.setInt(1, idPaciente);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al eliminar el paciente: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el paciente con id: " + idPaciente, e);
         }
     }
@@ -303,6 +315,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             pst.setString(1, dni);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al eliminar el paciente: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el paciente con DNI: " + dni, e);
         }
     }

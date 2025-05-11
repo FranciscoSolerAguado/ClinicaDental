@@ -4,16 +4,18 @@ import baseDatos.ConnectionDB;
 import exceptions.DentistaNoEncontradoException;
 import interfaces.CRUDGenericoBBDD;
 import model.Dentista;
+import utils.LoggerUtil;
 
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
     private static DentistaDAO instance;
     private TratamientoDAO tratamientoDAO;
-
+    private static final Logger logger = LoggerUtil.getLogger();
     private DentistaDAO() {
 
     }
@@ -79,6 +81,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentistas.add(dentista);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los dentistas: " + e.getMessage());
             e.printStackTrace();
         }
         return new ArrayList<>(dentistas);
@@ -121,6 +124,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             }
 
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los dentistas: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return new ArrayList<>(dentistas);
@@ -143,6 +147,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentista.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por cita: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return dentista;
@@ -165,6 +170,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentista.setEdad(rs.getInt("edad"));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por tratamiento: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return dentista;
@@ -196,6 +202,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(idDentista));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por ID: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return dentista;
@@ -225,6 +232,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(dentista.getIdDentista()));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por nombre: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return dentista;
@@ -254,6 +262,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(dentista.getIdDentista()));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por DNI: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return dentista;
@@ -283,6 +292,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 dentista.setTratamientosDentista(tratamientoDAO.findTratamientosByDentista(dentista.getIdDentista()));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por nColegiado: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return dentista;
@@ -300,6 +310,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             pst.setInt(7, dentista.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al insertar dentista: " + e.getMessage());
             throw new RuntimeException("Error al insertar el dentista", e);
         }
     }
@@ -326,6 +337,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             pst.setInt(8, dentista.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al actualizar dentista: " + e.getMessage());
             throw new RuntimeException("Error al actualizar el dentista", e);
         }
     }
@@ -346,6 +358,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             pst.setInt(1, idDentista);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al eliminar dentista: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el dentista con id: " + idDentista, e);
         }
     }
@@ -365,6 +378,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             pst.setString(1, dni);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al eliminar dentista: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el dentista con DNI: " + dni, e);
         }
     }

@@ -1,0 +1,17 @@
+may 11, 2025 8:52:15 P. M. delete.TestDeleteDentista main
+SEVERE: 🛑 Este es un error de prueba
+may 11, 2025 8:52:15 P. M. delete.TestDeleteDentista main
+INFO: ℹ️ Este es un log informativo
+may 11, 2025 8:55:15 P. M. delete.TestDeleteDentista main
+INFO: 🧪 Test de eliminación iniciado
+may 11, 2025 8:55:15 P. M. delete.TestDeleteDentista main
+SEVERE: ❌ Error durante el test: El dentista con id 534 no existe.may 11, 2025 8:56:13 P. M. delete.TestDeleteDentista main
+INFO: 🧪 Test de eliminación iniciado
+may 11, 2025 8:59:23 P. M. insert.TestInsertDentista main
+INFO: 🧪 Test de inserción iniciado
+may 11, 2025 8:59:23 P. M. insert.TestInsertDentista main
+INFO: ✅ Dentista insertado correctamente.
+may 11, 2025 9:00:05 P. M. delete.TestDeleteDentista main
+INFO: 🧪 Test de eliminación iniciado
+may 11, 2025 9:00:05 P. M. delete.TestDeleteDentista main
+INFO: ✅ Dentista eliminado correctamente.

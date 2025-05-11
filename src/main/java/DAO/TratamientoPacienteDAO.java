@@ -2,14 +2,18 @@ package DAO;
 
 import baseDatos.ConnectionDB;
 import exceptions.PacienteNoEncontradoException;
+import exceptions.TratamientoPacienteNoEncontrado;
 import model.TratamientoPaciente;
+import utils.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class TratamientoPacienteDAO {
     private static TratamientoPacienteDAO instance;
+    private static final Logger logger = LoggerUtil.getLogger();
 
     private TratamientoPacienteDAO() {
     }
@@ -38,6 +42,7 @@ public class TratamientoPacienteDAO {
             pst.setString(4, detalles);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al insertar en tratamientopaciente: " + e.getMessage());
             throw new RuntimeException("Error al insertar en tratamientopaciente", e);
         }
     }
@@ -58,6 +63,7 @@ public class TratamientoPacienteDAO {
                 tratamientosPacientes.add(tratamientoPaciente);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los tratamientos de pacientes: " + e.getMessage());
             e.printStackTrace();
         }
         return tratamientosPacientes;
@@ -77,6 +83,7 @@ public class TratamientoPacienteDAO {
                 tratamientoPaciente.setDetalles(rs.getString("detalles"));
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar tratamiento por ID: " + e.getMessage());
             throw new RuntimeException("Error al buscar tratamiento por ID", e);
         }
         return tratamientoPaciente;
@@ -96,6 +103,7 @@ public class TratamientoPacienteDAO {
                 tratamientosPacientes.add(tratamientoPaciente);
             }
         } catch (SQLException e) {
+            logger.severe("Error al buscar tratamientos por paciente: " + e.getMessage());
             throw new RuntimeException("Error al buscar tratamientos por paciente", e);
         }
         return tratamientosPacientes;
@@ -119,6 +127,7 @@ public class TratamientoPacienteDAO {
             pst.executeUpdate();
 
         } catch (SQLException e) {
+            logger.severe("Error al actualizar tratamiento por ID de paciente: " + e.getMessage());
             throw new RuntimeException("Error al actualizar tratamiento por ID de paciente", e);
         }
     }
@@ -131,7 +140,7 @@ public class TratamientoPacienteDAO {
             checkStmt.setInt(1, idTratamiento);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idTratamiento + " no existe.");
+                    throw new TratamientoPacienteNoEncontrado("El paciente con idPaciente " + idTratamiento + " no existe.");
                 }
             }
             pst.setInt(1, tratamientoPaciente.getIdPaciente());
@@ -141,6 +150,7 @@ public class TratamientoPacienteDAO {
             pst.executeUpdate();
 
         } catch (SQLException e) {
+            logger.severe("Error al actualizar tratamiento por ID de paciente: " + e.getMessage());
             throw new RuntimeException("Error al actualizar tratamiento por ID de paciente", e);
         }
     }

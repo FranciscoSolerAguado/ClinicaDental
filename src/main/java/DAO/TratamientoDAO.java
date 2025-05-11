@@ -5,14 +5,17 @@ import exceptions.PacienteNoEncontradoException;
 import exceptions.TratamientoNoEncontradoException;
 import interfaces.CRUDGenericoBBDD;
 import model.Tratamiento;
+import utils.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
     private static TratamientoDAO instance;
     private final DentistaDAO dentistaDAO;
+    private static final Logger logger = LoggerUtil.getLogger();
 
     private TratamientoDAO() {
         this.dentistaDAO = DentistaDAO.getInstance();
@@ -58,6 +61,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamientos.add(tratamiento);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los tratamientos: " + e.getMessage());
             e.printStackTrace();
         }
         return new ArrayList<>(tratamientos);
@@ -83,6 +87,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamientos.add(tratamiento);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener todos los tratamientos: " + e.getMessage());
             e.printStackTrace();
         }
         return new ArrayList<>(tratamientos);
@@ -109,6 +114,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamientos.add(tratamiento);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener tratamientos por dentista: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return tratamientos;
@@ -135,6 +141,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamientos.add(tratamiento);
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener tratamientos por paciente: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return tratamientos;
@@ -157,6 +164,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
             }
         } catch (SQLException e) {
+            logger.severe("Error al obtener el tratamiento por ID: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return tratamiento;
@@ -171,6 +179,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             pst.setInt(3, tratamiento.getIdDentista());
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al insertar el tratamiento: " + e.getMessage());
             throw new RuntimeException("Error al insertar el tratamiento", e);
         }
     }
@@ -192,6 +201,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             pst.setInt(4, idTratamiento);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al actualizar el tratamiento: " + e.getMessage());
             throw new RuntimeException("Error al actualizar el tratamiento", e);
         }
     }
@@ -205,6 +215,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             pst.setInt(2, idTratamiento);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al actualizar la descripción del tratamiento: " + e.getMessage());
             throw new RuntimeException("Error al actualizar la descripción del tratamiento", e);
         }
     }
@@ -225,6 +236,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             pst.setInt(1, idTratamiento);
             pst.executeUpdate();
         } catch (SQLException e) {
+            logger.severe("Error al eliminar el tratamiento: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el tratamiento con id: " + idTratamiento, e);
         }
     }
