@@ -1,6 +1,7 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import exceptions.PacienteNoEncontradoException;
 import model.TratamientoPaciente;
 
 import java.sql.*;
@@ -20,6 +21,7 @@ public class TratamientoPacienteDAO {
         return instance;
     }
 
+    private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM tratamientopaciente";
     private final static String SQL_INSERT = "INSERT INTO tratamientopaciente (idPaciente, idTratamiento, fechaTratamiento, detalles) VALUES (?, ?, ?, ?)";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM tratamientopaciente WHERE idTratamiento = ?";
@@ -80,7 +82,7 @@ public class TratamientoPacienteDAO {
         return tratamientoPaciente;
     }
 
-    public List<TratamientoPaciente> findTratamientosByPaciente (int idPacienteBuscado) {
+    public List<TratamientoPaciente> findTratamientosByPaciente(int idPacienteBuscado) {
         List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();
         try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_PACIENTE)) {
             pst.setInt(1, idPacienteBuscado);
@@ -97,5 +99,49 @@ public class TratamientoPacienteDAO {
             throw new RuntimeException("Error al buscar tratamientos por paciente", e);
         }
         return tratamientosPacientes;
+    }
+
+    public void updateByIdPaciente(int idPaciente, TratamientoPaciente tratamientoPaciente) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_BY_ID_PACIENTE)) {
+
+            checkStmt.setInt(1, idPaciente);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+                }
+            }
+            pst.setInt(1, tratamientoPaciente.getIdTratamiento());
+            pst.setString(2, tratamientoPaciente.getFechaTratamiento().toString());
+            pst.setString(3, tratamientoPaciente.getDetalles());
+            pst.setInt(4, idPaciente);
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar tratamiento por ID de paciente", e);
+        }
+    }
+
+    public void updateByIdTratamiento(int idTratamiento, TratamientoPaciente tratamientoPaciente) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_BY_ID_TRATAMIENTO)) {
+
+            checkStmt.setInt(1, idTratamiento);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idTratamiento + " no existe.");
+                }
+            }
+            pst.setInt(1, tratamientoPaciente.getIdPaciente());
+            pst.setString(2, tratamientoPaciente.getFechaTratamiento().toString());
+            pst.setString(3, tratamientoPaciente.getDetalles());
+            pst.setInt(4, tratamientoPaciente.getIdPaciente());
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar tratamiento por ID de paciente", e);
+        }
     }
 }

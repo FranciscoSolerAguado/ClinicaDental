@@ -2,13 +2,14 @@ package DAO;
 
 import baseDatos.ConnectionDB;
 import exceptions.PacienteNoEncontradoException;
+import interfaces.CRUDGenericoBBDD;
 import model.Paciente;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacienteDAO {
+public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
     private static PacienteDAO instance;
     private TratamientoDAO tratamientoDAO;
     private TratamientoPacienteDAO tratamientoPacienteDAO;
@@ -31,37 +32,24 @@ public class PacienteDAO {
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
     private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, alergias, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Paciente SET nombre = ?, dni = ?, telefono = ?, alergias = ?, fechaNacimiento = ?, edad = ? WHERE idPaciente = ?";
-    private final static String SQL_UPDATE_NAME = "UPDATE Paciente SET nombre = ? WHERE idPaciente = ?";
-    private final static String SQL_UPDATE_DNI = "UPDATE Paciente SET dni = ? WHERE idPaciente = ?";
-    private final static String SQL_UPDATE_ALERGIAS = "UPDATE Paciente SET alergias = ? WHERE idPaciente = ?";
-    private final static String SQL_UPDATE_TELEFONO = "UPDATE Paciente SET telefono = ? WHERE idPaciente = ?";
-    private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Paciente SET fechaNacimiento = ? WHERE idPaciente = ?";
-    private final static String SQL_UPDATE_EDAD = "UPDATE Paciente SET edad = ? WHERE idPaciente = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_DELETE_BY_DNI = "DELETE FROM Paciente WHERE dni = ?";
-    private final static String SQL_SELECT_BY_CITA =
-            "SELECT * " +
-                    "FROM Paciente " +
-                    "WHERE idPaciente IN (" +
-                    "    SELECT idPaciente " +
-                    "    FROM Cita " +
-                    "    WHERE idCita = ?" +
-                    ")";
-    private final static String SQL_SELECT_BY_TRATAMIENTO =
-            "SELECT * " +
-                    "FROM Paciente " +
-                    "WHERE idPaciente IN (" +
-                    "    SELECT idPaciente " +
-                    "    FROM TratamientoDentista " +
-                    "    WHERE idTratamiento = ?" +
-                    ")";
+    private final static String SQL_SELECT_BY_CITA = "SELECT * FROM Paciente WHERE idPaciente IN (SELECT idPaciente FROM Cita WHERE idCita = ?)";
+    private final static String SQL_SELECT_BY_TRATAMIENTO = "SELECT * FROM Paciente WHERE idPaciente IN (SELECT idPaciente FROM TratamientoDentista WHERE idTratamiento = ?)";
 
+    //    private final static String SQL_UPDATE_NAME = "UPDATE Paciente SET nombre = ? WHERE idPaciente = ?";
+//    private final static String SQL_UPDATE_DNI = "UPDATE Paciente SET dni = ? WHERE idPaciente = ?";
+//    private final static String SQL_UPDATE_ALERGIAS = "UPDATE Paciente SET alergias = ? WHERE idPaciente = ?";
+//    private final static String SQL_UPDATE_TELEFONO = "UPDATE Paciente SET telefono = ? WHERE idPaciente = ?";
+//    private final static String SQL_UPDATE_FECHA_NACIMIENTO = "UPDATE Paciente SET fechaNacimiento = ? WHERE idPaciente = ?";
+//    private final static String SQL_UPDATE_EDAD = "UPDATE Paciente SET edad = ? WHERE idPaciente = ?";
     /**
      * Version lazy para obtener todos los pacientes en un list
      *
      * @return un list de pacientes
      */
-    public List<Paciente> findAll() {
+    @Override
+    public List<Object> findAll() {
         List<Paciente> pacientes = new ArrayList<Paciente>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -83,7 +71,7 @@ public class PacienteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return pacientes;
+        return new ArrayList<>(pacientes);
     }
 
     /**
@@ -91,8 +79,8 @@ public class PacienteDAO {
      *
      * @return la lista de todos los pacientes de la BBDD.
      */
-
-    public List<Paciente> findAllEager() {
+    @Override
+    public List<Object> findAllEager() {
         List<Paciente> pacientes = new ArrayList<>();
 
 
@@ -121,8 +109,7 @@ public class PacienteDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return pacientes;
-
+        return new ArrayList<>(pacientes);
     }
 
     public Paciente findPacienteByCita(int idCita) {
@@ -217,7 +204,7 @@ public class PacienteDAO {
         return paciente;
     }
 
-    public Paciente findByDNIEager (String dni) {
+    public Paciente findByDNIEager(String dni) {
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_DNI)) {
@@ -241,7 +228,7 @@ public class PacienteDAO {
         }
         return paciente;
     }
-
+    @Override
     public void insert(Paciente paciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
@@ -257,10 +244,11 @@ public class PacienteDAO {
         }
     }
 
-    public void updateNombre(int idPaciente, String nombre) {
+    @Override
+    public void update(int idPaciente, Paciente paciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_NAME)) {
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE)) {
 
             checkStmt.setInt(1, idPaciente);
             try (ResultSet rs = checkStmt.executeQuery()) {
@@ -268,115 +256,19 @@ public class PacienteDAO {
                     throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
                 }
             }
-
-            pst.setString(1, nombre);
-            pst.setInt(2, idPaciente);
+            pst.setInt(1, paciente.getIdPaciente());
+            pst.setString(2, paciente.getNombre());
+            pst.setString(3, paciente.getDni());
+            pst.setInt(4, paciente.getTelefono());
+            pst.setString(5, paciente.getAlergias());
+            pst.setString(6, java.sql.Date.valueOf(paciente.getFechaNacimiento()).toString());
+            pst.setInt(7, paciente.getEdad());
             pst.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el nombre del paciente", e);
+            throw new RuntimeException("Error al actualizar el paciente", e);
         }
     }
-
-    public void updateDni(int idPaciente, String dni) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DNI)) {
-
-            checkStmt.setInt(1, idPaciente);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
-                }
-            }
-
-            pst.setString(1, dni);
-            pst.setInt(2, idPaciente);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el DNI del paciente", e);
-        }
-    }
-
-    public void updateAlergias (int idPaciente, String alergias){
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_ALERGIAS)) {
-
-            checkStmt.setInt(1, idPaciente);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
-                }
-            }
-
-            pst.setInt(1, idPaciente);
-            pst.setString(2, alergias);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el DNI del paciente", e);
-        }
-    }
-
-    public void updateTelefono(int idPaciente, int telefono) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_TELEFONO)) {
-
-            checkStmt.setInt(1, idPaciente);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
-                }
-            }
-
-            pst.setInt(1, telefono);
-            pst.setInt(2, idPaciente);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el teléfono del paciente", e);
-        }
-    }
-
-    public void updateFechaNacimiento(int idPaciente, String fechaNacimiento) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
-
-            checkStmt.setInt(1, idPaciente);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
-                }
-            }
-
-            pst.setString(1, fechaNacimiento);
-            pst.setInt(2, idPaciente);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar la fecha de nacimiento del paciente", e);
-        }
-    }
-
-    public void updateEdad(int idPaciente, int edad) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
-
-            checkStmt.setInt(1, idPaciente);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
-                }
-            }
-
-            pst.setInt(1, edad);
-            pst.setInt(2, idPaciente);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar la edad del paciente", e);
-        }
-    }
-
+    @Override
     public void deleteById(int idPaciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
@@ -414,4 +306,124 @@ public class PacienteDAO {
             throw new RuntimeException("Error al eliminar el paciente con DNI: " + dni, e);
         }
     }
+
+//    public void updateNombre(int idPaciente, String nombre) {
+//        try (Connection con = ConnectionDB.getConnection();
+//             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+//             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_NAME)) {
+//
+//            checkStmt.setInt(1, idPaciente);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) == 0) {
+//                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+//                }
+//            }
+//
+//            pst.setString(1, nombre);
+//            pst.setInt(2, idPaciente);
+//            pst.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error al actualizar el nombre del paciente", e);
+//        }
+//    }
+//
+//    public void updateDni(int idPaciente, String dni) {
+//        try (Connection con = ConnectionDB.getConnection();
+//             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+//             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DNI)) {
+//
+//            checkStmt.setInt(1, idPaciente);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) == 0) {
+//                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+//                }
+//            }
+//
+//            pst.setString(1, dni);
+//            pst.setInt(2, idPaciente);
+//            pst.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error al actualizar el DNI del paciente", e);
+//        }
+//    }
+//
+//    public void updateAlergias (int idPaciente, String alergias){
+//        try (Connection con = ConnectionDB.getConnection();
+//             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+//             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_ALERGIAS)) {
+//
+//            checkStmt.setInt(1, idPaciente);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) == 0) {
+//                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+//                }
+//            }
+//
+//            pst.setInt(1, idPaciente);
+//            pst.setString(2, alergias);
+//            pst.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error al actualizar el DNI del paciente", e);
+//        }
+//    }
+//
+//    public void updateTelefono(int idPaciente, int telefono) {
+//        try (Connection con = ConnectionDB.getConnection();
+//             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+//             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_TELEFONO)) {
+//
+//            checkStmt.setInt(1, idPaciente);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) == 0) {
+//                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+//                }
+//            }
+//
+//            pst.setInt(1, telefono);
+//            pst.setInt(2, idPaciente);
+//            pst.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error al actualizar el teléfono del paciente", e);
+//        }
+//    }
+//
+//    public void updateFechaNacimiento(int idPaciente, String fechaNacimiento) {
+//        try (Connection con = ConnectionDB.getConnection();
+//             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+//             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_FECHA_NACIMIENTO)) {
+//
+//            checkStmt.setInt(1, idPaciente);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) == 0) {
+//                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+//                }
+//            }
+//
+//            pst.setString(1, fechaNacimiento);
+//            pst.setInt(2, idPaciente);
+//            pst.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error al actualizar la fecha de nacimiento del paciente", e);
+//        }
+//    }
+//
+//    public void updateEdad(int idPaciente, int edad) {
+//        try (Connection con = ConnectionDB.getConnection();
+//             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+//             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_EDAD)) {
+//
+//            checkStmt.setInt(1, idPaciente);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) == 0) {
+//                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idPaciente + " no existe.");
+//                }
+//            }
+//
+//            pst.setInt(1, edad);
+//            pst.setInt(2, idPaciente);
+//            pst.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error al actualizar la edad del paciente", e);
+//        }
+//    }
 }

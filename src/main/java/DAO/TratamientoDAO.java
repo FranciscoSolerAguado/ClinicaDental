@@ -1,14 +1,16 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import exceptions.PacienteNoEncontradoException;
 import exceptions.TratamientoNoEncontradoException;
+import interfaces.CRUDGenericoBBDD;
 import model.Tratamiento;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TratamientoDAO {
+public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
     private static TratamientoDAO instance;
     private final DentistaDAO dentistaDAO;
 
@@ -27,6 +29,7 @@ public class TratamientoDAO {
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_INSERT = "INSERT INTO Tratamiento (descripcion, precio, idDentista) VALUES(?, ?, ?)";
+    private final static String SQL_UPDATE = "UPDATE Tratamiento SET descripcion = ?, precio = ?, idDentista = ? WHERE idTratamiento = ?";
     private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_SELECT_BY_DENTISTA = "SELECT * FROM Tratamiento WHERE idDentista = ?";
@@ -38,7 +41,8 @@ public class TratamientoDAO {
      * @return un list de citas
      */
 
-    public List<Tratamiento> findAll() {
+    @Override
+    public List<Object> findAll() {
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -56,10 +60,11 @@ public class TratamientoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return tratamientos;
+        return new ArrayList<>(tratamientos);
     }
 
-    public List<Tratamiento> findAllEager() {
+    @Override
+    public List<Object> findAllEager() {
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
         Connection con = ConnectionDB.getConnection();
         try {
@@ -80,7 +85,7 @@ public class TratamientoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return tratamientos;
+        return new ArrayList<>(tratamientos);
     }
 
     /**
@@ -157,7 +162,7 @@ public class TratamientoDAO {
         return tratamiento;
     }
 
-
+    @Override
     public void insert(Tratamiento tratamiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
@@ -167,6 +172,27 @@ public class TratamientoDAO {
             pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al insertar el tratamiento", e);
+        }
+    }
+
+    @Override
+    public void update(int idTratamiento, Tratamiento tratamiento) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_UPDATE)) {
+            checkStmt.setInt(1, idTratamiento);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new PacienteNoEncontradoException("El paciente con idPaciente " + idTratamiento + " no existe.");
+                }
+            }
+            pst.setString(1, tratamiento.getDescripcion());
+            pst.setDouble(2, tratamiento.getPrecio());
+            pst.setInt(3, tratamiento.getIdDentista());
+            pst.setInt(4, idTratamiento);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el tratamiento", e);
         }
     }
 
@@ -183,6 +209,7 @@ public class TratamientoDAO {
         }
     }
 
+    @Override
     public void deleteById(int idTratamiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
