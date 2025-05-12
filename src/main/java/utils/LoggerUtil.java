@@ -12,7 +12,7 @@ public class LoggerUtil {
             logger = Logger.getLogger("ClinicaLogger");
             logger.setLevel(Level.ALL);
 
-            FileHandler fileHandler = new FileHandler("clinicaLogErrores.log", true);
+            FileHandler fileHandler = new FileHandler("clinica.log", true);
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());
 
