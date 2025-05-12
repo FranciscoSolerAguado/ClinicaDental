@@ -384,6 +384,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         }
     }
 
+
     public void deleteByNColegiado(String nColegiado) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
@@ -403,6 +404,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             throw new RuntimeException("Error al eliminar el dentista con nColegiado: " + nColegiado, e);
         }
     }
+
 
     //    public void updateNombre(int idDentista, String nombre) {
 //        try (Connection con = ConnectionDB.getConnection();

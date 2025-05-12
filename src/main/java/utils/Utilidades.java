@@ -67,8 +67,6 @@ public class Utilidades {
         return numero;
     }
 
-
-
     /**
      * Pide una cadena de texto al usuario.
      *
@@ -110,6 +108,12 @@ public class Utilidades {
         return fecha;
     }
 
+    /**
+     * Pide al usuario que introduzca un DNI con el siguiente formato: 12345678Z
+     *
+     * @param msn mensaje que vamos a mostrar al usuario
+     * @return dni introducido por el usuario en formato String, o null si no se ha introducido un DNI correcto.
+     */
     public static String pideDNI(String msn) {
         String dni = null;
         Pattern pattern = Pattern.compile(REGEX_DNI);
@@ -131,6 +135,12 @@ public class Utilidades {
         return dni;
     }
 
+    /**
+     * Pide al usuario que introduzca un número de colegiado con el siguiente formato: 12345-X
+     *
+     * @param mensaje mensaje que vamos a mostrar al usuario
+     * @return numero de colegiado introducido por el usuario en formato String, o null si no se ha introducido un número correcto.
+     */
     public static String pideNColegiado(String mensaje) {
         String numero;
         boolean valido = false;
