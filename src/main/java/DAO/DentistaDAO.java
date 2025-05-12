@@ -44,6 +44,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
     private final static String SQL_UPDATE = "UPDATE Dentista SET nombre = ?, dni = ?, telefono = ?, nColegiado = ?, especialidad = ?, fechaNacimiento = ?, edad = ? WHERE idDentista = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Dentista WHERE idDentista = ?";
     private final static String SQL_DELETE_BY_DNI = "DELETE FROM Dentista WHERE dni = ?";
+    private final static String SQL_DELETE_BY_NCOLEGIADO = "DELETE FROM Dentista WHERE nColegiado = ?";
     private final static String SQL_SELECT_BY_CITA = "SELECT * FROM Dentista WHERE idDentista IN (SELECT idDentista FROM Cita WHERE idCita = ?)";
     private final static String SQL_SELECT_BY_TRATAMIENTO = "SELECT * FROM Dentista WHERE idDentista IN (SELECT idDentista FROM Tratamiento WHERE idTratamiento = ?)";//    private final static String SQL_UPDATE_NAME = "UPDATE Dentista SET nombre = ? WHERE idDentista = ?";
 //    private final static String SQL_UPDATE_DNI = "UPDATE Dentista SET dni = ? WHERE idDentista = ?";
@@ -380,6 +381,26 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         } catch (SQLException e) {
             logger.severe("Error al eliminar dentista: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el dentista con DNI: " + dni, e);
+        }
+    }
+
+    public void deleteByNColegiado(String nColegiado) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_NCOLEGIADO)) {
+
+            checkStmt.setString(1, nColegiado);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new DentistaNoEncontradoException("El dentista con nColegiado " + nColegiado + " no existe.");
+                }
+            }
+
+            pst.setString(1, nColegiado);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            logger.severe("Error al eliminar dentista: " + e.getMessage());
+            throw new RuntimeException("Error al eliminar el dentista con nColegiado: " + nColegiado, e);
         }
     }
 
