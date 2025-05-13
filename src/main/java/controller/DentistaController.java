@@ -1,44 +1,117 @@
 package controller;
 
 import DAO.DentistaDAO;
-import javafx.event.ActionEvent;
+import exceptions.DentistaNoEncontradoException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 import model.Dentista;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.logging.Logger;
 
 public class DentistaController {
 
     @FXML
     private ListView<String> dentistaListView;
+
     private final DentistaDAO dentistaDAO = DentistaDAO.getInstance();
+    private static final Logger logger = Logger.getLogger(DentistaController.class.getName());
 
     @FXML
     public void initialize() {
-        // Cargar los nombres de los dentistas en el ListView
-        dentistaDAO.findAll().forEach(dentista -> {
-            if (dentista instanceof Dentista) {
-                dentistaListView.getItems().add(((Dentista) dentista).getNombre());
-            }
-        });
+        logger.info("Inicializando la vista de Dentistas...");
+        cargarDentistas();
+    }
+    @FXML
+    private void cargarDentistas() {
+        try {
+            dentistaListView.getItems().clear();
+            dentistaDAO.findAll().forEach(dentista -> {
+                if (dentista instanceof Dentista) {
+                    dentistaListView.getItems().add(((Dentista) dentista).getNombre());
+                }
+            });
+            logger.info("Lista de dentistas cargada correctamente.");
+        } catch (Exception e) {
+            logger.severe("Error al cargar la lista de dentistas: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al cargar la lista de dentistas");
+            alerta.setContentText("No se pudo cargar la lista de dentistas. Intenta nuevamente.");
+            alerta.showAndWait();
+        }
     }
 
     @FXML
-    private void volverAMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setMaximized(true); // Maximizar la ventana con bordes
-        stage.show();
+    private void volverAMain() {
+        try {
+            // Cargar la vista principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            Parent root = loader.load();
+
+            // Obtener la escena actual y cambiar el contenido
+            Scene scene = dentistaListView.getScene();
+            scene.setRoot(root);
+        } catch (IOException e) {
+            logger.severe("Error al cargar la vista principal: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void mostrarMas() {
+        logger.info("Intentando mostrar información del dentista seleccionado...");
+
+        String nombreSeleccionado = dentistaListView.getSelectionModel().getSelectedItem();
+
+        if (nombreSeleccionado == null) {
+            logger.warning("No se seleccionó ningún dentista.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún dentista seleccionado");
+            alerta.setContentText("Por favor, selecciona un dentista de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Buscando información del dentista: " + nombreSeleccionado);
+            Dentista dentista = dentistaDAO.findByNameEager(nombreSeleccionado);
+            if (dentista == null) {
+                throw new DentistaNoEncontradoException("No se encontró el dentista con el nombre: " + nombreSeleccionado);
+            }
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Información del Dentista");
+            alerta.setHeaderText("Detalles del dentista seleccionado");
+            alerta.setContentText(
+                    "Nombre: " + dentista.getNombre() + "\n" +
+                            "DNI: " + dentista.getDni() + "\n" +
+                            "Teléfono: " + dentista.getTelefono() + "\n" +
+                            "Número Colegiado: " + dentista.getnColegiado() + "\n" +
+                            "Especialidad: " + dentista.getEspecialidad() + "\n" +
+                            "Fecha de Nacimiento: " + dentista.getFechaNacimiento() + "\n" +
+                            "Edad: " + dentista.getEdad()
+            );
+            alerta.showAndWait();
+        } catch (DentistaNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Dentista no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        } catch (Exception e) {
+            logger.severe("Error al buscar el dentista: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al buscar el dentista");
+            alerta.setContentText("Ocurrió un error al buscar el dentista seleccionado.");
+            alerta.showAndWait();
+        }
     }
 }
-

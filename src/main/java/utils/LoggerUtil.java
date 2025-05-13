@@ -1,24 +1,26 @@
 package utils;
 
 import java.io.IOException;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class LoggerUtil {
-    private static Logger logger;
+    private static final Logger logger = Logger.getLogger("ClinicaLogger");
 
     static {
         try {
-            LogManager.getLogManager().reset();
-            logger = Logger.getLogger("ClinicaLogger");
-            logger.setLevel(Level.ALL);
-
+            // Configurar el FileHandler para escribir en clinica.log
             FileHandler fileHandler = new FileHandler("clinica.log", true);
-            fileHandler.setLevel(Level.ALL);
-            fileHandler.setFormatter(new SimpleFormatter());
-
+            fileHandler.setLevel(Level.INFO); // Nivel de registro
+            fileHandler.setFormatter(new SimpleFormatter()); // Formato simple
             logger.addHandler(fileHandler);
+
+            // Configurar el nivel global del logger
+            logger.setLevel(Level.INFO);
         } catch (IOException e) {
-            System.err.println("❌ No se pudo inicializar el logger: " + e.getMessage());
+            System.err.println("Error al configurar el logger: " + e.getMessage());
         }
     }
 

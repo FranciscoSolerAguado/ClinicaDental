@@ -1,23 +1,89 @@
-may 11, 2025 8:52:15 P. M. delete.TestDeleteDentista main
-SEVERE: 🛑 Este es un error de prueba
-may 11, 2025 8:52:15 P. M. delete.TestDeleteDentista main
-INFO: ℹ️ Este es un log informativo
-may 11, 2025 8:55:15 P. M. delete.TestDeleteDentista main
-INFO: 🧪 Test de eliminación iniciado
-may 11, 2025 8:55:15 P. M. delete.TestDeleteDentista main
-SEVERE: ❌ Error durante el test: El dentista con id 534 no existe.may 11, 2025 8:56:13 P. M. delete.TestDeleteDentista main
-INFO: 🧪 Test de eliminación iniciado
-may 11, 2025 8:59:23 P. M. insert.TestInsertDentista main
-INFO: 🧪 Test de inserción iniciado
-may 11, 2025 8:59:23 P. M. insert.TestInsertDentista main
-INFO: ✅ Dentista insertado correctamente.
-may 11, 2025 9:00:05 P. M. delete.TestDeleteDentista main
-INFO: 🧪 Test de eliminación iniciado
-may 11, 2025 9:00:05 P. M. delete.TestDeleteDentista main
-INFO: ✅ Dentista eliminado correctamente.
-may 11, 2025 9:05:08 P. M. findAll.TestEagerTodosLosDentistas main
-INFO: 🧪 Test de búsqueda de todos los dentistas iniciado
-may 11, 2025 9:08:22 P. M. findAll.TestEagerTodosLosDentistas main
-INFO: 🧪 Test de búsqueda de todos los dentistas iniciado
-may 11, 2025 9:08:23 P. M. findAll.TestEagerTodosLosDentistas main
-INFO: ✅ Se encontraron 10 dentistas.
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:05:59 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:01 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:03 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:05 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:06 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:08 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:11 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:11 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:14 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:20 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:23 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:06:30 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:07:04 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:07:08 P. M. DAO.PacienteDAO findAll
+SEVERE: Error al obtener todos los pacientes: No operations allowed after connection closed.
+may 13, 2025 8:07:10 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: No operations allowed after connection closed.
+may 13, 2025 8:07:13 P. M. DAO.PacienteDAO findAll
+SEVERE: Error al obtener todos los pacientes: No operations allowed after connection closed.
+may 13, 2025 8:07:15 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:07:18 P. M. DAO.PacienteDAO findAll
+SEVERE: Error al obtener todos los pacientes: No operations allowed after connection closed.
+may 13, 2025 8:07:34 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:07:35 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:07:36 P. M. DAO.PacienteDAO findAll
+SEVERE: Error al obtener todos los pacientes: No operations allowed after connection closed.
+may 13, 2025 8:07:38 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:13:33 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:13:34 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:13:36 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:13:39 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:13:41 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:13:44 P. M. DAO.PacienteDAO findAll
+SEVERE: Error al obtener todos los pacientes: No operations allowed after connection closed.
+may 13, 2025 8:16:34 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:16:40 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:16:43 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:16:47 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:22:32 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:22:35 P. M. DAO.DentistaDAO findByNameEager
+SEVERE: Error al buscar dentista por nombre: No operations allowed after connection closed.
+may 13, 2025 8:22:37 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:24:03 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:29:12 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:32:02 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:32:05 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:32:07 P. M. DAO.PacienteDAO findAll
+SEVERE: Error al obtener todos los pacientes: No operations allowed after connection closed.
+may 13, 2025 8:32:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: No operations allowed after connection closed.
+may 13, 2025 8:32:11 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:34:11 P. M. DAO.DentistaDAO findAll
+SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
+may 13, 2025 8:34:18 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: No operations allowed after connection closed.

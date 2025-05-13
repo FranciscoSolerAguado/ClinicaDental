@@ -31,6 +31,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
+    private final static String SQL_FIND_BY_DESCRIPCION = "SELECT * FROM Tratamiento WHERE descripcion = ?";
     private final static String SQL_INSERT = "INSERT INTO Tratamiento (descripcion, precio, idDentista) VALUES(?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Tratamiento SET descripcion = ?, precio = ?, idDentista = ? WHERE idTratamiento = ?";
     private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
@@ -91,6 +92,29 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             e.printStackTrace();
         }
         return new ArrayList<>(tratamientos);
+    }
+
+    public Tratamiento findByDescripcionEager (String descripcion) {
+        Tratamiento tratamiento = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_DESCRIPCION)) {
+            pst.setString(1, descripcion);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                tratamiento = new Tratamiento();
+                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+                tratamiento.setDescripcion(rs.getString("descripcion"));
+                tratamiento.setPrecio(rs.getDouble("precio"));
+                tratamiento.setIdDentista(rs.getInt("idDentista"));
+
+                // Cargar el dentista asociado (versión EAGER)
+                tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
+            }
+        } catch (SQLException e) {
+            logger.severe("Error al obtener el tratamiento por descripción: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return tratamiento;
     }
 
     /**

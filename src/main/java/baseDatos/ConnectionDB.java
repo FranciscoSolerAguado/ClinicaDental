@@ -5,24 +5,31 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionDB {
-    private static final String FILE = "connection.xml";
-    private static Connection con;
-    private static ConnectionDB _instance;
-
-    private ConnectionDB() {
-        ConnectionProperties properties = XMLManager.readXML(new ConnectionProperties(), FILE);
-        try {
-            con = DriverManager.getConnection(properties.getURL(), properties.getUser(), properties.getPassword());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            con = null;
-        }
-    }
+    private static Connection connection;
 
     public static Connection getConnection() {
-        if (_instance == null) {
-            _instance = new ConnectionDB();
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/clinicadental", // Cambia por tu URL
+                        "root", // Cambia por tu usuario
+                        "" // Cambia por tu contraseña
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al conectar con la base de datos", e);
         }
-        return con;
+        return connection;
+    }
+
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
