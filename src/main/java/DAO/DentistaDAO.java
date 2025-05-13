@@ -16,6 +16,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
     private static DentistaDAO instance;
     private TratamientoDAO tratamientoDAO;
     private static final Logger logger = LoggerUtil.getLogger();
+
     private DentistaDAO() {
 
     }

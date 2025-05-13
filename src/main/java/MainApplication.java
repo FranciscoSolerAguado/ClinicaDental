@@ -8,9 +8,9 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("inicio.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("BibliotecaBDGUI");
+        stage.setTitle("Clinica Dental");
         stage.setScene(scene);
         stage.show();
     }
