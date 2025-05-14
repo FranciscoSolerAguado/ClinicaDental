@@ -2,6 +2,7 @@ package controller;
 
 import DAO.PacienteDAO;
 import exceptions.DNIErroneoException;
+import exceptions.FechaNVaciaException;
 import exceptions.TelefonoErroneoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,7 +75,7 @@ public class PacienteFormController {
             // Calcular la edad automáticamente
             if (fechaNacimiento == null) {
                 logger.warning("La fecha de nacimiento no puede estar vacía.");
-                throw new IllegalArgumentException("La fecha de nacimiento no puede estar vacía.");
+                throw new FechaNVaciaException("La fecha de nacimiento no puede estar vacía.");
             }
             int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
             logger.fine("Edad calculada: " + edad);
@@ -95,7 +96,31 @@ public class PacienteFormController {
             }
 
             cerrarVentana(event);
-        } catch (Exception e) {
+        }catch (DNIErroneoException e){
+            logger.log(Level.SEVERE, "Error al guardar el paciente: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("El ");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (TelefonoErroneoException e){
+            logger.log(Level.SEVERE, "Error al guardar el paciente: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Teléfono inválido");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (FechaNVaciaException e){
+            logger.log(Level.SEVERE, "Error al guardar el paciente: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("La fecha de nacimiento no puede estar vacia");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el paciente: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");

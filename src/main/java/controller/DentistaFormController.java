@@ -2,6 +2,7 @@ package controller;
 
 import DAO.DentistaDAO;
 import exceptions.DNIErroneoException;
+import exceptions.FechaNVaciaException;
 import exceptions.NColegiadoErroneoException;
 import exceptions.TelefonoErroneoException;
 import javafx.event.ActionEvent;
@@ -84,7 +85,7 @@ public class DentistaFormController {
             // Calcular la edad automáticamente
             if (fechaNacimiento == null) {
                 logger.warning("La fecha de nacimiento no puede estar vacía.");
-                throw new IllegalArgumentException("La fecha de nacimiento no puede estar vacía.");
+                throw new FechaNVaciaException("La fecha de nacimiento no puede estar vacía.");
             }
             int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
             logger.fine("Edad calculada: " + edad);
@@ -105,7 +106,39 @@ public class DentistaFormController {
             }
 
             cerrarVentana(event);
-        } catch (Exception e) {
+        }catch (DNIErroneoException e){
+            logger.log(Level.SEVERE, "Error al guardar el dentista: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("DNI inválido");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (TelefonoErroneoException e){
+            logger.log(Level.SEVERE, "Error al guardar el dentista: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Teléfono inválido");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (NColegiadoErroneoException e){
+            logger.log(Level.SEVERE, "Error al guardar el dentista: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Número de colegiado inválido");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (FechaNVaciaException e){
+            logger.log(Level.SEVERE, "Error al guardar el dentista: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Fecha de nacimiento vacía");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+        catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el dentista: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");

@@ -2,9 +2,7 @@ package controller;
 
 import DAO.DentistaDAO;
 import DAO.TratamientoDAO;
-import exceptions.DNIErroneoException;
-import exceptions.NColegiadoErroneoException;
-import exceptions.TelefonoErroneoException;
+import exceptions.*;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -40,8 +38,23 @@ public class TratamientoFormController {
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         cargarDentistas();
+
+        dentistaComboBox.setConverter(new javafx.util.StringConverter<>() {
+            @Override
+            public String toString(Dentista dentista) {
+                return dentista != null ? dentista.mostrarNombre() : "";
+            }
+
+            @Override
+            public Dentista fromString(String string) {
+                return dentistaComboBox.getItems().stream()
+                        .filter(dentista -> dentista.mostrarNombre().equals(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
     }
 
     private void cargarDentistas() {
@@ -64,18 +77,17 @@ public class TratamientoFormController {
         try {
             String descripcion = descripcionField.getText();
             if (descripcion == null || descripcion.isEmpty()) {
-                throw new IllegalArgumentException("La descripción no puede estar vacía.");
+                throw new DescripcionVaciaException("La descripción no puede estar vacía.");
             }
 
-            String precioStr = precioField.getText();
-            if (!precioStr.matches("^\\d+(\\.\\d{1,2})?$")) {
-                throw new IllegalArgumentException("El precio debe ser un número válido con hasta dos decimales.");
+            double precio = Double.parseDouble(precioField.getText());
+            if (precio <= 0) {
+                throw new PrecioNegativoException("El precio debe ser un número positivo.");
             }
-            double precio = Double.parseDouble(precioStr);
 
             Dentista dentistaSeleccionado = dentistaComboBox.getValue();
             if (dentistaSeleccionado == null) {
-                throw new IllegalArgumentException("Debe seleccionarse un dentista.");
+                throw new DentistaNoSeleccionadoException("Debe seleccionarse un dentista.");
             }
 
             // Crear el tratamiento con el id del dentista seleccionado
@@ -93,7 +105,39 @@ public class TratamientoFormController {
             }
 
             cerrarVentana(event);
-        } catch (Exception e) {
+        }catch (DescripcionVaciaException e){
+            logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al añadir el tratamiento");
+            alerta.setContentText("La descripción no puede estar vacía.");
+            alerta.showAndWait();
+        }
+        catch (DentistaNoSeleccionadoException e){
+            logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al añadir el tratamiento");
+            alerta.setContentText("Debe seleccionarse un dentista.");
+            alerta.showAndWait();
+        }
+        catch (IllegalArgumentException e) {
+            logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al añadir el tratamiento");
+            alerta.setContentText("La descripción no puede estar vacía.");
+            alerta.showAndWait();
+        }
+        catch (PrecioNegativoException e){
+            logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al añadir el tratamiento");
+            alerta.setContentText("El precio debe ser un número positivo.");
+            alerta.showAndWait();
+        }
+        catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
