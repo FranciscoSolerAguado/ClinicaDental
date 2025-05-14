@@ -44,8 +44,10 @@ public class PacienteController {
         stage.show();
     }
 
+
+
     @FXML
-    private void cargarPacientes() {
+    public void cargarPacientes() {
         try {
             pacienteListView.getItems().clear();
             pacienteDAO.findAll().forEach(paciente -> {
@@ -113,6 +115,30 @@ public class PacienteController {
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al buscar el paciente");
             alerta.setContentText("Ocurrió un error al buscar el paciente seleccionado.");
+            alerta.showAndWait();
+        }
+    }
+
+    @FXML
+    private void abrirFormularioPaciente() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pacienteForm.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador del formulario
+            PacienteFormController formController = loader.getController();
+            formController.setPacienteController(this); // Pasar referencia del controlador actual
+
+            Stage stage = new Stage();
+            stage.setTitle("Añadir Paciente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error al abrir el formulario de añadir paciente: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir el formulario");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de añadir paciente.");
             alerta.showAndWait();
         }
     }

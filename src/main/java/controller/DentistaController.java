@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 import model.Dentista;
 
 import java.io.IOException;
@@ -26,8 +27,9 @@ public class DentistaController {
         logger.info("Inicializando la vista de Dentistas...");
         cargarDentistas();
     }
+
     @FXML
-    private void cargarDentistas() {
+    public void cargarDentistas() {
         try {
             dentistaListView.getItems().clear();
             dentistaDAO.findAll().forEach(dentista -> {
@@ -111,6 +113,30 @@ public class DentistaController {
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al buscar el dentista");
             alerta.setContentText("Ocurrió un error al buscar el dentista seleccionado.");
+            alerta.showAndWait();
+        }
+    }
+
+    @FXML
+    private void abrirFormularioDentista() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dentistaForm.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador del formulario
+            DentistaFormController formController = loader.getController();
+            formController.setDentistaController(this); // Pasar referencia del controlador actual
+
+            Stage stage = new Stage();
+            stage.setTitle("Añadir Dentista");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error al abrir el formulario de añadir dentista: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir el formulario");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de añadir dentista.");
             alerta.showAndWait();
         }
     }

@@ -44,7 +44,7 @@ public class TratamientoController {
     }
 
     @FXML
-    private void cargarTratamientos() {
+    public void cargarTratamientos() {
         try {
             tratamientoListView.getItems().clear();
             tratamientoDAO.findAll().forEach(tratamiento -> {
@@ -81,6 +81,7 @@ public class TratamientoController {
 
         try {
             logger.info("Buscando información del tratamiento: " + descripcionSeleccionada);
+            logger.info("Tratamiento mostrado: " + descripcionSeleccionada);
             Tratamiento tratamiento = tratamientoDAO.findByDescripcionEager(descripcionSeleccionada);
             if (tratamiento == null) {
                 throw new TratamientoNoEncontradoException("No se encontró el tratamiento con la descripción: " + descripcionSeleccionada);
@@ -109,6 +110,30 @@ public class TratamientoController {
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al buscar el tratamiento");
             alerta.setContentText("Ocurrió un error al buscar el tratamiento seleccionado.");
+            alerta.showAndWait();
+        }
+    }
+
+    @FXML
+    private void abrirFormularioTratamiento() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientoForm.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador del formulario
+            TratamientoFormController formController = loader.getController();
+            formController.setTratamientoController(this); // Pasar referencia del controlador actual
+
+            Stage stage = new Stage();
+            stage.setTitle("Añadir Tratamiento");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error al abrir el formulario de añadir tratamiento: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir el formulario");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de añadir tratamiento.");
             alerta.showAndWait();
         }
     }

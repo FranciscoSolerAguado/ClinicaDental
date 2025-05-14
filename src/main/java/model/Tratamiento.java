@@ -13,6 +13,12 @@ public class Tratamiento {
 
     }
 
+    public Tratamiento (String descripcion, double precio, int idDentista) {
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.idDentista = idDentista;
+    }
+
     public Tratamiento(int idTratamiento, String descripcion, double precio, int idDentista, Dentista dentista) {
         this.idTratamiento = idTratamiento;
         this.descripcion = descripcion;

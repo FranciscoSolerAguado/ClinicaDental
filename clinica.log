@@ -87,3 +87,7 @@ may 13, 2025 8:34:11 P. M. DAO.DentistaDAO findAll
 SEVERE: Error al obtener todos los dentistas: No operations allowed after connection closed.
 may 13, 2025 8:34:18 P. M. DAO.TratamientoDAO findAll
 SEVERE: Error al obtener todos los tratamientos: No operations allowed after connection closed.
+may 14, 2025 9:13:34 A. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Data truncation: Data too long for column 'nColegiado' at row 1
+may 14, 2025 9:13:47 A. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Data truncation: Data too long for column 'nColegiado' at row 1

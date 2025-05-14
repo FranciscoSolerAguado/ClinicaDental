@@ -99,6 +99,9 @@ public class Dentista extends Persona {
         return Objects.hashCode(idDentista);
     }
 
+    public String mostrarNombre() {
+        return getNombre();
+    }
 
     @Override
     public String toString() {
