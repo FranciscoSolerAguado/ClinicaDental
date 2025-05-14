@@ -32,6 +32,7 @@ public class TratamientoFormController {
     private final TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
     private TratamientoController tratamientoController;
     private final static Logger logger = Logger.getLogger(TratamientoFormController.class.getName());
+    private Tratamiento tratamientoActual;
 
     public void setTratamientoController(TratamientoController tratamientoController) {
         this.tratamientoController = tratamientoController;
@@ -105,39 +106,35 @@ public class TratamientoFormController {
             }
 
             cerrarVentana(event);
-        }catch (DescripcionVaciaException e){
+        } catch (DescripcionVaciaException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al añadir el tratamiento");
             alerta.setContentText("La descripción no puede estar vacía.");
             alerta.showAndWait();
-        }
-        catch (DentistaNoSeleccionadoException e){
+        } catch (DentistaNoSeleccionadoException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al añadir el tratamiento");
             alerta.setContentText("Debe seleccionarse un dentista.");
             alerta.showAndWait();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al añadir el tratamiento");
             alerta.setContentText("La descripción no puede estar vacía.");
             alerta.showAndWait();
-        }
-        catch (PrecioNegativoException e){
+        } catch (PrecioNegativoException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al añadir el tratamiento");
             alerta.setContentText("El precio debe ser un número positivo.");
             alerta.showAndWait();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -157,5 +154,16 @@ public class TratamientoFormController {
         logger.info("Cerrando la ventana del formulario de tratamiento.");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public void cargarDatosTratamiento(Tratamiento tratamiento) {
+        this.tratamientoActual = tratamiento;
+        descripcionField.setText(tratamiento.getDescripcion());
+        precioField.setText(String.valueOf(tratamiento.getPrecio()));
+        dentistaComboBox.setValue(tratamiento.getDentista());
+                dentistaComboBox.getItems().stream()
+                        .filter(dentista -> dentista.getIdDentista() == tratamiento.getIdDentista())
+                        .findFirst()
+                        .orElse(null);
     }
 }

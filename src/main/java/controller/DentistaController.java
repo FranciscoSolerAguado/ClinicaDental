@@ -140,4 +140,103 @@ public class DentistaController {
             alerta.showAndWait();
         }
     }
+
+    @FXML
+    private void eliminarDentista() {
+        String nombreSeleccionado = dentistaListView.getSelectionModel().getSelectedItem();
+
+        if (nombreSeleccionado == null) {
+            logger.warning("No se seleccionó ningún dentista.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún dentista seleccionado");
+            alerta.setContentText("Por favor, selecciona un dentista de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Intentando eliminar el dentista: " + nombreSeleccionado);
+            Dentista dentista = dentistaDAO.findByNameEager(nombreSeleccionado);
+            if (dentista == null) {
+                throw new DentistaNoEncontradoException("No se encontró el dentista con el nombre: " + nombreSeleccionado);
+            }
+
+            dentistaDAO.deleteById(dentista.getIdDentista());
+            logger.info("Dentista eliminado correctamente.");
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Éxito");
+            alerta.setHeaderText("Dentista eliminado");
+            alerta.setContentText("El dentista ha sido eliminado correctamente.");
+            alerta.showAndWait();
+
+            cargarDentistas(); // Actualiza la lista
+        } catch (DentistaNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Dentista no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        } catch (Exception e) {
+            logger.severe("Error al eliminar el dentista: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al eliminar el dentista");
+            alerta.setContentText("Ocurrió un error al intentar eliminar el dentista.");
+            alerta.showAndWait();
+        }
+    }
+
+    @FXML
+    private void editarDentista() {
+        String nombreSeleccionado = dentistaListView.getSelectionModel().getSelectedItem();
+
+        if (nombreSeleccionado == null) {
+            logger.warning("No se seleccionó ningún dentista.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún dentista seleccionado");
+            alerta.setContentText("Por favor, selecciona un dentista de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Cargando datos del dentista para editar: " + nombreSeleccionado);
+            Dentista dentista = dentistaDAO.findByNameEager(nombreSeleccionado);
+            if (dentista == null) {
+                throw new DentistaNoEncontradoException("No se encontró el dentista con el nombre: " + nombreSeleccionado);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dentistaEditForm.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador del formulario
+            DentistaFormController formController = loader.getController();
+            formController.setDentistaController(this); // Pasar referencia del controlador actual
+            formController.cargarDatosDentista(dentista); // Cargar datos del dentista
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Dentista");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error al abrir el formulario de edición: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir el formulario");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
+            alerta.showAndWait();
+        } catch (DentistaNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Dentista no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+    }
+
 }

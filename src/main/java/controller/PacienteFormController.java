@@ -100,7 +100,7 @@ public class PacienteFormController {
             logger.log(Level.SEVERE, "Error al guardar el paciente: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
-            alerta.setHeaderText("El ");
+            alerta.setHeaderText("DNI inválido");
             alerta.setContentText(e.getMessage());
             alerta.showAndWait();
         }
@@ -140,5 +140,17 @@ public class PacienteFormController {
         logger.info("Cerrando la ventana del formulario de paciente.");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    private Paciente pacienteActual;
+
+    public void cargarDatosPaciente(Paciente paciente) {
+        this.pacienteActual = paciente;
+        nombreField.setText(paciente.getNombre());
+        dniField.setText(paciente.getDni());
+        telefonoField.setText(String.valueOf(paciente.getTelefono()));
+        alergiasField.setText(paciente.getAlergias());
+        fechaNacimientoPicker.setValue(paciente.getFechaNacimiento());
+        edadField.setText(String.valueOf(paciente.getEdad()));
     }
 }

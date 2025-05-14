@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.DentistaFormController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="CENTER" spacing="10.0" prefWidth="600.0" prefHeight="400.0" AnchorPane.topAnchor="20.0">
+        <Label text="Editar Dentista" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="nombreField" promptText="Nombre"/>
+        <TextField fx:id="dniField" promptText="DNI"/>
+        <TextField fx:id="telefonoField" promptText="Teléfono"/>
+        <TextField fx:id="nColegiadoField" promptText="Número Colegiado"/>
+        <TextField fx:id="especialidadField" promptText="Especialidad"/>
+        <DatePicker fx:id="fechaNacimientoPicker" promptText="Fecha de Nacimiento"/>
+        <TextField fx:id="edadField" promptText="Edad"/>
+
+        <HBox alignment="CENTER" spacing="10.0">
+            <Button text="Guardar" onAction="#guardarDentista" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button text="Cancelar" onAction="#cancelar" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

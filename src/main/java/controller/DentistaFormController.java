@@ -159,4 +159,18 @@ public class DentistaFormController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+
+    private Dentista dentistaActual;
+
+    public void cargarDatosDentista(Dentista dentista) {
+        this.dentistaActual = dentista;
+        nombreField.setText(dentista.getNombre());
+        dniField.setText(dentista.getDni());
+        telefonoField.setText(String.valueOf(dentista.getTelefono()));
+        nColegiadoField.setText(dentista.getnColegiado());
+        especialidadField.setText(dentista.getEspecialidad());
+        fechaNacimientoPicker.setValue(dentista.getFechaNacimiento());
+        edadField.setText(String.valueOf(dentista.getEdad()));
+    }
+
 }

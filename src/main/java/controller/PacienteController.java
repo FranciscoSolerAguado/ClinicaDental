@@ -142,4 +142,101 @@ public class PacienteController {
             alerta.showAndWait();
         }
     }
+    @FXML
+    private void eliminarPaciente() {
+        String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
+
+        if (nombreSeleccionado == null) {
+            logger.warning("No se seleccionó ningún paciente.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún paciente seleccionado");
+            alerta.setContentText("Por favor, selecciona un paciente de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Intentando eliminar el paciente: " + nombreSeleccionado);
+            Paciente paciente = pacienteDAO.findByNameEager(nombreSeleccionado);
+            if (paciente == null) {
+                throw new PacienteNoEncontradoException("No se encontró el paciente con el nombre: " + nombreSeleccionado);
+            }
+
+            pacienteDAO.deleteById(paciente.getIdPaciente());
+            logger.info("Paciente eliminado correctamente.");
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Éxito");
+            alerta.setHeaderText("Paciente eliminado");
+            alerta.setContentText("El paciente ha sido eliminado correctamente.");
+            alerta.showAndWait();
+
+            cargarPacientes(); // Actualiza la lista
+        } catch (PacienteNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Paciente no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        } catch (Exception e) {
+            logger.severe("Error al eliminar el paciente: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al eliminar el paciente");
+            alerta.setContentText("Ocurrió un error al intentar eliminar el paciente.");
+            alerta.showAndWait();
+        }
+    }
+
+    @FXML
+    private void editarPaciente() {
+        String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
+
+        if (nombreSeleccionado == null) {
+            logger.warning("No se seleccionó ningún paciente.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún paciente seleccionado");
+            alerta.setContentText("Por favor, selecciona un paciente de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Cargando datos del paciente para editar: " + nombreSeleccionado);
+            Paciente paciente = pacienteDAO.findByNameEager(nombreSeleccionado);
+            if (paciente == null) {
+                throw new PacienteNoEncontradoException("No se encontró el paciente con el nombre: " + nombreSeleccionado);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pacienteEditForm.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador del formulario
+            PacienteFormController formController = loader.getController();
+            formController.setPacienteController(this); // Pasar referencia del controlador actual
+            formController.cargarDatosPaciente(paciente); // Cargar datos del paciente
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Paciente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error al abrir el formulario de edición: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir el formulario");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
+            alerta.showAndWait();
+        } catch (PacienteNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Paciente no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+    }
 }

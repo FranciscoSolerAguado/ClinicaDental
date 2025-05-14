@@ -129,12 +129,110 @@ public class TratamientoController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            logger.severe("Error al abrir el formulario de añadir tratamiento: " + e.getMessage());
+            logger.severe("Error al abrir el formulario de editar tratamiento: " + e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("No se pudo abrir el formulario");
-            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de añadir tratamiento.");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de editar tratamiento.");
             alerta.showAndWait();
         }
     }
+
+    @FXML
+    private void eliminarTratamiento() {
+        String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem();
+
+        if (descripcionSeleccionada == null) {
+            logger.warning("No se seleccionó ningún tratamiento.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún tratamiento seleccionado");
+            alerta.setContentText("Por favor, selecciona un tratamiento de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Intentando eliminar el tratamiento: " + descripcionSeleccionada);
+            Tratamiento tratamiento = tratamientoDAO.findByDescripcionEager(descripcionSeleccionada);
+            if (tratamiento == null) {
+                throw new TratamientoNoEncontradoException("No se encontró el tratamiento con la descripción: " + descripcionSeleccionada);
+            }
+
+            tratamientoDAO.deleteById(tratamiento.getIdTratamiento());
+            logger.info("Tratamiento eliminado correctamente.");
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Éxito");
+            alerta.setHeaderText("Tratamiento eliminado");
+            alerta.setContentText("El tratamiento ha sido eliminado correctamente.");
+            alerta.showAndWait();
+
+            cargarTratamientos(); // Actualiza la lista
+        } catch (TratamientoNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Tratamiento no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        } catch (Exception e) {
+            logger.severe("Error al eliminar el tratamiento: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Error al eliminar el tratamiento");
+            alerta.setContentText("Ocurrió un error al intentar eliminar el tratamiento.");
+            alerta.showAndWait();
+        }
+    }
+
+@FXML
+private void editarTratamiento() {
+    String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem();
+
+    if (descripcionSeleccionada == null) {
+        logger.warning("No se seleccionó ningún tratamiento.");
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("Advertencia");
+        alerta.setHeaderText("Ningún tratamiento seleccionado");
+        alerta.setContentText("Por favor, selecciona un tratamiento de la lista.");
+        alerta.showAndWait();
+        return;
+    }
+
+    try {
+        logger.info("Cargando datos del tratamiento para editar: " + descripcionSeleccionada);
+        Tratamiento tratamiento = tratamientoDAO.findByDescripcionEager(descripcionSeleccionada);
+        if (tratamiento == null) {
+            throw new TratamientoNoEncontradoException("No se encontró el tratamiento con la descripción: " + descripcionSeleccionada);
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientoEditForm.fxml"));
+        Parent root = loader.load();
+
+        // Obtener el controlador del formulario
+        TratamientoFormController formController = loader.getController();
+        formController.setTratamientoController(this); // Pasar referencia del controlador actual
+        formController.cargarDatosTratamiento(tratamiento); // Cargar datos del tratamiento
+
+        Stage stage = new Stage();
+        stage.setTitle("Editar Tratamiento");
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        logger.severe("Error al abrir el formulario de edición: " + e.getMessage());
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Error");
+        alerta.setHeaderText("No se pudo abrir el formulario");
+        alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
+        alerta.showAndWait();
+    } catch (TratamientoNoEncontradoException e) {
+        logger.warning(e.getMessage());
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Error");
+        alerta.setHeaderText("Tratamiento no encontrado");
+        alerta.setContentText(e.getMessage());
+        alerta.showAndWait();
+    }
+}
 }
