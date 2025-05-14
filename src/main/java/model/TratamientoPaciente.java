@@ -7,6 +7,7 @@ public class TratamientoPaciente {
     private int idTratamiento;
     private LocalDate fechaTratamiento;
     private String detalles;
+    private String pacienteNombre;
 
     public TratamientoPaciente() {
     }
@@ -16,6 +17,14 @@ public class TratamientoPaciente {
         this.idTratamiento = idTratamiento;
         this.fechaTratamiento = fechaTratamiento;
         this.detalles = detalles;
+    }
+
+    public String getPacienteNombre() {
+        return pacienteNombre;
+    }
+
+    public void setPacienteNombre(String pacienteNombre) {
+        this.pacienteNombre = pacienteNombre;
     }
 
     public int getIdPaciente() {

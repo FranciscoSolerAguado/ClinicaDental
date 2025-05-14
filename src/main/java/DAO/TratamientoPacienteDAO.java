@@ -89,6 +89,7 @@ public class TratamientoPacienteDAO {
         return tratamientoPaciente;
     }
 
+
     public List<TratamientoPaciente> findTratamientosByPaciente(int idPacienteBuscado) {
         List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();
         try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_PACIENTE)) {

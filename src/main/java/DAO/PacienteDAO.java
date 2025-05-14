@@ -33,6 +33,7 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM Paciente WHERE dni = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
+    private final static String SQL_FINDNAME_BY_ID = "SELECT nombre FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, alergias, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Paciente SET nombre = ?, dni = ?, telefono = ?, alergias = ?, fechaNacimiento = ?, edad = ? WHERE idPaciente = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Paciente WHERE idPaciente = ?";
@@ -137,6 +138,21 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             throw new RuntimeException(e);
         }
         return paciente;
+    }
+
+    public String findNameById(int idPaciente) {
+        String nombre = null;
+        try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_FINDNAME_BY_ID)) {
+            pst.setInt(1, idPaciente);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                nombre = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error al obtener el nombre del paciente por ID: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return nombre;
     }
 
     public Paciente findPacienteByTratamiento(int idTratamiento) {

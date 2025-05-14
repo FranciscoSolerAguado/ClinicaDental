@@ -32,6 +32,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_FIND_BY_DESCRIPCION = "SELECT * FROM Tratamiento WHERE descripcion = ?";
+    private final static String SQL_FIND_DESCRIPCION_BY_ID = "SELECT descripcion FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_INSERT = "INSERT INTO Tratamiento (descripcion, precio, idDentista) VALUES(?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Tratamiento SET descripcion = ?, precio = ?, idDentista = ? WHERE idTratamiento = ?";
     private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
@@ -115,6 +116,22 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             throw new RuntimeException(e);
         }
         return tratamiento;
+    }
+
+    public String findDescripcionById(int idTratamiento) {
+        String descripcion = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_DESCRIPCION_BY_ID)) {
+            pst.setInt(1, idTratamiento);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                descripcion = rs.getString("descripcion");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error al obtener la descripción del tratamiento por ID: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return descripcion;
     }
 
     /**
