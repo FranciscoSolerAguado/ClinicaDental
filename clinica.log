@@ -121,3 +121,13 @@ may 15, 2025 11:32:25 A. M. DAO.TratamientoPacienteDAO delete
 SEVERE: Error al eliminar el tratamiento-paciente: Unknown column 'fecha' in 'where clause'
 may 15, 2025 11:36:52 A. M. DAO.TratamientoPacienteDAO delete
 SEVERE: Error al eliminar el tratamiento-paciente: Unknown column 'fecha' in 'where clause'
+may 15, 2025 12:11:00 P. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
+may 15, 2025 12:11:05 P. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
+may 15, 2025 12:11:20 P. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
+may 15, 2025 12:11:30 P. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
+may 15, 2025 12:11:33 P. M. DAO.DentistaDAO insert
+SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'

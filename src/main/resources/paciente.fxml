@@ -30,6 +30,8 @@
                     style="-fx-background-color: #F44336; -fx-text-fill: #FFFFFF;" text="Borrar"/>
             <Button fx:id="btnMostrarMas" onAction="#mostrarMas"
                     style="-fx-background-color: #2196F3; -fx-text-fill: #FFFFFF;" text="Mostrar más"/>
+            <Button fx:id="btnMostrarTratamientos" onAction="#mostrarTratamientosPaciente"
+                    style="-fx-background-color: #FF9800; -fx-text-fill: #FFFFFF;" text="Mostrar tratamientos"/>
         </HBox>
 
         <!-- Botón para volver a main.fxml -->

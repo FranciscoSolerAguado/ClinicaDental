@@ -185,8 +185,8 @@ private void editarTratamientoPaciente() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientosPacientesEditForm.fxml"));
         Parent root = loader.load();
 
-        // Obtener el controlador del formulario de edición
         TratamientosPacientesFormController controller = loader.getController();
+        controller.setTratatamientosPacientesController(this); // Pasar referencia del controlador principal
         controller.setTratamientoPaciente(seleccionado); // Pasar el tratamiento seleccionado
 
         Stage stage = new Stage();

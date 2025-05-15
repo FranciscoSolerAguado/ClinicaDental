@@ -299,6 +299,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         }
         return dentista;
     }
+
     @Override
     public void insert(Dentista dentista) {
         try (Connection con = ConnectionDB.getConnection();
@@ -323,20 +324,24 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
              PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE)) {
 
+            // Verificar si el dentista existe
             checkStmt.setInt(1, idDentista);
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    throw new DentistaNoEncontradoException("El dentista con id " + dentista.getIdDentista() + " no existe.");
+                    throw new DentistaNoEncontradoException("El dentista con id " + idDentista + " no existe.");
                 }
             }
-            pst.setInt(1, dentista.getIdDentista());
-            pst.setString(2, dentista.getNombre());
-            pst.setString(3, dentista.getDni());
-            pst.setInt(4, dentista.getTelefono());
-            pst.setString(5, dentista.getnColegiado());
-            pst.setString(6, dentista.getEspecialidad());
-            pst.setString(7, java.sql.Date.valueOf(dentista.getFechaNacimiento()).toString());
-            pst.setInt(8, dentista.getEdad());
+
+            // Asignar los parámetros en el orden correcto
+            pst.setString(1, dentista.getNombre());
+            pst.setString(2, dentista.getDni());
+            pst.setInt(3, dentista.getTelefono());
+            pst.setString(4, dentista.getnColegiado());
+            pst.setString(5, dentista.getEspecialidad());
+            pst.setDate(6, java.sql.Date.valueOf(dentista.getFechaNacimiento()));
+            pst.setInt(7, dentista.getEdad());
+            pst.setInt(8, idDentista); // ID del dentista para la cláusula WHERE
+
             pst.executeUpdate();
         } catch (SQLException e) {
             logger.severe("Error al actualizar dentista: " + e.getMessage());

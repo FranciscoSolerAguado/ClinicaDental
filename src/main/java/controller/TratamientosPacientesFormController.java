@@ -119,7 +119,7 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
             logger.log(Level.SEVERE, "Error al cargar los tratamientos: " + e.getMessage(), e);
         }
     }
-   @FXML
+    @FXML
     private void guardarTratamientoPaciente(ActionEvent event) {
         try {
             // Validar campos
@@ -129,32 +129,38 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
             if (idTratamiento.getValue() == null || idTratamiento.getValue().isEmpty()) {
                 throw new TratamientoNoSeleccionadoException("Debe seleccionar un tratamiento.");
             }
-            LocalDate fechaTratamiento = LocalDate.now();
-
             if (detalles.getText() == null || detalles.getText().isEmpty()) {
                 throw new DetallesVaciosException("El campo detalles no puede estar vacío.");
             }
 
-            // Crear el objeto TratamientoPaciente
+            // Obtener datos del formulario
             Paciente paciente = idPaciente.getValue();
             String descripcionTratamiento = idTratamiento.getValue();
             Tratamiento tratamiento = TratamientoDAO.getInstance().findByDescripcionEager(descripcionTratamiento);
 
-            TratamientoPaciente tratamientoPaciente = new TratamientoPaciente(
-                paciente.getIdPaciente(),
-                tratamiento.getIdTratamiento(),
-                fechaTratamiento,
-                detalles.getText()
-            );
+            // Si el objeto tratamientoPaciente ya existe, actualiza
+            if (tratamientoPaciente != null) {
+                tratamientoPaciente.setIdPaciente(paciente.getIdPaciente());
+                tratamientoPaciente.setIdTratamiento(tratamiento.getIdTratamiento());
+                tratamientoPaciente.setDetalles(detalles.getText());
 
-            // Guardar en la base de datos
-            TratamientoPacienteDAO.getInstance().insert(tratamientoPaciente);
+                TratamientoPacienteDAO.getInstance().update(tratamientoPaciente);
+            } else {
+                // Si no existe, crea uno nuevo
+                TratamientoPaciente nuevoTratamientoPaciente = new TratamientoPaciente(
+                        paciente.getIdPaciente(),
+                        tratamiento.getIdTratamiento(),
+                        LocalDate.now(),
+                        detalles.getText()
+                );
+                TratamientoPacienteDAO.getInstance().insert(nuevoTratamientoPaciente);
+            }
 
             // Mostrar mensaje de éxito
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Éxito");
-            alerta.setHeaderText("Tratamiento añadido");
-            alerta.setContentText("El tratamiento se ha añadido correctamente.");
+            alerta.setHeaderText("Tratamiento guardado");
+            alerta.setContentText("El tratamiento se ha guardado correctamente.");
             alerta.showAndWait();
 
             // Actualizar la lista en el controlador principal

@@ -2,6 +2,7 @@ package controller;
 
 import DAO.PacienteDAO;
 import DAO.PacienteDAO;
+import DAO.TratamientoDAO;
 import exceptions.PacienteNoEncontradoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +15,11 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.Paciente;
 import model.Paciente;
+import model.Tratamiento;
+import model.TratamientoPaciente;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class PacienteController {
@@ -43,7 +47,6 @@ public class PacienteController {
         stage.setMaximized(true); // Maximizar la ventana con bordes
         stage.show();
     }
-
 
 
     @FXML
@@ -142,6 +145,7 @@ public class PacienteController {
             alerta.showAndWait();
         }
     }
+
     @FXML
     private void eliminarPaciente() {
         String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
@@ -229,6 +233,55 @@ public class PacienteController {
             alerta.setTitle("Error");
             alerta.setHeaderText("No se pudo abrir el formulario");
             alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
+            alerta.showAndWait();
+        } catch (PacienteNoEncontradoException e) {
+            logger.warning(e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("Paciente no encontrado");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+        }
+    }
+
+
+   @FXML
+    private void mostrarTratamientosPaciente() {
+        String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
+
+        if (nombreSeleccionado == null) {
+            logger.warning("No se seleccionó ningún paciente.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún paciente seleccionado");
+            alerta.setContentText("Por favor, selecciona un paciente de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            logger.info("Cargando tratamientos del paciente: " + nombreSeleccionado);
+            Paciente paciente = pacienteDAO.findByNameEager(nombreSeleccionado); // Carga el paciente con tratamientos
+            if (paciente == null) {
+                throw new PacienteNoEncontradoException("No se encontró el paciente con el nombre: " + nombreSeleccionado);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pacienteTratamientos.fxml"));
+            Parent root = loader.load();
+
+            PacienteTratamientoController controller = loader.getController();
+            controller.setPaciente(paciente); // Pasa el paciente cargado al controlador
+
+            Stage stage = new Stage();
+            stage.setTitle("Tratamientos del Paciente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error al abrir la ventana de tratamientos: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir la ventana");
+            alerta.setContentText("Ocurrió un error al intentar abrir la ventana de tratamientos.");
             alerta.showAndWait();
         } catch (PacienteNoEncontradoException e) {
             logger.warning(e.getMessage());

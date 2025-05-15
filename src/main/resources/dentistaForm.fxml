@@ -16,7 +16,6 @@
         <TextField fx:id="nColegiadoField" promptText="Número Colegiado"/>
         <TextField fx:id="especialidadField" promptText="Especialidad"/>
         <DatePicker fx:id="fechaNacimientoPicker" promptText="Fecha de Nacimiento"/>
-        <TextField fx:id="edadField" promptText="Edad"/>
 
         <HBox alignment="CENTER" spacing="10.0">
             <Button text="Guardar" onAction="#guardarDentista" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>

@@ -30,8 +30,6 @@ public class PacienteFormController {
     private TextField alergiasField;
     @FXML
     private DatePicker fechaNacimientoPicker;
-    @FXML
-    private TextField edadField;
 
     private final PacienteDAO pacienteDAO = PacienteDAO.getInstance();
     private PacienteController pacienteController;
@@ -43,56 +41,54 @@ public class PacienteFormController {
 
     @FXML
     private void guardarPaciente(ActionEvent event) {
-        logger.info("Iniciando el proceso de guardar un nuevo paciente...");
+        logger.info("Iniciando el proceso de guardar un paciente...");
         try {
             String nombre = nombreField.getText();
-            logger.fine("Nombre ingresado: " + nombre);
-
-            // Validar el DNI
             String dni = dniField.getText();
-            logger.fine("Validando DNI: " + dni);
             if (!dni.matches("^[0-9]{8}[A-HJ-NP-TV-Z]$")) {
-                logger.warning("DNI inválido: " + dni);
                 throw new DNIErroneoException("DNI incorrecto. Debe tener 8 cifras y una letra al final.");
             }
 
-            // Validar el teléfono
             String telefonoStr = telefonoField.getText();
-            logger.fine("Validando teléfono: " + telefonoStr);
             if (!telefonoStr.matches("^[67][0-9]{8}$")) {
-                logger.warning("Teléfono inválido: " + telefonoStr);
                 throw new TelefonoErroneoException("Teléfono incorrecto. Debe tener 9 cifras y comenzar por 6 o 7.");
             }
             int telefono = Integer.parseInt(telefonoStr);
 
-
             String alergias = alergiasField.getText();
-            logger.fine("Alergia ingresada: " + alergias);
 
             LocalDate fechaNacimiento = fechaNacimientoPicker.getValue();
-            logger.fine("Fecha de nacimiento seleccionada: " + fechaNacimiento);
-
-            // Calcular la edad automáticamente
             if (fechaNacimiento == null) {
-                logger.warning("La fecha de nacimiento no puede estar vacía.");
                 throw new FechaNVaciaException("La fecha de nacimiento no puede estar vacía.");
             }
             int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
-            logger.fine("Edad calculada: " + edad);
 
-            Paciente nuevoPaciente = new Paciente(nombre, dni, telefono, 0, alergias, fechaNacimiento, edad, null);
-            logger.info("Insertando el nuevo paciente en la base de datos: " + nuevoPaciente);
-            pacienteDAO.insert(nuevoPaciente);
+            if (pacienteActual != null) {
+                // Actualizar paciente existente
+                pacienteActual.setNombre(nombre);
+                pacienteActual.setDni(dni);
+                pacienteActual.setTelefono(telefono);
+                pacienteActual.setFechaNacimiento(fechaNacimiento);
+                pacienteActual.setAlergias(alergiasField.getText());
+                pacienteActual.setEdad(edad);
+
+                pacienteDAO.update(pacienteActual.getIdPaciente(), pacienteActual);
+                logger.info("Paciente actualizado correctamente.");
+            } else {
+                // Crear un nuevo paciente
+                Paciente nuevoPaciente = new Paciente(nombre, dni, telefono, 0, alergias, fechaNacimiento, edad, null);
+                pacienteDAO.insert(nuevoPaciente);
+                logger.info("Paciente añadido correctamente.");
+            }
 
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Éxito");
-            alerta.setHeaderText("Paciente añadido");
-            alerta.setContentText("El paciente se ha añadido correctamente.");
+            alerta.setHeaderText("Paciente guardado");
+            alerta.setContentText("El paciente se ha guardado correctamente.");
             alerta.showAndWait();
 
-            logger.info("Paciente añadido correctamente. Actualizando la lista de pacientes...");
             if (pacienteController != null) {
-                pacienteController.cargarPacientes();
+                pacienteController.cargarPacientes(); // Actualizar la lista
             }
 
             cerrarVentana(event);
@@ -151,6 +147,5 @@ public class PacienteFormController {
         telefonoField.setText(String.valueOf(paciente.getTelefono()));
         alergiasField.setText(paciente.getAlergias());
         fechaNacimientoPicker.setValue(paciente.getFechaNacimiento());
-        edadField.setText(String.valueOf(paciente.getEdad()));
     }
 }

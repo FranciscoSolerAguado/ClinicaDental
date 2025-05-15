@@ -74,7 +74,7 @@ public class TratamientoFormController {
 
     @FXML
     private void guardarTratamiento(ActionEvent event) {
-        logger.info("Iniciando el proceso de guardar un nuevo tratamiento...");
+        logger.info("Iniciando el proceso de guardar un tratamiento...");
         try {
             String descripcion = descripcionField.getText();
             if (descripcion == null || descripcion.isEmpty()) {
@@ -91,18 +91,29 @@ public class TratamientoFormController {
                 throw new DentistaNoSeleccionadoException("Debe seleccionarse un dentista.");
             }
 
-            // Crear el tratamiento con el id del dentista seleccionado
-            Tratamiento nuevoTratamiento = new Tratamiento(descripcion, precio, dentistaSeleccionado.getIdDentista());
-            tratamientoDAO.insert(nuevoTratamiento);
+            if (tratamientoActual != null) {
+                // Editar tratamiento existente
+                tratamientoActual.setDescripcion(descripcion);
+                tratamientoActual.setPrecio(precio);
+                tratamientoActual.setIdDentista(dentistaSeleccionado.getIdDentista());
+
+                tratamientoDAO.update(tratamientoActual.getIdTratamiento(), tratamientoActual);
+                logger.info("Tratamiento actualizado correctamente.");
+            } else {
+                // Crear un nuevo tratamiento
+                Tratamiento nuevoTratamiento = new Tratamiento(descripcion, precio, dentistaSeleccionado.getIdDentista());
+                tratamientoDAO.insert(nuevoTratamiento);
+                logger.info("Tratamiento añadido correctamente.");
+            }
 
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Éxito");
-            alerta.setHeaderText("Tratamiento añadido");
-            alerta.setContentText("El tratamiento se ha añadido correctamente.");
+            alerta.setHeaderText("Tratamiento guardado");
+            alerta.setContentText("El tratamiento se ha guardado correctamente.");
             alerta.showAndWait();
 
             if (tratamientoController != null) {
-                tratamientoController.cargarTratamientos();
+                tratamientoController.cargarTratamientos(); // Actualizar la lista
             }
 
             cerrarVentana(event);

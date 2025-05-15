@@ -15,7 +15,6 @@
         <TextField fx:id="telefonoField" promptText="Teléfono"/>
         <TextField fx:id="alergiasField" promptText="Alergias"/>
         <DatePicker fx:id="fechaNacimientoPicker" promptText="Fecha de Nacimiento"/>
-        <TextField fx:id="edadField" promptText="Edad"/>
 
         <HBox alignment="CENTER" spacing="10.0">
             <Button text="Guardar" onAction="#guardarPaciente" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
