@@ -32,18 +32,31 @@ public class TratamientoPacienteDAO {
     private final static String SQL_UPDATE_BY_ID_PACIENTE = "UPDATE tratamientopaciente SET fechaTratamiento = ?, detalles = ? WHERE idPaciente = ?";
     private final static String SQL_UPDATE_BY_ID_TRATAMIENTO = "UPDATE tratamientopaciente SET idPaciente = ?, fechaTratamiento = ?, detalles = ? WHERE idTratamiento = ?";
     private final static String SQL_SELECT_BY_PACIENTE = "SELECT * FROM TratamientoPaciente WHERE idPaciente = ?";
+    private final static String SQL_DELETE = "DELETE FROM TratamientoPaciente WHERE idPaciente = ? AND idTratamiento = ? AND fechaTratamiento = ?";
+   public void insert(TratamientoPaciente tratamientoPaciente) {
+       try (Connection con = ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
+           pst.setInt(1, tratamientoPaciente.getIdPaciente());
+           pst.setInt(2, tratamientoPaciente.getIdTratamiento());
+           pst.setDate(3, Date.valueOf(tratamientoPaciente.getFechaTratamiento()));
+           pst.setString(4, tratamientoPaciente.getDetalles());
+           pst.executeUpdate();
+       } catch (SQLException e) {
+           logger.severe("Error al insertar el tratamiento-paciente: " + e.getMessage());
+           throw new RuntimeException("Error al insertar el tratamiento-paciente", e);
+       }
+   }
 
-    public void insert(int idTratamiento, int idPaciente, String fechaTratamiento, String detalles) {
+    public void delete(int idPaciente, int idTratamiento, Date fechaTratamiento) {
         try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
-            pst.setInt(1, idTratamiento);
-            pst.setInt(2, idPaciente);
-            pst.setString(3, fechaTratamiento);
-            pst.setString(4, detalles);
+             PreparedStatement pst = con.prepareStatement(SQL_DELETE)) {
+            pst.setInt(1, idPaciente);
+            pst.setInt(2, idTratamiento);
+            pst.setDate(3, fechaTratamiento);
             pst.executeUpdate();
         } catch (SQLException e) {
-            logger.severe("Error al insertar en tratamientopaciente: " + e.getMessage());
-            throw new RuntimeException("Error al insertar en tratamientopaciente", e);
+            logger.severe("Error al eliminar el tratamiento-paciente: " + e.getMessage());
+            throw new RuntimeException("Error al eliminar el tratamiento-paciente", e);
         }
     }
 

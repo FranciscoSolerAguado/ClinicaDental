@@ -91,3 +91,33 @@ may 14, 2025 9:13:34 A. M. DAO.DentistaDAO insert
 SEVERE: Error al insertar dentista: Data truncation: Data too long for column 'nColegiado' at row 1
 may 14, 2025 9:13:47 A. M. DAO.DentistaDAO insert
 SEVERE: Error al insertar dentista: Data truncation: Data too long for column 'nColegiado' at row 1
+may 15, 2025 11:02:46 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:02:49 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:02:54 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:02:57 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:09:09 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:12:41 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:12:45 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:12:52 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:12:57 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:13:01 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:14:31 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Unknown column 'fecha' in 'field list'
+may 15, 2025 11:17:24 A. M. DAO.TratamientoPacienteDAO insert
+SEVERE: Error al insertar el tratamiento-paciente: Duplicate entry '1-1-2025-05-15' for key 'PRIMARY'
+may 15, 2025 11:32:21 A. M. DAO.TratamientoPacienteDAO delete
+SEVERE: Error al eliminar el tratamiento-paciente: Unknown column 'fecha' in 'where clause'
+may 15, 2025 11:32:25 A. M. DAO.TratamientoPacienteDAO delete
+SEVERE: Error al eliminar el tratamiento-paciente: Unknown column 'fecha' in 'where clause'
+may 15, 2025 11:36:52 A. M. DAO.TratamientoPacienteDAO delete
+SEVERE: Error al eliminar el tratamiento-paciente: Unknown column 'fecha' in 'where clause'
