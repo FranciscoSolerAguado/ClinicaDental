@@ -23,26 +23,41 @@ public class TratamientoPacienteDAO {
         return instance;
     }
 
+    /**
+     * Consultas SQL
+     */
     private final static String SQL_ALL = "SELECT * FROM tratamientopaciente";
     private final static String SQL_INSERT = "INSERT INTO tratamientopaciente (idPaciente, idTratamiento, fechaTratamiento, detalles) VALUES (?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE TratamientoPaciente SET idPaciente = ?, idTratamiento = ?, detalles = ? WHERE idPaciente = ? AND idTratamiento = ?";
     private final static String SQL_SELECT_BY_PACIENTE = "SELECT * FROM TratamientoPaciente WHERE idPaciente = ?";
     private final static String SQL_DELETE = "DELETE FROM TratamientoPaciente WHERE idPaciente = ? AND idTratamiento = ? AND fechaTratamiento = ?";
 
-   public void insert(TratamientoPaciente tratamientoPaciente) {
-       try (Connection con = ConnectionDB.getConnection();
-            PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
-           pst.setInt(1, tratamientoPaciente.getIdPaciente());
-           pst.setInt(2, tratamientoPaciente.getIdTratamiento());
-           pst.setDate(3, Date.valueOf(tratamientoPaciente.getFechaTratamiento()));
-           pst.setString(4, tratamientoPaciente.getDetalles());
-           pst.executeUpdate();
-       } catch (SQLException e) {
-           logger.severe("Error al insertar el tratamiento-paciente: " + e.getMessage());
-           throw new RuntimeException("Error al insertar el tratamiento-paciente", e);
-       }
-   }
+    /**
+     * Metodo para insertar un tratamiento-paciente
+     *
+     * @param tratamientoPaciente El tratamiento-paciente a insertar
+     */
+    public void insert(TratamientoPaciente tratamientoPaciente) {
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
+            pst.setInt(1, tratamientoPaciente.getIdPaciente());
+            pst.setInt(2, tratamientoPaciente.getIdTratamiento());
+            pst.setDate(3, Date.valueOf(tratamientoPaciente.getFechaTratamiento()));
+            pst.setString(4, tratamientoPaciente.getDetalles());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            logger.severe("Error al insertar el tratamiento-paciente: " + e.getMessage());
+            throw new RuntimeException("Error al insertar el tratamiento-paciente", e);
+        }
+    }
 
+    /**
+     * Metodo para eliminar un tratamiento-paciente
+     *
+     * @param idPaciente El id del paciente
+     * @param idTratamiento El id del tratamiento
+     * @param fechaTratamiento La fecha del tratamiento
+     */
     public void delete(int idPaciente, int idTratamiento, Date fechaTratamiento) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_DELETE)) {
@@ -56,6 +71,12 @@ public class TratamientoPacienteDAO {
         }
     }
 
+
+    /**
+     * Metodo para obtener todos los tratamientos de pacientes
+     *
+     * @return Una lista con todos los tratamientos de pacientes
+     */
     public List<TratamientoPaciente> findAll() {
         List<TratamientoPaciente> tratamientosPacientes = new ArrayList<TratamientoPaciente>();
         Connection con = ConnectionDB.getConnection();
@@ -78,6 +99,12 @@ public class TratamientoPacienteDAO {
         return tratamientosPacientes;
     }
 
+    /**
+     * Metodo para buscar tratamientos por paciente
+     *
+     * @param idPacienteBuscado El id del paciente a buscar
+     * @return Una lista con los tratamientos del paciente buscado
+     */
     public List<TratamientoPaciente> findTratamientosByPaciente(int idPacienteBuscado) {
         List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();
         try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_PACIENTE)) {
@@ -98,7 +125,12 @@ public class TratamientoPacienteDAO {
         return tratamientosPacientes;
     }
 
-    public void update (TratamientoPaciente tratamientoPaciente) {
+    /**
+     * Metodo para actualizar un tratamiento-paciente
+     *
+     * @param tratamientoPaciente El tratamiento-paciente a actualizar con los datos ya pasados
+     */
+    public void update(TratamientoPaciente tratamientoPaciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE)) {
             pst.setInt(1, tratamientoPaciente.getIdPaciente());

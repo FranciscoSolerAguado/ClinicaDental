@@ -28,6 +28,9 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         return instance;
     }
 
+    /**
+     * Consultas SQL
+     */
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
     private final static String SQL_FIND_BY_DESCRIPCION = "SELECT * FROM Tratamiento WHERE descripcion = ?";
@@ -42,7 +45,6 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
      *
      * @return un list de citas
      */
-
     @Override
     public List<Object> findAll() {
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
@@ -66,6 +68,11 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         return new ArrayList<>(tratamientos);
     }
 
+    /**
+     * Version EAGER para obtener todos los tratamientos en un list
+     *
+     * @return un list de tratamientos
+     */
     @Override
     public List<Object> findAllEager() {
         List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
@@ -92,6 +99,12 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         return new ArrayList<>(tratamientos);
     }
 
+    /**
+     * Devuelve un tratamiento según su descripción, en versión EAGER
+     *
+     * @param descripcion la descripción del tratamiento
+     * @return tratamiento o null si no existe
+     */
     public Tratamiento findByDescripcionEager(String descripcion) {
         Tratamiento tratamiento = null;
         try (Connection con = ConnectionDB.getConnection();
@@ -115,6 +128,12 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         return tratamiento;
     }
 
+    /**
+     * Devuelve una descripción de un tratamiento según su id
+     *
+     * @param idTratamiento el id del tratamiento a buscar
+     * @return tratamiento o null si no existe
+     */
     public String findDescripcionById(int idTratamiento) {
         String descripcion = null;
         try (Connection con = ConnectionDB.getConnection();
@@ -159,6 +178,10 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
     }
 
 
+    /**
+     * Metodo para insertar un tratamiento
+     * @param tratamiento el tratamiento a insertar con los datos necesarios
+     */
     @Override
     public void insert(Tratamiento tratamiento) {
         try (Connection con = ConnectionDB.getConnection();
@@ -173,6 +196,11 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         }
     }
 
+    /**
+     * Metodo para actualizar un tratamiento
+     * @param idTratamiento el id del tratamiento a actualizar
+     * @param tratamiento el tratamiento con los datos a actualizar
+     */
     @Override
     public void update(int idTratamiento, Tratamiento tratamiento) {
         try (Connection con = ConnectionDB.getConnection();
@@ -195,6 +223,10 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         }
     }
 
+    /**
+     * Metodo para eliminar un tratamiento
+     * @param idTratamiento el id del tratamiento a eliminar
+     */
     @Override
     public void deleteById(int idTratamiento) {
         try (Connection con = ConnectionDB.getConnection();

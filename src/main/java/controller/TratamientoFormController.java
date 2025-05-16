@@ -34,14 +34,23 @@ public class TratamientoFormController {
     private final static Logger logger = Logger.getLogger(TratamientoFormController.class.getName());
     private Tratamiento tratamientoActual;
 
+    /**
+     * Establece el controlador principal para actualizar la lista de tratamientos.
+     *
+     * @param tratamientoController Controlador principal.
+     */
     public void setTratamientoController(TratamientoController tratamientoController) {
         this.tratamientoController = tratamientoController;
     }
 
+    /**
+     * Método que se ejecuta al inicializar la vista.
+     * Carga los dentistas en el ComboBox y configura su conversor.
+     */
     @FXML
     public void initialize() {
         cargarDentistas();
-
+// Configurar el conversor para mostrar los nombres de los dentistas en el ComboBox.
         dentistaComboBox.setConverter(new javafx.util.StringConverter<>() {
             @Override
             public String toString(Dentista dentista) {
@@ -58,6 +67,10 @@ public class TratamientoFormController {
         });
     }
 
+
+    /**
+     * Carga los dentistas desde la base de datos y los añade al ComboBox.
+     */
     private void cargarDentistas() {
         try {
             // Obtén la lista de dentistas desde la base de datos
@@ -72,6 +85,13 @@ public class TratamientoFormController {
         }
     }
 
+
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Guardar".
+     * Valida los datos ingresados y guarda el tratamiento en la base de datos.
+     *
+     * @param event Evento de acción.
+     */
     @FXML
     private void guardarTratamiento(ActionEvent event) {
         logger.info("Iniciando el proceso de guardar un tratamiento...");
@@ -155,26 +175,42 @@ public class TratamientoFormController {
         }
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Cancelar".
+     * Cierra la ventana del formulario.
+     *
+     * @param event Evento de acción.
+     */
     @FXML
     private void cancelar(ActionEvent event) {
         logger.info("Cancelando la operación y cerrando la ventana.");
         cerrarVentana(event);
     }
 
+    /**
+     * Cierra la ventana actual.
+     *
+     * @param event Evento de acción.
+     */
     private void cerrarVentana(ActionEvent event) {
         logger.info("Cerrando la ventana del formulario de tratamiento.");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Carga los datos del tratamiento en el formulario para su edición.
+     *
+     * @param tratamiento Tratamiento a cargar.
+     */
     public void cargarDatosTratamiento(Tratamiento tratamiento) {
         this.tratamientoActual = tratamiento;
         descripcionField.setText(tratamiento.getDescripcion());
         precioField.setText(String.valueOf(tratamiento.getPrecio()));
         dentistaComboBox.setValue(tratamiento.getDentista());
-                dentistaComboBox.getItems().stream()
-                        .filter(dentista -> dentista.getIdDentista() == tratamiento.getIdDentista())
-                        .findFirst()
-                        .orElse(null);
+        dentistaComboBox.getItems().stream()
+                .filter(dentista -> dentista.getIdDentista() == tratamiento.getIdDentista())
+                .findFirst()
+                .orElse(null);
     }
 }

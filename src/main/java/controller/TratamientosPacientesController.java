@@ -47,6 +47,10 @@ public class TratamientosPacientesController implements Initializable {
 
     private ObservableList<TratamientoPaciente> tratamientosPacientesList;
 
+    /**
+     * Método que se ejecuta al inicializar la vista.
+     * Configura las columnas de la tabla y carga los datos.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         logger.info("Inicializando controlador TratamientoPacienteController...");
@@ -77,6 +81,9 @@ public class TratamientosPacientesController implements Initializable {
         cargarTratamientosPacientes();
     }
 
+    /**
+     * Carga los tratamientos de pacientes desde la base de datos y los muestra en la tabla.
+     */
     public void cargarTratamientosPacientes() {
         logger.info("Cargando tratamientos de pacientes...");
         try {
@@ -90,6 +97,11 @@ public class TratamientosPacientesController implements Initializable {
         }
     }
 
+    /**
+     * Método para manejar el evento de volver al menú principal.
+     *
+     * @param event Evento de acción.
+     */
     @FXML
     private void volver(javafx.event.ActionEvent event) {
         logger.info("Intentando volver al menú principal...");
@@ -112,6 +124,11 @@ public class TratamientosPacientesController implements Initializable {
         }
     }
 
+    /**
+     * Método para manejar el evento de abrir el formulario de añadir tratamiento.
+     *
+     * @param event Evento de acción.
+     */
     @FXML
     private void abrirFormularioTratamientoPaciente(ActionEvent event) {
         try {
@@ -135,6 +152,10 @@ public class TratamientosPacientesController implements Initializable {
             alerta.showAndWait();
         }
     }
+
+    /**
+     * Método para manejar el evento de eliminar un tratamiento de paciente.
+     */
     @FXML
     private void eliminarTratamientoPaciente() {
         TratamientoPaciente seleccionado = tratamientosPacientesTable.getSelectionModel().getSelectedItem();
@@ -168,37 +189,41 @@ public class TratamientosPacientesController implements Initializable {
             alerta.showAndWait();
         }
     }
-@FXML
-private void editarTratamientoPaciente() {
-    TratamientoPaciente seleccionado = tratamientosPacientesTable.getSelectionModel().getSelectedItem();
 
-    if (seleccionado == null) {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("Advertencia");
-        alerta.setHeaderText("Ningún tratamiento seleccionado");
-        alerta.setContentText("Por favor, selecciona un tratamiento de la lista.");
-        alerta.showAndWait();
-        return;
+    /**
+     * Método para manejar el evento de editar un tratamiento de paciente.
+     */
+    @FXML
+    private void editarTratamientoPaciente() {
+        TratamientoPaciente seleccionado = tratamientosPacientesTable.getSelectionModel().getSelectedItem();
+
+        if (seleccionado == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Advertencia");
+            alerta.setHeaderText("Ningún tratamiento seleccionado");
+            alerta.setContentText("Por favor, selecciona un tratamiento de la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientosPacientesEditForm.fxml"));
+            Parent root = loader.load();
+
+            TratamientosPacientesFormController controller = loader.getController();
+            controller.setTratatamientosPacientesController(this); // Pasar referencia del controlador principal
+            controller.setTratamientoPaciente(seleccionado); // Pasar el tratamiento seleccionado
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Tratamiento de Paciente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se pudo abrir el formulario");
+            alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
+            alerta.showAndWait();
+        }
     }
-
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientosPacientesEditForm.fxml"));
-        Parent root = loader.load();
-
-        TratamientosPacientesFormController controller = loader.getController();
-        controller.setTratatamientosPacientesController(this); // Pasar referencia del controlador principal
-        controller.setTratamientoPaciente(seleccionado); // Pasar el tratamiento seleccionado
-
-        Stage stage = new Stage();
-        stage.setTitle("Editar Tratamiento de Paciente");
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setTitle("Error");
-        alerta.setHeaderText("No se pudo abrir el formulario");
-        alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
-        alerta.showAndWait();
-    }
-}
 }

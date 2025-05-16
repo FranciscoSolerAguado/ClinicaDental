@@ -22,12 +22,20 @@ public class DentistaController {
     private final DentistaDAO dentistaDAO = DentistaDAO.getInstance();
     private static final Logger logger = Logger.getLogger(DentistaController.class.getName());
 
+    /**
+     * Método que se ejecuta al inicializar la vista de Dentistas.
+     * Carga la lista de dentistas desde la base de datos y la muestra en la interfaz.
+     */
     @FXML
     public void initialize() {
         logger.info("Inicializando la vista de Dentistas...");
         cargarDentistas();
     }
 
+    /**
+     * Método para cargar la lista de dentistas desde la base de datos.
+     * Limpia la lista actual y agrega los nombres de los dentistas obtenidos.
+     */
     @FXML
     public void cargarDentistas() {
         try {
@@ -48,14 +56,14 @@ public class DentistaController {
         }
     }
 
+    /**
+     * Método para volver a la vista principal de la aplicación.
+     */
     @FXML
     private void volverAMain() {
         try {
-            // Cargar la vista principal
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
             Parent root = loader.load();
-
-            // Obtener la escena actual y cambiar el contenido
             Scene scene = dentistaListView.getScene();
             scene.setRoot(root);
         } catch (IOException e) {
@@ -64,10 +72,12 @@ public class DentistaController {
         }
     }
 
+    /**
+     * Método para mostrar todos los datos sobre el dentista seleccionado.
+     */
     @FXML
     private void mostrarMas() {
         logger.info("Intentando mostrar información del dentista seleccionado...");
-
         String nombreSeleccionado = dentistaListView.getSelectionModel().getSelectedItem();
 
         if (nombreSeleccionado == null) {
@@ -92,12 +102,12 @@ public class DentistaController {
             alerta.setHeaderText("Detalles del dentista seleccionado");
             alerta.setContentText(
                     "Nombre: " + dentista.getNombre() + "\n" +
-                            "DNI: " + dentista.getDni() + "\n" +
-                            "Teléfono: " + dentista.getTelefono() + "\n" +
-                            "Número Colegiado: " + dentista.getnColegiado() + "\n" +
-                            "Especialidad: " + dentista.getEspecialidad() + "\n" +
-                            "Fecha de Nacimiento: " + dentista.getFechaNacimiento() + "\n" +
-                            "Edad: " + dentista.getEdad()
+                    "DNI: " + dentista.getDni() + "\n" +
+                    "Teléfono: " + dentista.getTelefono() + "\n" +
+                    "Número Colegiado: " + dentista.getnColegiado() + "\n" +
+                    "Especialidad: " + dentista.getEspecialidad() + "\n" +
+                    "Fecha de Nacimiento: " + dentista.getFechaNacimiento() + "\n" +
+                    "Edad: " + dentista.getEdad()
             );
             alerta.showAndWait();
         } catch (DentistaNoEncontradoException e) {
@@ -238,5 +248,4 @@ public class DentistaController {
             alerta.showAndWait();
         }
     }
-
 }

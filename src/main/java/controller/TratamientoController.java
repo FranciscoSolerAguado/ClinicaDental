@@ -22,6 +22,10 @@ public class TratamientoController {
     private final TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TratamientoController.class.getName());
 
+    /**
+     * Método que se ejecuta al inicializar la vista.
+     * Carga los nombres de los tratamientos en el ListView.
+     */
     @FXML
     public void initialize() {
         // Cargar los nombres de los tratamientos en el ListView
@@ -33,6 +37,11 @@ public class TratamientoController {
     }
 
 
+    /**
+     * Vuelve a la vista principal.
+     * @param event realiza el cambio de vista.
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void volverAMain(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
@@ -43,6 +52,9 @@ public class TratamientoController {
         stage.show();
     }
 
+    /**
+     * Recarga la lista de tratamientos en el ListView.
+     */
     @FXML
     public void cargarTratamientos() {
         try {
@@ -63,6 +75,9 @@ public class TratamientoController {
         }
     }
 
+    /**
+     * Muestra información detallada del tratamiento seleccionado.
+     */
     @FXML
     private void mostrarMas() {
         logger.info("Intentando mostrar información del tratamiento seleccionado...");
@@ -115,6 +130,9 @@ public class TratamientoController {
         }
     }
 
+    /**
+     * Abre el formulario para añadir un nuevo tratamiento.
+     */
     @FXML
     private void abrirFormularioTratamiento() {
         try {
@@ -139,6 +157,9 @@ public class TratamientoController {
         }
     }
 
+    /**
+     * Elimina el tratamiento seleccionado.
+     */
     @FXML
     private void eliminarTratamiento() {
         String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem();
@@ -187,6 +208,9 @@ public class TratamientoController {
         }
     }
 
+    /**
+     * Abre el formulario para editar el tratamiento seleccionado.
+     */
     @FXML
     private void editarTratamiento() {
         String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem();

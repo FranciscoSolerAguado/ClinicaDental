@@ -36,12 +36,22 @@ public class DentistaFormController {
 
     private final DentistaDAO dentistaDAO = DentistaDAO.getInstance();
     private DentistaController dentistaController;
-    private final static Logger logger = Logger.getLogger(DentistaFormController.class.getName());
+    private final static Logger logger = Logger.getLogger(DentistaFormController.class.getName());//Clase logger para registrar eventos
 
+    /**
+     * Establece el controlador principal para actualizar la lista de dentistas.
+     *
+     * @param dentistaController Controlador principal.
+     */
     public void setDentistaController(DentistaController dentistaController) {
         this.dentistaController = dentistaController;
     }
 
+    /**
+     * Guarda un nuevo dentista o actualiza uno existente.
+     *
+     * @param event realiza el guardado.
+     */
     @FXML
     private void guardarDentista(ActionEvent event) {
         logger.info("Iniciando el proceso de guardar un dentista...");
@@ -142,12 +152,22 @@ public class DentistaFormController {
         }
     }
 
+    /**
+     * Cancela la operación y cierra la ventana.
+     *
+     * @param event realiza el cierre.
+     */
     @FXML
     private void cancelar(ActionEvent event) {
         logger.info("Cancelando la operación y cerrando la ventana.");
         cerrarVentana(event);
     }
 
+    /**
+     * Cierra la ventana del formulario.
+     *
+     * @param event realiza el cierre.
+     */
     private void cerrarVentana(ActionEvent event) {
         logger.info("Cerrando la ventana del formulario de dentista.");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -156,6 +176,11 @@ public class DentistaFormController {
 
     private Dentista dentistaActual;
 
+    /**
+     * Carga los datos de un dentista en el formulario para su edición.
+     *
+     * @param dentista Dentista cuyos datos se cargarán.
+     */
     public void cargarDatosDentista(Dentista dentista) {
         this.dentistaActual = dentista;
         nombreField.setText(dentista.getNombre());

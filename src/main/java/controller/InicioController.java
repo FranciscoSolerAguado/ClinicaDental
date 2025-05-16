@@ -19,6 +19,10 @@ public class InicioController {
     @FXML
     private Label welcomeLabel;
 
+    /**
+     * Método que se ejecuta al inicializar la vista.
+     * Configura una pantalla de caraga de 3 segundos antes de cambiar a la vista principal.
+     */
     @FXML
     public void initialize() {
         // Espera 3 segundos antes de cambiar a pantalla completa
@@ -27,20 +31,22 @@ public class InicioController {
         pause.play();
     }
 
+    /**
+     * Cambia la vista actual a la vista principal y ajusta la ventana.
+     */
     private void ponerPantallaCompleta() {
         try {
             // Cargar el archivo main.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../main.fxml"));
             AnchorPane mainPane = loader.load();
 
-            // Obtener la escena actual y establecer el nuevo contenido
             Scene scene = rootPane.getScene();
             scene.setRoot(mainPane);
 
-            // Configurar la ventana en modo maximizado
+            // Ajustar la ventana a pantalla completa con bordes
             Stage stage = (Stage) scene.getWindow();
-            stage.setFullScreen(false); // Desactivar pantalla completa
-            stage.setMaximized(true);  // Maximizar la ventana
+            stage.setFullScreen(false);
+            stage.setMaximized(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

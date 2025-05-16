@@ -11,9 +11,9 @@ public class ConnectionDB {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/clinicadental", // Cambia por tu URL
-                        "root", // Cambia por tu usuario
-                        "" // Cambia por tu contraseña
+                        "jdbc:mysql://localhost:3306/clinicadental",
+                        "root",
+                        ""
                 );
             }
         } catch (SQLException e) {
