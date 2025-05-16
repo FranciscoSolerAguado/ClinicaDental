@@ -30,15 +30,12 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
 
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
-    private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_FIND_BY_DESCRIPCION = "SELECT * FROM Tratamiento WHERE descripcion = ?";
     private final static String SQL_FIND_DESCRIPCION_BY_ID = "SELECT descripcion FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_INSERT = "INSERT INTO Tratamiento (descripcion, precio, idDentista) VALUES(?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Tratamiento SET descripcion = ?, precio = ?, idDentista = ? WHERE idTratamiento = ?";
-    private final static String SQL_UPDATE_DESCRIPCION = "UPDATE Tratamiento SET descripcion = ? WHERE idTratamiento = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_SELECT_BY_DENTISTA = "SELECT * FROM Tratamiento WHERE idDentista = ?";
-    private final static String SQL_SELECT_BY_PACIENTE = "SELECT * FROM TratamientoPaciente WHERE idPaciente = ?";
 
     /**
      * Version lazy para obtener todos los tratamientos en un list
@@ -95,7 +92,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         return new ArrayList<>(tratamientos);
     }
 
-    public Tratamiento findByDescripcionEager (String descripcion) {
+    public Tratamiento findByDescripcionEager(String descripcion) {
         Tratamiento tratamiento = null;
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_DESCRIPCION)) {
@@ -161,55 +158,6 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         return tratamientos;
     }
 
-    /**
-     * Devuelve la lista de tratamientos de un paciente según su Id, en versión Lazy
-     *
-     * @param idPacienteBuscado
-     * @return tratamientos
-     */
-    public List<Tratamiento> findTratamientosByPaciente(int idPacienteBuscado) {
-        List<Tratamiento> tratamientos = new ArrayList<>();
-        try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_PACIENTE)) {
-            pst.setInt(1, idPacienteBuscado);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                Tratamiento tratamiento = new Tratamiento();
-                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setDescripcion(rs.getString("descripcion"));
-                tratamiento.setPrecio(rs.getDouble("precio"));
-                tratamiento.setIdDentista(rs.getInt("idDentista"));
-
-                tratamientos.add(tratamiento);
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener tratamientos por paciente: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return tratamientos;
-    }
-
-    public Tratamiento findByIdEager(int idTratamiento) {
-        Tratamiento tratamiento = null;
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
-            pst.setInt(1, idTratamiento);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                tratamiento = new Tratamiento();
-                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setDescripcion(rs.getString("descripcion"));
-                tratamiento.setPrecio(rs.getDouble("precio"));
-                tratamiento.setIdDentista(rs.getInt("idDentista"));
-
-                // Cargar el dentista asociado (versión EAGER)
-                tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener el tratamiento por ID: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return tratamiento;
-    }
 
     @Override
     public void insert(Tratamiento tratamiento) {
@@ -244,20 +192,6 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
         } catch (SQLException e) {
             logger.severe("Error al actualizar el tratamiento: " + e.getMessage());
             throw new RuntimeException("Error al actualizar el tratamiento", e);
-        }
-    }
-
-    public void updateDescripcion(int idTratamiento, String descripcion) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_UPDATE_DESCRIPCION)) {
-
-
-            pst.setString(1, descripcion);
-            pst.setInt(2, idTratamiento);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            logger.severe("Error al actualizar la descripción del tratamiento: " + e.getMessage());
-            throw new RuntimeException("Error al actualizar la descripción del tratamiento", e);
         }
     }
 

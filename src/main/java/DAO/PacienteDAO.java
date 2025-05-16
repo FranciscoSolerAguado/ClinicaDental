@@ -31,14 +31,11 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_ALL = "SELECT * FROM Paciente";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
-    private final static String SQL_FIND_BY_DNI = "SELECT * FROM Paciente WHERE dni = ?";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Paciente WHERE nombre = ?";
     private final static String SQL_FIND_NAME_BY_ID = "SELECT nombre FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_INSERT = "INSERT INTO Paciente (nombre, dni, telefono, alergias, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Paciente SET nombre = ?, dni = ?, telefono = ?, alergias = ?, fechaNacimiento = ?, edad = ? WHERE idPaciente = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Paciente WHERE idPaciente = ?";
-    private final static String SQL_DELETE_BY_DNI = "DELETE FROM Paciente WHERE dni = ?";
-    private final static String SQL_SELECT_BY_TRATAMIENTO = "SELECT * FROM Paciente WHERE idPaciente IN (SELECT idPaciente FROM TratamientoDentista WHERE idTratamiento = ?)";
 
     /**
      * Version lazy para obtener todos los pacientes en un list
@@ -126,28 +123,6 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         return nombre;
     }
 
-    public Paciente findPacienteByTratamiento(int idTratamiento) {
-        Paciente paciente = null;
-        try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_TRATAMIENTO)) {
-            pst.setInt(1, idTratamiento);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                paciente = new Paciente();
-                paciente.setIdPaciente(rs.getInt("idPaciente"));
-                paciente.setNombre(rs.getString("nombre"));
-                paciente.setDni(rs.getString("dni"));
-                paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setAlergias(rs.getString("alergias"));
-                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                paciente.setEdad(rs.getInt("edad"));
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener el paciente por tratamiento: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return paciente;
-    }
-
     public Paciente findByIdEager(int idPaciente) {
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
@@ -195,32 +170,6 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             }
         } catch (SQLException e) {
             logger.severe("Error al obtener el paciente por nombre: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return paciente;
-    }
-
-    public Paciente findByDNIEager(String dni) {
-        Paciente paciente = null;
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_DNI)) {
-            pst.setString(1, dni);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                paciente = new Paciente();
-                paciente.setIdPaciente(rs.getInt("idPaciente"));
-                paciente.setNombre(rs.getString("nombre"));
-                paciente.setDni(rs.getString("dni"));
-                paciente.setTelefono(rs.getInt("telefono"));
-                paciente.setAlergias(rs.getString("alergias"));
-                paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                paciente.setEdad(rs.getInt("edad"));
-
-                // Cargar los tratamientos asociados (versión EAGER)
-                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener el paciente por DNI: " + e.getMessage());
             throw new RuntimeException(e);
         }
         return paciente;
@@ -290,26 +239,6 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         } catch (SQLException e) {
             logger.severe("Error al eliminar el paciente: " + e.getMessage());
             throw new RuntimeException("Error al eliminar el paciente con id: " + idPaciente, e);
-        }
-    }
-
-    public void deleteByDni(String dni) {
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement checkStmt = con.prepareStatement(SQL_CHECK);
-             PreparedStatement pst = con.prepareStatement(SQL_DELETE_BY_DNI)) {
-
-            checkStmt.setString(1, dni);
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next() && rs.getInt(1) == 0) {
-                    throw new PacienteNoEncontradoException("El paciente con DNI " + dni + " no existe.");
-                }
-            }
-
-            pst.setString(1, dni);
-            pst.executeUpdate();
-        } catch (SQLException e) {
-            logger.severe("Error al eliminar el paciente: " + e.getMessage());
-            throw new RuntimeException("Error al eliminar el paciente con DNI: " + dni, e);
         }
     }
 }

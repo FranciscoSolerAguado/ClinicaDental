@@ -36,7 +36,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-                <TableView fx:id="tratamientosPacientesTable" prefHeight="400.0" prefWidth="780.0">
+                <TableView fx:id="tratamientosPacientesTable" prefHeight="600.0" prefWidth="758.0">
                     <columns>
                         <TableColumn fx:id="colPaciente" prefWidth="200.0" text="Paciente" />
                         <TableColumn fx:id="colTratamiento" prefWidth="260.79998779296875" text="Tratamiento" />

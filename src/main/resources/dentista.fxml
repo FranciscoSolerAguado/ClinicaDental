@@ -37,7 +37,7 @@
         </Label>
 
         <!-- Lista de dentistas -->
-        <ListView fx:id="dentistaListView" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #d1ffba; -fx-text-fill: #FFFFFF;">
+        <ListView fx:id="dentistaListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #d1ffba; -fx-text-fill: #FFFFFF;">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></ListView>

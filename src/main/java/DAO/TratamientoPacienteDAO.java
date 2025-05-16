@@ -1,8 +1,6 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
-import exceptions.PacienteNoEncontradoException;
-import exceptions.TratamientoPacienteNoEncontrado;
 import model.TratamientoPaciente;
 import utils.LoggerUtil;
 
@@ -25,10 +23,8 @@ public class TratamientoPacienteDAO {
         return instance;
     }
 
-    private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM tratamientopaciente";
     private final static String SQL_INSERT = "INSERT INTO tratamientopaciente (idPaciente, idTratamiento, fechaTratamiento, detalles) VALUES (?, ?, ?, ?)";
-    private final static String SQL_FIND_BY_ID = "SELECT * FROM tratamientopaciente WHERE idTratamiento = ?";
     private final static String SQL_UPDATE = "UPDATE TratamientoPaciente SET idPaciente = ?, idTratamiento = ?, detalles = ? WHERE idPaciente = ? AND idTratamiento = ?";
     private final static String SQL_SELECT_BY_PACIENTE = "SELECT * FROM TratamientoPaciente WHERE idPaciente = ?";
     private final static String SQL_DELETE = "DELETE FROM TratamientoPaciente WHERE idPaciente = ? AND idTratamiento = ? AND fechaTratamiento = ?";
@@ -81,27 +77,6 @@ public class TratamientoPacienteDAO {
         }
         return tratamientosPacientes;
     }
-
-    public TratamientoPaciente findById(int idTratamiento) {
-        TratamientoPaciente tratamientoPaciente = null;
-        try (Connection con = ConnectionDB.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
-            pst.setInt(1, idTratamiento);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                tratamientoPaciente = new TratamientoPaciente();
-                tratamientoPaciente.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamientoPaciente.setIdPaciente(rs.getInt("idPaciente"));
-                tratamientoPaciente.setFechaTratamiento(rs.getDate("fechaTratamiento").toLocalDate());
-                tratamientoPaciente.setDetalles(rs.getString("detalles"));
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al buscar tratamiento por ID: " + e.getMessage());
-            throw new RuntimeException("Error al buscar tratamiento por ID", e);
-        }
-        return tratamientoPaciente;
-    }
-
 
     public List<TratamientoPaciente> findTratamientosByPaciente(int idPacienteBuscado) {
         List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();

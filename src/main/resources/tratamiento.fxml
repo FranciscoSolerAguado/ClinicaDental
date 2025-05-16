@@ -17,7 +17,7 @@
         <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #fdcc8d;" text="Gestión de Tratamientos" />
 
         <!-- Lista de dentistas -->
-        <ListView fx:id="tratamientoListView" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #fdcc8d; -fx-text-fill: #FFFFFF;">
+        <ListView fx:id="tratamientoListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #fdcc8d; -fx-text-fill: #FFFFFF;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
