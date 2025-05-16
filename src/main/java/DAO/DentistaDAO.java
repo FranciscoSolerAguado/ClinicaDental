@@ -35,6 +35,9 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         return tratamientoDAO;
     }
 
+    /**
+     * Consultas SQL
+     */
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Dentista WHERE idDentista = ?";
     private final static String SQL_ALL = "SELECT * FROM Dentista";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
@@ -120,6 +123,12 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         return new ArrayList<>(dentistas);
     }
 
+    /**
+     * Busca un dentista por el del ID del tratamiento.
+     *
+     * @param idTratamiento el ID del tratamiento por el que se busca el dentista.
+     * @return el dentista encontrado o null si no se encuentra.
+     */
     public Dentista findDentistaByTratamiento(int idTratamiento) {
         Dentista dentista = null;
         try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_TRATAMIENTO)) {
@@ -143,6 +152,13 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         return dentista;
     }
 
+    /**
+     * VERSION EAGER
+     * Busca un dentista por su nombre.
+     *
+     * @param nombre el nombre del dentista a buscar.
+     * @return el dentista encontrado o null si no se encuentra.
+     */
     public Dentista findByNameEager(String nombre) {
         if (tratamientoDAO == null) {
             tratamientoDAO = getTratamientoDAO();
@@ -173,6 +189,12 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         return dentista;
     }
 
+    /**
+     * Metodo para insertar un dentista en la base de datos.
+     *
+     * @param dentista el dentista a insertar.
+     *
+     */
     @Override
     public void insert(Dentista dentista) {
         try (Connection con = ConnectionDB.getConnection();
@@ -191,6 +213,12 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         }
     }
 
+    /**
+     * Metodo para actualizar un dentista en la base de datos.
+     *
+     * @param idDentista el ID del dentista a actualizar.
+     * @param dentista   el dentista con los nuevos datos.
+     */
     @Override
     public void update(int idDentista, Dentista dentista) {
         try (Connection con = ConnectionDB.getConnection();
@@ -205,7 +233,6 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
                 }
             }
 
-            // Asignar los parámetros en el orden correcto
             pst.setString(1, dentista.getNombre());
             pst.setString(2, dentista.getDni());
             pst.setInt(3, dentista.getTelefono());
@@ -213,7 +240,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
             pst.setString(5, dentista.getEspecialidad());
             pst.setDate(6, java.sql.Date.valueOf(dentista.getFechaNacimiento()));
             pst.setInt(7, dentista.getEdad());
-            pst.setInt(8, idDentista); // ID del dentista para la cláusula WHERE
+            pst.setInt(8, idDentista);
 
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -222,6 +249,11 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
         }
     }
 
+    /**
+     * Metodo para eliminar un dentista de la base de datos.
+     *
+     * @param idDentista el ID del dentista a eliminar.
+     */
     @Override
     public void deleteById(int idDentista) {
         try (Connection con = ConnectionDB.getConnection();

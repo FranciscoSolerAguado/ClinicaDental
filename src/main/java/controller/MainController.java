@@ -21,6 +21,12 @@ public class MainController {
     private Stage stage;
     private Scene scene;
 
+    /**
+     * Cambia a la vista de Dentista.
+     *
+     * @param event realiza el cambio de vista.
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void switchToDentista(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Dentista...");
@@ -44,6 +50,12 @@ public class MainController {
         }
     }
 
+    /**
+     * Cambia a la vista de Paciente.
+     *
+     * @param event realiza el cambio de vista.
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void switchToPaciente(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Paciente...");
@@ -67,6 +79,12 @@ public class MainController {
         }
     }
 
+    /**
+     * Cambia a la vista de Tratamiento.
+     *
+     * @param event realiza el cambio de vista.
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void switchToTratamiento(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Tratamiento...");
@@ -90,6 +108,12 @@ public class MainController {
         }
     }
 
+    /**
+     * Cambia a la vista de Tratamientos a Pacientes.
+     *
+     * @param event realiza el cambio de vista.
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void switchToTratamientosPacientes(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Tratamientos a Pacientes...");

@@ -28,6 +28,9 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         return instance;
     }
 
+    /**
+     * Consultas SQL
+     */
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Paciente WHERE idPaciente = ?";
     private final static String SQL_ALL = "SELECT * FROM Paciente";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM Paciente WHERE idPaciente = ?";
@@ -108,6 +111,11 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         return new ArrayList<>(pacientes);
     }
 
+    /**
+     * Metodo que encuentra el nombre de un paciente por su id
+     * @param idPaciente el id del paciente
+     * @return el nombre del paciente
+     */
     public String findNameById(int idPaciente) {
         String nombre = null;
         try (java.sql.PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_FIND_NAME_BY_ID)) {
@@ -123,6 +131,12 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         return nombre;
     }
 
+    /**
+     * VERSION EAGER
+     * Metodo que encuentra un paciente por su id
+     * @param idPaciente el id del paciente
+     * @return el paciente
+     */
     public Paciente findByIdEager(int idPaciente) {
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
@@ -149,6 +163,12 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         return paciente;
     }
 
+    /**
+     * VERSION EAGER
+     * Método que encuentra un paciente por su nombre
+     * @param nombre el nombre del paciente
+     * @return el paciente
+     */
     public Paciente findByNameEager(String nombre) {
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
@@ -175,6 +195,10 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         return paciente;
     }
 
+    /**
+     * Metodo que inserta un paciente en la BBDD
+     * @param paciente el paciente a insertar con los datos pasados por el formulario
+     */
     @Override
     public void insert(Paciente paciente) {
         try (Connection con = ConnectionDB.getConnection();
@@ -191,6 +215,11 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         }
     }
 
+    /**
+     * Metodo que actualiza un paciente en la BBDD
+     * @param idPaciente el id del paciente a actualizar
+     * @param paciente el paciente con los nuevos datos
+     */
     @Override
     public void update(int idPaciente, Paciente paciente) {
         try (Connection con = ConnectionDB.getConnection();
@@ -221,6 +250,10 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
         }
     }
 
+    /**
+     * Metodo que elimina un paciente de la BBDD
+     * @param idPaciente el id del paciente a eliminar
+     */
     @Override
     public void deleteById(int idPaciente) {
         try (Connection con = ConnectionDB.getConnection();

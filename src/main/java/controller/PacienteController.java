@@ -28,6 +28,10 @@ public class PacienteController {
     private final PacienteDAO pacienteDAO = PacienteDAO.getInstance();
     private static final Logger logger = Logger.getLogger(PacienteController.class.getName());
 
+    /**
+     * Método que se ejecuta al inicializar la vista.
+     * Carga los nombres de los pacientes en el ListView.
+     */
     @FXML
     public void initialize() {
         // Cargar los nombres de los pacientes en el ListView
@@ -38,6 +42,12 @@ public class PacienteController {
         });
     }
 
+    /**
+     * Vuelve a la vista principal.
+     *
+     * @param event realiza el cambio de vista.
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void volverAMain(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
@@ -49,6 +59,9 @@ public class PacienteController {
     }
 
 
+    /**
+     * Recarga la lista de pacientes en el ListView.
+     */
     @FXML
     public void cargarPacientes() {
         try {
@@ -69,6 +82,9 @@ public class PacienteController {
         }
     }
 
+    /**
+     * Muestra información detallada del paciente seleccionado.
+     */
     @FXML
     private void mostrarMas() {
         logger.info("Intentando mostrar información del paciente seleccionado...");
@@ -122,6 +138,9 @@ public class PacienteController {
         }
     }
 
+    /**
+     * Abre el formulario para añadir un nuevo paciente.
+     */
     @FXML
     private void abrirFormularioPaciente() {
         try {
@@ -146,6 +165,9 @@ public class PacienteController {
         }
     }
 
+    /**
+     * Elimina el paciente seleccionado.
+     */
     @FXML
     private void eliminarPaciente() {
         String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
@@ -194,6 +216,9 @@ public class PacienteController {
         }
     }
 
+    /**
+     * Elimina el paciente seleccionado.
+     */
     @FXML
     private void editarPaciente() {
         String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
@@ -245,7 +270,10 @@ public class PacienteController {
     }
 
 
-   @FXML
+    /**
+     * Muestra los tratamientos del paciente seleccionado.
+     */
+    @FXML
     private void mostrarTratamientosPaciente() {
         String nombreSeleccionado = pacienteListView.getSelectionModel().getSelectedItem();
 

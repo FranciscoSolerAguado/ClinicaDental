@@ -35,25 +35,42 @@ public class TratamientosPacientesFormController {
     private TratamientosPacientesController tratamientoPacienteController;
     private TratamientoPaciente tratamientoPaciente;
 
+    /**
+     * Establece el controlador principal para actualizar la lista de tratamientos.
+     *
+     * @param tratamientoPacienteController Controlador principal.
+     */
     public void setTratatamientosPacientesController(TratamientosPacientesController tratamientoPacienteController) {
         this.tratamientoPacienteController = tratamientoPacienteController;
     }
 
-public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
-    this.tratamientoPaciente = tratamientoPaciente;
+    /**
+     * Establece el tratamiento de paciente a editar y rellena los campos del formulario.
+     * @param tratamientoPaciente TratamientoPaciente cuyos datos se cargarán.
+     */
+    public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
+        this.tratamientoPaciente = tratamientoPaciente;
 
-    // Rellenar los campos con los datos del tratamiento seleccionado
-    idPaciente.setValue(PacienteDAO.getInstance().findByIdEager(tratamientoPaciente.getIdPaciente()));
-    idTratamiento.setValue(TratamientoDAO.getInstance().findDescripcionById(tratamientoPaciente.getIdTratamiento()));
-    detalles.setText(tratamientoPaciente.getDetalles());
-}
+        // Rellenar los campos con los datos del tratamiento seleccionado
+        idPaciente.setValue(PacienteDAO.getInstance().findByIdEager(tratamientoPaciente.getIdPaciente()));
+        idTratamiento.setValue(TratamientoDAO.getInstance().findDescripcionById(tratamientoPaciente.getIdTratamiento()));
+        detalles.setText(tratamientoPaciente.getDetalles());
+    }
 
+
+    /**
+     * Método que se ejecuta al inicializar la vista.
+     * Configura los ComboBox y carga los datos necesarios.
+     */
     @FXML
     private void initialize() {
         configurarComboBoxPaciente();
         configurarComboBoxTratamiento();
     }
 
+    /**
+     * Configura el ComboBox de pacientes para mostrar el nombre del paciente.
+     */
     private void configurarComboBoxPaciente() {
         idPaciente.setCellFactory(comboBox -> new ListCell<>() {
             @Override
@@ -74,6 +91,9 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
         cargarPacientes();
     }
 
+    /**
+     * Configura el ComboBox de tratamientos para mostrar la descripción del tratamiento.
+     */
     private void configurarComboBoxTratamiento() {
         idTratamiento.setCellFactory(comboBox -> new ListCell<>() {
             @Override
@@ -94,6 +114,9 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
         cargarTratamientos();
     }
 
+    /**
+     * Carga los pacientes desde la base de datos y los añade al ComboBox.
+     */
     private void cargarPacientes() {
         try {
             List<Object> pacientes = PacienteDAO.getInstance().findAll();
@@ -107,6 +130,9 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
         }
     }
 
+    /**
+     * Carga los tratamientos desde la base de datos y los añade al ComboBox.
+     */
     private void cargarTratamientos() {
         try {
             List<Object> tratamientos = TratamientoDAO.getInstance().findAll();
@@ -119,6 +145,12 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
             logger.log(Level.SEVERE, "Error al cargar los tratamientos: " + e.getMessage(), e);
         }
     }
+
+    /**
+     * Guarda el tratamiento del paciente en la base de datos.
+     *
+     * @param event Evento de acción.
+     */
     @FXML
     private void guardarTratamientoPaciente(ActionEvent event) {
         try {
@@ -133,7 +165,7 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
                 throw new DetallesVaciosException("El campo detalles no puede estar vacío.");
             }
 
-            // Obtener datos del formulario
+            // Obtener datos del form
             Paciente paciente = idPaciente.getValue();
             String descripcionTratamiento = idTratamiento.getValue();
             Tratamiento tratamiento = TratamientoDAO.getInstance().findByDescripcionEager(descripcionTratamiento);
@@ -170,15 +202,14 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
 
             // Cerrar la ventana
             cerrarVentana(event);
-        }catch (PacienteNoSeleccionadoException e){
+        } catch (PacienteNoSeleccionadoException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento a paciente: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al añadir el tratamiento");
             alerta.setContentText("Debe seleccionarse un paciente.");
             alerta.showAndWait();
-        }
-        catch (DetallesVaciosException e) {
+        } catch (DetallesVaciosException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento a paciente: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -192,8 +223,7 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
             alerta.setHeaderText("Error al añadir el tratamiento");
             alerta.setContentText("Debe seleccionarse un tratamiento.");
             alerta.showAndWait();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento a paciente: " + e.getMessage(), e);
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -203,6 +233,11 @@ public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
         }
     }
 
+    /**
+     * Método para manejar el evento de cancelar la operación.
+     *
+     * @param event Evento de acción.
+     */
     @FXML
     private void cancelar(ActionEvent event) {
         logger.info("Cancelando la operación y cerrando la ventana.");

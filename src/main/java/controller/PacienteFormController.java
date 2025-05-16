@@ -35,10 +35,18 @@ public class PacienteFormController {
     private PacienteController pacienteController;
     private final static Logger logger = Logger.getLogger(PacienteFormController.class.getName());
 
+    /**
+     * Establece el controlador principal para actualizar la lista de pacientes.
+     * @param pacienteController Controlador principal.
+     */
     public void setPacienteController(PacienteController pacienteController) {
         this.pacienteController = pacienteController;
     }
 
+    /**
+     * Guarda los datos del paciente, ya sea creando uno nuevo o actualizando uno existente.
+     * @param event Evento que dispara la acción.
+     */
     @FXML
     private void guardarPaciente(ActionEvent event) {
         logger.info("Iniciando el proceso de guardar un paciente...");
@@ -126,12 +134,20 @@ public class PacienteFormController {
         }
     }
 
+    /**
+     * Cancela la operación y cierra la ventana.
+     * @param event realiza la acción.
+     */
     @FXML
     private void cancelar(ActionEvent event) {
         logger.info("Cancelando la operación y cerrando la ventana.");
         cerrarVentana(event);
     }
 
+    /**
+     * Cierra la ventana actual.
+     * @param event realiza la acción.
+     */
     private void cerrarVentana(ActionEvent event) {
         logger.info("Cerrando la ventana del formulario de paciente.");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -140,6 +156,10 @@ public class PacienteFormController {
 
     private Paciente pacienteActual;
 
+    /**
+     * Carga los datos de un paciente existente en el formulario.
+     * @param paciente Paciente a cargar.
+     */
     public void cargarDatosPaciente(Paciente paciente) {
         this.pacienteActual = paciente;
         nombreField.setText(paciente.getNombre());
