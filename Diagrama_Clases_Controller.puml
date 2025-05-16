@@ -1,0 +1,123 @@
+@startuml
+package controller {
+    class DentistaController {
+        - dentistaDAO: DentistaDAO
+        - dentistaListView: ListView<String>
+        + cargarDentistas(): void
+        + mostrarMas(): void
+        + abrirFormularioDentista(): void
+        + eliminarDentista(): void
+        + editarDentista(): void
+    }
+
+    class DentistaFormController {
+        - nombreField: TextField
+        - dniField: TextField
+        - telefonoField: TextField
+        - nColegiadoField: TextField
+        - especialidadField: TextField
+        - fechaNacimientoPicker: DatePicker
+        - dentistaDAO: DentistaDAO
+        - dentistaActual: Dentista
+        + setDentistaController(controller: DentistaController): void
+        + guardarDentista(event: ActionEvent): void
+        + cancelar(event: ActionEvent): void
+        + cargarDatosDentista(dentista: Dentista): void
+    }
+
+    class InicioController {
+        - rootPane: AnchorPane
+        - welcomeLabel: Label
+        + initialize(): void
+        + ponerPantallaCompleta(): void
+    }
+
+    class MainController {
+        + switchToDentista(event: ActionEvent): void
+        + switchToPaciente(event: ActionEvent): void
+        + switchToTratamiento(event: ActionEvent): void
+        + switchToTratamientosPacientes(event: ActionEvent): void
+    }
+
+    class PacienteController {
+        - pacienteDAO: PacienteDAO
+        - pacienteListView: ListView<String>
+        + cargarPacientes(): void
+        + mostrarMas(): void
+        + abrirFormularioPaciente(): void
+        + eliminarPaciente(): void
+        + editarPaciente(): void
+        + mostrarTratamientosPaciente(): void
+    }
+
+    class PacienteFormController {
+        - nombreField: TextField
+        - dniField: TextField
+        - telefonoField: TextField
+        - alergiasField: TextField
+        - fechaNacimientoPicker: DatePicker
+        - pacienteDAO: PacienteDAO
+        - pacienteActual: Paciente
+        + setPacienteController(controller: PacienteController): void
+        + guardarPaciente(event: ActionEvent): void
+        + cancelar(event: ActionEvent): void
+        + cargarDatosPaciente(paciente: Paciente): void
+    }
+
+    class PacienteTratamientoController {
+        - tratamientosListView: ListView<String>
+        - pacienteActual: Paciente
+        + setPaciente(paciente: Paciente): void
+        + cargarTratamientos(): void
+        + cerrarVentana(): void
+    }
+
+    class TratamientoController {
+        - tratamientoDAO: TratamientoDAO
+        - tratamientoListView: ListView<String>
+        + cargarTratamientos(): void
+        + mostrarMas(): void
+        + abrirFormularioTratamiento(): void
+        + eliminarTratamiento(): void
+        + editarTratamiento(): void
+    }
+
+    class TratamientoFormController {
+        - descripcionField: TextField
+        - precioField: TextField
+        - dentistaComboBox: ComboBox<Dentista>
+        - tratamientoActual: Tratamiento
+        + setTratamientoController(controller: TratamientoController): void
+        + guardarTratamiento(event: ActionEvent): void
+        + cancelar(event: ActionEvent): void
+        + cargarDatosTratamiento(tratamiento: Tratamiento): void
+    }
+
+    class TratamientosPacientesController {
+        - tratamientosPacientesTable: TableView<TratamientoPaciente>
+        - tratamientosPacientesList: ObservableList<TratamientoPaciente>
+        + cargarTratamientosPacientes(): void
+        + volver(event: ActionEvent): void
+        + abrirFormularioTratamientoPaciente(event: ActionEvent): void
+        + eliminarTratamientoPaciente(): void
+        + editarTratamientoPaciente(): void
+    }
+
+    class TratamientosPacientesFormController {
+        - idPaciente: ComboBox<Paciente>
+        - idTratamiento: ComboBox<String>
+        - detalles: TextField
+        - tratamientoPaciente: TratamientoPaciente
+        + setTratatamientosPacientesController(controller: TratamientosPacientesController): void
+        + setTratamientoPaciente(tratamientoPaciente: TratamientoPaciente): void
+        + guardarTratamientoPaciente(event: ActionEvent): void
+        + cancelar(event: ActionEvent): void
+    }
+
+    DentistaController --> DentistaFormController
+    PacienteController --> PacienteFormController
+    PacienteController --> PacienteTratamientoController
+    TratamientoController --> TratamientoFormController
+    TratamientosPacientesController --> TratamientosPacientesFormController
+}
+@enduml
