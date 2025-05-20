@@ -77,6 +77,11 @@ public class Paciente extends Persona{
     }
 
     @Override
+    public String mostrarNombre() {
+        return getNombre();
+    }
+
+    @Override
     public String toString() {
         return "Paciente{" +
                 ", nombre='" + getNombre() + '\'' +

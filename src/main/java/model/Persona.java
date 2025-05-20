@@ -1,6 +1,6 @@
 package model;
 
-public class Persona {
+public abstract class Persona {
     private String nombre;
     private String dni;
     private int telefono;
@@ -39,6 +39,7 @@ public class Persona {
         this.telefono = telefono;
     }
 
+    public abstract String mostrarNombre();
 
     @Override
     public String toString() {
