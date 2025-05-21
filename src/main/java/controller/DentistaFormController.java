@@ -58,18 +58,18 @@ public class DentistaFormController {
         try {
             String nombre = nombreField.getText();
             String dni = dniField.getText();
-            if (!dni.matches("^[0-9]{8}[A-HJ-NP-TV-Z]$")) {
+            if (!dni.matches("^[0-9]{8}[A-HJ-NP-TV-Z]$")) { // EXPRESIÓN REGULAR DNI
                 throw new DNIErroneoException("DNI incorrecto. Debe tener 8 cifras y una letra al final.");
             }
 
             String telefonoStr = telefonoField.getText();
-            if (!telefonoStr.matches("^[67][0-9]{8}$")) {
+            if (!telefonoStr.matches("^[67][0-9]{8}$")) { // EXPRESIÓN REGULAR TELÉFONO
                 throw new TelefonoErroneoException("Teléfono incorrecto. Debe tener 9 cifras y comenzar por 6 o 7.");
             }
             int telefono = Integer.parseInt(telefonoStr);
 
             String nColegiado = nColegiadoField.getText();
-            if (!nColegiado.matches("^[0-9]{5}-[A-Z]$")) {
+            if (!nColegiado.matches("^[0-9]{5}-[A-Z]$")) { // EXPRESIÓN REGULAR NÚMERO DE COLEGIADO
                 throw new NColegiadoErroneoException("Número de colegiado incorrecto. Debe ser 5 dígitos seguidos de '-' y una letra mayúscula.");
             }
 
@@ -78,7 +78,7 @@ public class DentistaFormController {
             if (fechaNacimiento == null) {
                 throw new FechaNVaciaException("La fecha de nacimiento no puede estar vacía.");
             }
-            int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
+            int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears(); // La edad no es necesario guardarla, se calcula a partir de la fecha de nacimiento.
 
             if (dentistaActual != null) {
                 // Actualizar dentista existente

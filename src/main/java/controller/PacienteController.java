@@ -36,8 +36,8 @@ public class PacienteController {
     public void initialize() {
         // Cargar los nombres de los pacientes en el ListView
         pacienteDAO.findAll().forEach(paciente -> {
-            if (paciente instanceof Paciente) {
-                pacienteListView.getItems().add(((Paciente) paciente).getNombre());
+            if (paciente instanceof Paciente) { // Verifica que el objeto sea de tipo Paciente
+                pacienteListView.getItems().add(((Paciente) paciente).getNombre()); //En el list view se muestra el nombre del paciente
             }
         });
     }
@@ -67,7 +67,7 @@ public class PacienteController {
         try {
             pacienteListView.getItems().clear();
             pacienteDAO.findAll().forEach(paciente -> {
-                if (paciente instanceof Paciente) {
+                if (paciente instanceof Paciente) { // Verifica que la instancia sea de tipo Paciente
                     pacienteListView.getItems().add(((Paciente) paciente).getNombre());
                 }
             });
@@ -121,14 +121,14 @@ public class PacienteController {
                             "Alergias: " + paciente.getAlergias() + "\n"
             );
             alerta.showAndWait();
-        } catch (PacienteNoEncontradoException e) {
+        } catch (PacienteNoEncontradoException e) { // Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Paciente no encontrado");
             alerta.setContentText(e.getMessage());
             alerta.showAndWait();
-        } catch (Exception e) {
+        } catch (Exception e) { // Manejo de excepciones generales
             logger.severe("Error al buscar el paciente: " + e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");

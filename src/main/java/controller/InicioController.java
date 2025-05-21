@@ -24,7 +24,7 @@ public class InicioController {
      * Configura una pantalla de caraga de 3 segundos antes de cambiar a la vista principal.
      */
     @FXML
-    public void initialize() {
+    public void initialize() { //PANTALLA DE CARGA
         // Espera 3 segundos antes de cambiar a pantalla completa
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> ponerPantallaCompleta());

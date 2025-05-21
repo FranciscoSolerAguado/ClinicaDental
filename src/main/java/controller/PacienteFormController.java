@@ -53,12 +53,12 @@ public class PacienteFormController {
         try {
             String nombre = nombreField.getText();
             String dni = dniField.getText();
-            if (!dni.matches("^[0-9]{8}[A-HJ-NP-TV-Z]$")) {
+            if (!dni.matches("^[0-9]{8}[A-HJ-NP-TV-Z]$")) { //EXPRESION REGULAR DNI
                 throw new DNIErroneoException("DNI incorrecto. Debe tener 8 cifras y una letra al final.");
             }
 
             String telefonoStr = telefonoField.getText();
-            if (!telefonoStr.matches("^[67][0-9]{8}$")) {
+            if (!telefonoStr.matches("^[67][0-9]{8}$")) { //EXPRESION REGULAR TELEFONO
                 throw new TelefonoErroneoException("Teléfono incorrecto. Debe tener 9 cifras y comenzar por 6 o 7.");
             }
             int telefono = Integer.parseInt(telefonoStr);
@@ -69,7 +69,7 @@ public class PacienteFormController {
             if (fechaNacimiento == null) {
                 throw new FechaNVaciaException("La fecha de nacimiento no puede estar vacía.");
             }
-            int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
+            int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears(); //La edad se calcula a partir de la fecha de nacimiento
 
             if (pacienteActual != null) {
                 // Actualizar paciente existente

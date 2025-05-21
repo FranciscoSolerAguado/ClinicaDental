@@ -70,6 +70,7 @@ public class TratamientosPacientesFormController {
 
     /**
      * Configura el ComboBox de pacientes para mostrar el nombre del paciente.
+     * De normal mostraria el idPaciente, pero se ha cambiado para mostrar el nombre del paciente.
      */
     private void configurarComboBoxPaciente() {
         idPaciente.setCellFactory(comboBox -> new ListCell<>() {
@@ -93,6 +94,7 @@ public class TratamientosPacientesFormController {
 
     /**
      * Configura el ComboBox de tratamientos para mostrar la descripción del tratamiento.
+     * De normal mostraria el idTratamiento, pero se ha cambiado para mostrar la descripcion del tratamiento.
      */
     private void configurarComboBoxTratamiento() {
         idTratamiento.setCellFactory(comboBox -> new ListCell<>() {
@@ -131,7 +133,7 @@ public class TratamientosPacientesFormController {
     }
 
     /**
-     * Carga los tratamientos desde la base de datos y los añade al ComboBox.
+     * Carga los tratamientos desde la base de datos y los añade al ComboBox (Lista de seleccion)
      */
     private void cargarTratamientos() {
         try {

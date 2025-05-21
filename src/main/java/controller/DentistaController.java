@@ -33,7 +33,7 @@ public class DentistaController {
         try {
             dentistaListView.getItems().clear();
             dentistaDAO.findAll().forEach(dentista -> {
-                if (dentista instanceof Dentista) {
+                if (dentista instanceof Dentista) { // Verifica que sea una instancia de Dentista
                     dentistaListView.getItems().add(((Dentista) dentista).getNombre());
                 }
             });
@@ -68,7 +68,7 @@ public class DentistaController {
     private void mostrarMas() {
         logger.info("Intentando mostrar información del dentista seleccionado...");
 
-        String nombreSeleccionado = dentistaListView.getSelectionModel().getSelectedItem();
+        String nombreSeleccionado = dentistaListView.getSelectionModel().getSelectedItem(); // Obtener el dentista seleccionado
 
         if (nombreSeleccionado == null) {
             logger.warning("No se seleccionó ningún dentista.");
@@ -87,7 +87,7 @@ public class DentistaController {
                 throw new DentistaNoEncontradoException("No se encontró el dentista con el nombre: " + nombreSeleccionado);
             }
 
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION); // Crear una alerta para mostrar la información del dentista
             alerta.setTitle("Información del Dentista");
             alerta.setHeaderText("Detalles del dentista seleccionado");
             alerta.setContentText(
@@ -100,14 +100,14 @@ public class DentistaController {
                             "Edad: " + dentista.getEdad()
             );
             alerta.showAndWait();
-        } catch (DentistaNoEncontradoException e) {
+        } catch (DentistaNoEncontradoException e) { // Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Dentista no encontrado");
             alerta.setContentText(e.getMessage());
             alerta.showAndWait();
-        } catch (Exception e) {
+        } catch (Exception e) { // Manejo de excepciones generales
             logger.severe("Error al buscar el dentista: " + e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -121,11 +121,11 @@ public class DentistaController {
     private void abrirFormularioDentista() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/dentistaForm.fxml"));
-            Parent root = loader.load();
+            Parent root = loader.load(); // Cargar el formulario de añadir dentista
 
             // Obtener el controlador del formulario
             DentistaFormController formController = loader.getController();
-            formController.setDentistaController(this); // Pasar referencia del controlador actual
+            formController.setDentistaController(this); // Pasar el controlador actual
 
             Stage stage = new Stage();
             stage.setTitle("Añadir Dentista");
@@ -172,14 +172,14 @@ public class DentistaController {
             alerta.showAndWait();
 
             cargarDentistas(); // Actualiza la lista
-        } catch (DentistaNoEncontradoException e) {
+        } catch (DentistaNoEncontradoException e) { // Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Dentista no encontrado");
             alerta.setContentText(e.getMessage());
             alerta.showAndWait();
-        } catch (Exception e) {
+        } catch (Exception e) { // Manejo de excepciones generales
             logger.severe("Error al eliminar el dentista: " + e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -222,14 +222,14 @@ public class DentistaController {
             stage.setTitle("Editar Dentista");
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException e) {
+        } catch (IOException e) { // Manejo de excepcion
             logger.severe("Error al abrir el formulario de edición: " + e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("No se pudo abrir el formulario");
             alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
             alerta.showAndWait();
-        } catch (DentistaNoEncontradoException e) {
+        } catch (DentistaNoEncontradoException e) { // Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");

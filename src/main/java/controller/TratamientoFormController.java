@@ -12,12 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import model.Dentista;
 import model.Tratamiento;
-import model.Tratamiento;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,16 +45,22 @@ public class TratamientoFormController {
      */
     @FXML
     public void initialize() {
+        // Carga los dentistas desde la base de datos y los añade al ComboBox.
         cargarDentistas();
-// Configurar el conversor para mostrar los nombres de los dentistas en el ComboBox.
+
+        // Configura un conversor para el ComboBox que permite mostrar los nombres de los dentistas
+        // asociados a ese ID.
         dentistaComboBox.setConverter(new javafx.util.StringConverter<>() {
             @Override
             public String toString(Dentista dentista) {
+                // Devuelve el nombre del dentista si no es nulo, de lo contrario, devuelve una cadena vacía.
                 return dentista != null ? dentista.mostrarNombre() : "";
             }
 
             @Override
             public Dentista fromString(String string) {
+                // Busca en la lista de elementos del ComboBox un dentista cuyo nombre coincida con la cadena proporcionada.
+                // Si no encuentra coincidencias, devuelve null.
                 return dentistaComboBox.getItems().stream()
                         .filter(dentista -> dentista.mostrarNombre().equals(string))
                         .findFirst()

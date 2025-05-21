@@ -36,11 +36,11 @@ public class MainController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
 
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX());
-            stage.setY(screenBounds.getMinY());
-            stage.setWidth(screenBounds.getWidth());
-            stage.setHeight(screenBounds.getHeight());
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Obtiene el tamaño de la pantalla
+            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
+            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
+            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
+            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
 
             stage.show();
             logger.info("Vista de Dentista cargada correctamente.");
@@ -66,10 +66,10 @@ public class MainController {
             stage.setScene(scene);
 
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX());
-            stage.setY(screenBounds.getMinY());
-            stage.setWidth(screenBounds.getWidth());
-            stage.setHeight(screenBounds.getHeight());
+            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
+            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
+            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
+            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
 
             stage.show();
             logger.info("Vista de Paciente cargada correctamente.");
@@ -95,10 +95,10 @@ public class MainController {
             stage.setScene(scene);
 
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX());
-            stage.setY(screenBounds.getMinY());
-            stage.setWidth(screenBounds.getWidth());
-            stage.setHeight(screenBounds.getHeight());
+            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
+            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
+            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
+            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
 
             stage.show();
             logger.info("Vista de Tratamiento cargada correctamente.");
@@ -124,10 +124,10 @@ public class MainController {
             stage.setScene(scene);
 
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX());
-            stage.setY(screenBounds.getMinY());
-            stage.setWidth(screenBounds.getWidth());
-            stage.setHeight(screenBounds.getHeight());
+            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
+            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
+            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
+            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
 
             stage.show();
             logger.info("Vista de Tratamientos a Pacientes cargada correctamente.");

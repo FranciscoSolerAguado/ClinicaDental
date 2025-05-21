@@ -45,11 +45,11 @@ public class TratamientoController {
     @FXML
     private void volverAMain(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Obtiene la ventana (Stage) actual a partir del evento
         Scene scene = new Scene(root);
-        stage.setScene(scene);
+        stage.setScene(scene);    // Establece la nueva escena en la ventana
         stage.setMaximized(true); // Maximizar la ventana con bordes
-        stage.show();
+        stage.show();    // Muestra la ventana
     }
 
     /**
@@ -58,10 +58,10 @@ public class TratamientoController {
     @FXML
     public void cargarTratamientos() {
         try {
-            tratamientoListView.getItems().clear();
+            tratamientoListView.getItems().clear(); // Limpia la lista antes de cargar los tratamientos
             tratamientoDAO.findAll().forEach(tratamiento -> {
-                if (tratamiento instanceof Tratamiento) {
-                    tratamientoListView.getItems().add(((Tratamiento) tratamiento).getDescripcion());
+                if (tratamiento instanceof Tratamiento) { // Verifica que el objeto sea una instancia de Tratamiento
+                    tratamientoListView.getItems().add(((Tratamiento) tratamiento).getDescripcion()); // Agrega la descripción del tratamiento a la lista
                 }
             });
             logger.info("Lista de tratamientos cargada correctamente.");
@@ -82,7 +82,7 @@ public class TratamientoController {
     private void mostrarMas() {
         logger.info("Intentando mostrar información del tratamiento seleccionado...");
 
-        String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem();
+        String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem(); // Obtiene el tratamiento seleccionado en la lista
 
         if (descripcionSeleccionada == null) {
             logger.warning("No se seleccionó ningún tratamiento.");
@@ -101,7 +101,7 @@ public class TratamientoController {
                 throw new TratamientoNoEncontradoException("No se encontró el tratamiento con la descripción: " + descripcionSeleccionada);
             }
 
-            String dentistaNombre = (tratamiento.getDentista() != null) ? tratamiento.getDentista().getNombre() : "No asignado";
+            String dentistaNombre = (tratamiento.getDentista() != null) ? tratamiento.getDentista().getNombre() : "No asignado"; // Verifica si el dentista está asignado a un tratamiento
 
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Información del Tratamiento");
@@ -113,7 +113,7 @@ public class TratamientoController {
                             "Dentista especialista: " + dentistaNombre + "\n"
             );
             alerta.showAndWait();
-        } catch (TratamientoNoEncontradoException e) {
+        } catch (TratamientoNoEncontradoException e) { // Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -143,7 +143,7 @@ public class TratamientoController {
             TratamientoFormController formController = loader.getController();
             formController.setTratamientoController(this); // Pasar referencia del controlador actual
 
-            Stage stage = new Stage();
+            Stage stage = new Stage(); // Crear una nueva ventana
             stage.setTitle("Añadir Tratamiento");
             stage.setScene(new Scene(root));
             stage.show();
@@ -162,7 +162,7 @@ public class TratamientoController {
      */
     @FXML
     private void eliminarTratamiento() {
-        String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem();
+        String descripcionSeleccionada = tratamientoListView.getSelectionModel().getSelectedItem(); // Coje el tratamiento seleccionado en la lista
 
         if (descripcionSeleccionada == null) {
             logger.warning("No se seleccionó ningún tratamiento.");
@@ -191,14 +191,14 @@ public class TratamientoController {
             alerta.showAndWait();
 
             cargarTratamientos(); // Actualiza la lista
-        } catch (TratamientoNoEncontradoException e) {
+        } catch (TratamientoNoEncontradoException e) {// Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Tratamiento no encontrado");
             alerta.setContentText(e.getMessage());
             alerta.showAndWait();
-        } catch (Exception e) {
+        } catch (Exception e) { // Manejo de excepción general
             logger.severe("Error al eliminar el tratamiento: " + e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
@@ -240,7 +240,7 @@ public class TratamientoController {
             formController.setTratamientoController(this); // Pasar referencia del controlador actual
             formController.cargarDatosTratamiento(tratamiento); // Cargar datos del tratamiento
 
-            Stage stage = new Stage();
+            Stage stage = new Stage(); // Crear una nueva ventana
             stage.setTitle("Editar Tratamiento");
             stage.setScene(new Scene(root));
             stage.show();
@@ -251,7 +251,7 @@ public class TratamientoController {
             alerta.setHeaderText("No se pudo abrir el formulario");
             alerta.setContentText("Ocurrió un error al intentar abrir el formulario de edición.");
             alerta.showAndWait();
-        } catch (TratamientoNoEncontradoException e) {
+        } catch (TratamientoNoEncontradoException e) { // Manejo de excepción personalizada
             logger.warning(e.getMessage());
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
