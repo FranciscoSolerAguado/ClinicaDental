@@ -45,28 +45,44 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
      *
      * @return un list de citas
      */
-    @Override
-    public List<Object> findAll() {
-        List<Tratamiento> tratamientos = new ArrayList<Tratamiento>();
-        Connection con = ConnectionDB.getConnection();
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL_ALL);
-            while (rs.next()) {
-                Tratamiento tratamiento = new Tratamiento();
-                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setDescripcion(rs.getString("descripcion"));
-                tratamiento.setPrecio(rs.getDouble("precio"));
-                tratamiento.setIdDentista(rs.getInt("idDentista"));
+@Override
+public List<Object> findAll() {
+    List<Object> tratamientos = new ArrayList<>();
+    List<Integer> dentistaIds = new ArrayList<>(); // Lista temporal para almacenar los IDs de dentistas
 
-                tratamientos.add(tratamiento);
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener todos los tratamientos: " + e.getMessage());
-            e.printStackTrace();
+    try (Connection con = ConnectionDB.getConnection();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL_ALL)) {
+
+        while (rs.next()) {
+            Tratamiento tratamiento = new Tratamiento();
+            tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+            tratamiento.setDescripcion(rs.getString("descripcion"));
+            tratamiento.setPrecio(rs.getDouble("precio"));
+            dentistaIds.add(rs.getInt("idDentista")); // Guardar el ID del dentista temporalmente
+            tratamientos.add(tratamiento); // Agregar el tratamiento a la lista
         }
-        return new ArrayList<>(tratamientos);
+
+    } catch (SQLException e) {
+        logger.severe("Error al obtener todos los tratamientos: " + e.getMessage());
+        throw new RuntimeException(e);
     }
+
+    /**
+     * Me estaba dando el error Operation not allowed after ResultSet que ocurre porque el
+     * ResultSet se está cerrando antes de que se complete su uso, después de eliminar el idDentista,
+     * asi que se ha creado una lista temporal dentistaIds para almacenar los ids de los dentistas
+     * Esta es la única solución que he encontrado para evitar el error
+     */
+    // Asignar los dentistas después de cerrar el ResultSet
+    for (int i = 0; i < tratamientos.size(); i++) {
+        Tratamiento tratamiento = (Tratamiento) tratamientos.get(i);
+        int idDentista = dentistaIds.get(i);
+        tratamiento.setDentista(dentistaDAO.findById(idDentista));
+    }
+
+    return tratamientos; // Devolver la lista de tratamientos
+}
 
     /**
      * Version EAGER para obtener todos los tratamientos en un list
@@ -85,7 +101,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
-                tratamiento.setIdDentista(rs.getInt("idDentista"));
+                tratamiento.setDentista(dentistaDAO.findById(rs.getInt("idDentista")));
 
                 //Version EAGER
                 tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
@@ -116,7 +132,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
-                tratamiento.setIdDentista(rs.getInt("idDentista"));
+                tratamiento.setDentista(dentistaDAO.findById(rs.getInt("idDentista")));
 
                 // Cargar el dentista asociado (versión EAGER)
                 tratamiento.setDentista(dentistaDAO.findDentistaByTratamiento(tratamiento.getIdTratamiento()));
@@ -156,26 +172,44 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
      * @param idDentistaBuscado
      * @return tratamientos
      */
-    public List<Tratamiento> findTratamientosByDentista(int idDentistaBuscado) {
-        List<Tratamiento> tratamientos = new ArrayList<>();
-        try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_DENTISTA)) {
-            pst.setInt(1, idDentistaBuscado);
-            ResultSet rs = pst.executeQuery();
+public List<Tratamiento> findTratamientosByDentista(int idDentistaBuscado) {
+    List<Tratamiento> tratamientos = new ArrayList<>();
+    String query = "SELECT * FROM Tratamiento WHERE idDentista = ?";
+    List<Integer> dentistaIds = new ArrayList<>();
+
+    try (Connection con = ConnectionDB.getConnection();
+         PreparedStatement pst = con.prepareStatement(query)) {
+        pst.setInt(1, idDentistaBuscado);
+        try (ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 Tratamiento tratamiento = new Tratamiento();
                 tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
                 tratamiento.setDescripcion(rs.getString("descripcion"));
                 tratamiento.setPrecio(rs.getDouble("precio"));
-                tratamiento.setIdDentista(rs.getInt("idDentista"));
-
+                dentistaIds.add(rs.getInt("idDentista")); // Guardar idDentista temporalmente
                 tratamientos.add(tratamiento);
             }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener tratamientos por dentista: " + e.getMessage());
-            throw new RuntimeException(e);
         }
-        return tratamientos;
+    } catch (SQLException e) {
+        logger.severe("Error al obtener tratamientos por dentista: " + e.getMessage());
+        throw new RuntimeException(e);
     }
+
+    /**
+     * Me estaba dando mismo que en el findAll
+     * error Operation not allowed after ResultSet que ocurre porque el
+     * ResultSet se está cerrando antes de que se complete su uso, después de eliminar el idDentista,
+     * asi que se ha creado una lista temporal dentistaIds para almacenar los ids de los dentistas
+     * Esta es la única solución que he encontrado para evitar el error
+     */
+    // Asignar los dentistas después de cerrar el ResultSet
+    for (int i = 0; i < tratamientos.size(); i++) {
+        int idDentista = dentistaIds.get(i);
+        tratamientos.get(i).setDentista(dentistaDAO.findById(idDentista));
+    }
+
+    return tratamientos;
+}
 
 
     /**
@@ -188,7 +222,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
             pst.setString(1, tratamiento.getDescripcion());
             pst.setDouble(2, tratamiento.getPrecio());
-            pst.setInt(3, tratamiento.getIdDentista());
+            pst.setInt(3, tratamiento.getDentista().getIdDentista());
             pst.executeUpdate();
         } catch (SQLException e) {
             logger.severe("Error al insertar el tratamiento: " + e.getMessage());
@@ -214,7 +248,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
             }
             pst.setString(1, tratamiento.getDescripcion());
             pst.setDouble(2, tratamiento.getPrecio());
-            pst.setInt(3, tratamiento.getIdDentista());
+            pst.setInt(3, tratamiento.getDentista().getIdDentista());
             pst.setInt(4, idTratamiento);
             pst.executeUpdate();
         } catch (SQLException e) {

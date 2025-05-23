@@ -6,24 +6,22 @@ public class Tratamiento {
     private int idTratamiento;
     private String descripcion;
     private double precio;
-    private int idDentista;
     private Dentista dentista;
 
     public Tratamiento() {
 
     }
 
-    public Tratamiento (String descripcion, double precio, int idDentista) {
+    public Tratamiento (String descripcion, double precio, Dentista dentista) {
         this.descripcion = descripcion;
         this.precio = precio;
-        this.idDentista = idDentista;
+        this.dentista = dentista;
     }
 
-    public Tratamiento(int idTratamiento, String descripcion, double precio, int idDentista, Dentista dentista) {
+    public Tratamiento(int idTratamiento, String descripcion, double precio, Dentista dentista) {
         this.idTratamiento = idTratamiento;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.idDentista = idDentista;
         this.dentista = dentista;
     }
 
@@ -59,13 +57,7 @@ public class Tratamiento {
         this.dentista = dentista;
     }
 
-    public int getIdDentista() {
-        return idDentista;
-    }
 
-    public void setIdDentista(int idDentista) {
-        this.idDentista = idDentista;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -85,7 +77,6 @@ public class Tratamiento {
                 "idTratamiento=" + idTratamiento +
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
-                ", idDentista=" + idDentista +
                 ", dentista=" + dentista +
                 '}';
     }

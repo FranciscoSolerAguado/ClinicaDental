@@ -131,3 +131,39 @@ may 15, 2025 12:11:30 P. M. DAO.DentistaDAO insert
 SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
 may 15, 2025 12:11:33 P. M. DAO.DentistaDAO insert
 SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
+may 23, 2025 2:17:08 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:19 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:33 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:54 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:57 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:25:37 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:27:02 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:28:34 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: No value specified for parameter 1
+may 23, 2025 2:29:39 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:30:21 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:31:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:31:16 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:32:58 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:39:23 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:42:06 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:42:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:43:32 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:43:49 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed

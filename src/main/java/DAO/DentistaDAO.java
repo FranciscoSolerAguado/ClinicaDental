@@ -41,6 +41,7 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Dentista WHERE idDentista = ?";
     private final static String SQL_ALL = "SELECT * FROM Dentista";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM Dentista WHERE nombre = ?";
+    private final static String SQL_FIND_BY_ID = "SELECT * FROM Dentista WHERE idDentista = ?";
     private final static String SQL_INSERT = "INSERT INTO Dentista (nombre, dni,nColegiado, especialidad, telefono, fechaNacimiento, edad) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private final static String SQL_UPDATE = "UPDATE Dentista SET nombre = ?, dni = ?, telefono = ?, nColegiado = ?, especialidad = ?, fechaNacimiento = ?, edad = ? WHERE idDentista = ?";
     private final static String SQL_DELETE_BY_ID = "DELETE FROM Dentista WHERE idDentista = ?";
@@ -190,10 +191,40 @@ public class DentistaDAO implements CRUDGenericoBBDD<Dentista> {
     }
 
     /**
+     * Busca un dentista por su ID.
+     *
+     * @param idDentista el ID del dentista a buscar.
+     * @return el dentista encontrado o null si no se encuentra.
+     */
+    public Dentista findById(int idDentista) {
+        Dentista dentista = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
+            pst.setInt(1, idDentista);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                dentista = new Dentista();
+                dentista.setIdDentista(rs.getInt("idDentista"));
+                dentista.setNombre(rs.getString("nombre"));
+                dentista.setDni(rs.getString("dni"));
+                dentista.setnColegiado(rs.getString("nColegiado"));
+                dentista.setEspecialidad(rs.getString("especialidad"));
+                dentista.setTelefono(rs.getInt("telefono"));
+                dentista.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                dentista.setEdad(rs.getInt("edad"));
+            }
+        } catch (SQLException e) {
+            logger.severe("Error al buscar dentista por ID: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return dentista;
+    }
+
+
+    /**
      * Metodo para insertar un dentista en la base de datos.
      *
      * @param dentista el dentista a insertar.
-     *
      */
     @Override
     public void insert(Dentista dentista) {

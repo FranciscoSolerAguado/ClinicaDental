@@ -117,13 +117,13 @@ public class TratamientoFormController {
                 // Editar tratamiento existente
                 tratamientoActual.setDescripcion(descripcion);
                 tratamientoActual.setPrecio(precio);
-                tratamientoActual.setIdDentista(dentistaSeleccionado.getIdDentista());
+                tratamientoActual.setDentista(dentistaSeleccionado);
 
                 tratamientoDAO.update(tratamientoActual.getIdTratamiento(), tratamientoActual);
                 logger.info("Tratamiento actualizado correctamente.");
             } else {
                 // Crear un nuevo tratamiento
-                Tratamiento nuevoTratamiento = new Tratamiento(descripcion, precio, dentistaSeleccionado.getIdDentista());
+                Tratamiento nuevoTratamiento = new Tratamiento(descripcion, precio, dentistaSeleccionado);
                 tratamientoDAO.insert(nuevoTratamiento);
                 logger.info("Tratamiento añadido correctamente.");
             }
@@ -211,7 +211,7 @@ public class TratamientoFormController {
         precioField.setText(String.valueOf(tratamiento.getPrecio()));
         dentistaComboBox.setValue(tratamiento.getDentista());
         dentistaComboBox.getItems().stream()
-                .filter(dentista -> dentista.getIdDentista() == tratamiento.getIdDentista())
+                .filter(dentista -> dentista.equals(tratamiento.getDentista()))
                 .findFirst()
                 .orElse(null);
     }
