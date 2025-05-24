@@ -1,9 +1,12 @@
 package DAO;
 
 import baseDatos.ConnectionDB;
+import model.Paciente;
+import model.Tratamiento;
 import model.TratamientoPaciente;
 import utils.LoggerUtil;
 
+import java.lang.ref.PhantomReference;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +14,29 @@ import java.util.logging.Logger;
 
 public class TratamientoPacienteDAO {
     private static TratamientoPacienteDAO instance;
+    private PacienteDAO pacienteDAO;
+    private final TratamientoDAO tratamientoDAO;
     private static final Logger logger = LoggerUtil.getLogger();
 
-    private TratamientoPacienteDAO() {
-    }
+private TratamientoPacienteDAO() {
+    this.tratamientoDAO = TratamientoDAO.getInstance();
+    this.pacienteDAO = PacienteDAO.getInstance();
+    logger.info("TratamientoPacienteDAO inicializado correctamente.");
+}
 
     public static TratamientoPacienteDAO getInstance() {
         if (instance == null) {
+            logger.info("Inicializando instancia de TratamientoPacienteDAO...");
             instance = new TratamientoPacienteDAO();
+        } else {
+            logger.info("Usando instancia existente de TratamientoPacienteDAO.");
         }
         return instance;
+    }
+
+
+    public void initialize(PacienteDAO pacienteDAO) {
+        this.pacienteDAO = pacienteDAO;
     }
 
     /**
@@ -40,8 +56,8 @@ public class TratamientoPacienteDAO {
     public void insert(TratamientoPaciente tratamientoPaciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
-            pst.setInt(1, tratamientoPaciente.getIdPaciente());
-            pst.setInt(2, tratamientoPaciente.getIdTratamiento());
+            pst.setInt(1, tratamientoPaciente.getPaciente().getIdPaciente());
+            pst.setInt(2, tratamientoPaciente.getTratamiento().getIdTratamiento());
             pst.setDate(3, Date.valueOf(tratamientoPaciente.getFechaTratamiento()));
             pst.setString(4, tratamientoPaciente.getDetalles());
             pst.executeUpdate();
@@ -54,8 +70,8 @@ public class TratamientoPacienteDAO {
     /**
      * Metodo para eliminar un tratamiento-paciente
      *
-     * @param idPaciente El id del paciente
-     * @param idTratamiento El id del tratamiento
+     * @param idPaciente       El id del paciente
+     * @param idTratamiento    El id del tratamiento
      * @param fechaTratamiento La fecha del tratamiento
      */
     public void delete(int idPaciente, int idTratamiento, Date fechaTratamiento) {
@@ -77,27 +93,46 @@ public class TratamientoPacienteDAO {
      *
      * @return Una lista con todos los tratamientos de pacientes
      */
-    public List<TratamientoPaciente> findAll() {
-        List<TratamientoPaciente> tratamientosPacientes = new ArrayList<TratamientoPaciente>();
-        Connection con = ConnectionDB.getConnection();
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL_ALL);
-            while (rs.next()) {
-                TratamientoPaciente tratamientoPaciente = new TratamientoPaciente();
-                tratamientoPaciente.setIdPaciente(rs.getInt("idPaciente"));
-                tratamientoPaciente.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamientoPaciente.setFechaTratamiento(rs.getDate("fechaTratamiento").toLocalDate());
-                tratamientoPaciente.setDetalles(rs.getString("detalles"));
+public List<TratamientoPaciente> findAll() {
+    List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();
+    List<Integer> pacienteIds = new ArrayList<>();
+    List<Integer> tratamientoIds = new ArrayList<>();
 
-                tratamientosPacientes.add(tratamientoPaciente);
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al obtener todos los tratamientos de pacientes: " + e.getMessage());
-            e.printStackTrace();
+    try (Connection con = ConnectionDB.getConnection();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL_ALL)) {
+
+        while (rs.next()) {
+            TratamientoPaciente tratamientoPaciente = new TratamientoPaciente();
+            tratamientoPaciente.setFechaTratamiento(rs.getDate("fechaTratamiento").toLocalDate());
+            tratamientoPaciente.setDetalles(rs.getString("detalles"));
+
+            // Guardar IDs temporalmente
+            pacienteIds.add(rs.getInt("idPaciente"));
+            tratamientoIds.add(rs.getInt("idTratamiento"));
+
+            tratamientosPacientes.add(tratamientoPaciente);
         }
-        return tratamientosPacientes;
+    } catch (SQLException e) {
+        logger.severe("Error al obtener todos los tratamientos de pacientes: " + e.getMessage());
+        throw new RuntimeException("Error al obtener todos los tratamientos de pacientes", e);
     }
+
+    /**
+     * Error Operation not allowed after ResultSet que ocurre porque el
+     * ResultSet se está cerrando antes de que se complete su uso, después de eliminar el idPaciente y idTratamiento,
+     * asi que se ha creado una lista temporal pacienteIds y tratamientoIds para almacenar los ids de los pacientes y tratamientos
+     * Esta es la única solución que he encontrado para evitar el error
+     */
+    // Asignar los objetos relacionados después de cerrar el ResultSet
+    for (int i = 0; i < tratamientosPacientes.size(); i++) {
+        TratamientoPaciente tratamientoPaciente = tratamientosPacientes.get(i);
+        tratamientoPaciente.setPaciente(pacienteDAO.findByIdEager(pacienteIds.get(i)));
+        tratamientoPaciente.setTratamiento(tratamientoDAO.findById(tratamientoIds.get(i)));
+    }
+
+    return tratamientosPacientes;
+}
 
     /**
      * Metodo para buscar tratamientos por paciente
@@ -105,25 +140,42 @@ public class TratamientoPacienteDAO {
      * @param idPacienteBuscado El id del paciente a buscar
      * @return Una lista con los tratamientos del paciente buscado
      */
-    public List<TratamientoPaciente> findTratamientosByPaciente(int idPacienteBuscado) {
-        List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();
-        try (PreparedStatement pst = ConnectionDB.getConnection().prepareStatement(SQL_SELECT_BY_PACIENTE)) {
-            pst.setInt(1, idPacienteBuscado);
-            ResultSet rs = pst.executeQuery();
+public List<TratamientoPaciente> findTratamientosByPaciente(int idPacienteBuscado) {
+    List<TratamientoPaciente> tratamientosPacientes = new ArrayList<>();
+    List<Integer> tratamientoIds = new ArrayList<>(); // Lista temporal para almacenar los IDs de tratamientos
+
+    try (Connection con = ConnectionDB.getConnection();
+         PreparedStatement pst = con.prepareStatement(SQL_SELECT_BY_PACIENTE)) {
+        pst.setInt(1, idPacienteBuscado);
+        try (ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 TratamientoPaciente tratamientoPaciente = new TratamientoPaciente();
-                tratamientoPaciente.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamientoPaciente.setIdPaciente(rs.getInt("idPaciente"));
                 tratamientoPaciente.setFechaTratamiento(rs.getDate("fechaTratamiento").toLocalDate());
                 tratamientoPaciente.setDetalles(rs.getString("detalles"));
-                tratamientosPacientes.add(tratamientoPaciente);
+                tratamientoIds.add(rs.getInt("idTratamiento")); // Guardar el ID del tratamiento
+                tratamientosPacientes.add(tratamientoPaciente); // Agregar a la lista
             }
-        } catch (SQLException e) {
-            logger.severe("Error al buscar tratamientos por paciente: " + e.getMessage());
-            throw new RuntimeException("Error al buscar tratamientos por paciente", e);
         }
-        return tratamientosPacientes;
+    } catch (SQLException e) {
+        logger.severe("Error al buscar tratamientos por paciente: " + e.getMessage());
+        throw new RuntimeException("Error al buscar tratamientos por paciente", e);
     }
+
+    /**
+     * Error Operation not allowed after ResultSet que ocurre porque el
+     * ResultSet se está cerrando antes de que se complete su uso, después de eliminar el idTratamiento,
+     * asi que se ha creado una lista temporal tratamientosIds para almacenar los ids de los tratamientos
+     * Esta es la única solución que he encontrado para evitar el error
+     */
+    // Asignar los tratamientos después de cerrar el ResultSet
+    for (int i = 0; i < tratamientosPacientes.size(); i++) {
+        Tratamiento tratamiento = tratamientoDAO.findById(tratamientoIds.get(i));
+        tratamientosPacientes.get(i).setTratamiento(tratamiento);
+        tratamientosPacientes.get(i).setPaciente(pacienteDAO.findByIdEager(idPacienteBuscado));
+    }
+
+    return tratamientosPacientes;
+}
 
     /**
      * Metodo para actualizar un tratamiento-paciente
@@ -133,11 +185,11 @@ public class TratamientoPacienteDAO {
     public void update(TratamientoPaciente tratamientoPaciente) {
         try (Connection con = ConnectionDB.getConnection();
              PreparedStatement pst = con.prepareStatement(SQL_UPDATE)) {
-            pst.setInt(1, tratamientoPaciente.getIdPaciente());
-            pst.setInt(2, tratamientoPaciente.getIdTratamiento());
+            pst.setInt(1, tratamientoPaciente.getPaciente().getIdPaciente());
+            pst.setInt(2, tratamientoPaciente.getTratamiento().getIdTratamiento());
             pst.setString(3, tratamientoPaciente.getDetalles());
-            pst.setInt(4, tratamientoPaciente.getIdPaciente());
-            pst.setInt(5, tratamientoPaciente.getIdTratamiento());
+            pst.setInt(4, tratamientoPaciente.getPaciente().getIdPaciente());
+            pst.setInt(5, tratamientoPaciente.getTratamiento().getIdTratamiento());
             pst.executeUpdate();
         } catch (SQLException e) {
             logger.severe("Error al actualizar el tratamiento-paciente: " + e.getMessage());

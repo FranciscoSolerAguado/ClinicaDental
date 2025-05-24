@@ -8,7 +8,9 @@ import utils.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
@@ -16,9 +18,11 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
     private TratamientoDAO tratamientoDAO;
     private TratamientoPacienteDAO tratamientoPacienteDAO;
     private static final Logger logger = LoggerUtil.getLogger();
+    private final ThreadLocal<Set<Integer>> processingPatients = ThreadLocal.withInitial(HashSet::new);
 
+
+    // Constructor vacío para evitar inicialización circular
     private PacienteDAO() {
-        this.tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
     }
 
     public static PacienteDAO getInstance() {
@@ -26,6 +30,13 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
             instance = new PacienteDAO();
         }
         return instance;
+    }
+
+    // Método de inicialización para configurar dependencias
+    public void initialize(TratamientoDAO tratamientoDAO, TratamientoPacienteDAO tratamientoPacienteDAO) {
+        this.tratamientoDAO = tratamientoDAO;
+        this.tratamientoPacienteDAO = tratamientoPacienteDAO;
+        logger.info("PacienteDAO inicializado correctamente.");
     }
 
     /**
@@ -138,9 +149,16 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
      * @return el paciente
      */
     public Paciente findByIdEager(int idPaciente) {
+        if (processingPatients.get().contains(idPaciente)) {
+            // Evitar recursión infinita
+            return null;
+        }
+
+
+        processingPatients.get().add(idPaciente);
         Paciente paciente = null;
         try (Connection con = ConnectionDB.getConnection();
-             java.sql.PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
             pst.setInt(1, idPaciente);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
@@ -153,12 +171,14 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
                 paciente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 paciente.setEdad(rs.getInt("edad"));
 
-                // Versión EAGER
-                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(paciente.getIdPaciente()));
+                // Evitar recursión infinita cargando tratamientos solo si no está en proceso
+                paciente.setTratamientosPaciente(tratamientoPacienteDAO.findTratamientosByPaciente(idPaciente));
             }
         } catch (SQLException e) {
             logger.severe("Error al obtener el paciente por ID: " + e.getMessage());
             throw new RuntimeException(e);
+        } finally {
+            processingPatients.get().remove(idPaciente);
         }
         return paciente;
     }

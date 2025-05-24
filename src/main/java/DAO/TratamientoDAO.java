@@ -33,6 +33,7 @@ public class TratamientoDAO implements CRUDGenericoBBDD<Tratamiento> {
      */
     private final static String SQL_CHECK = "SELECT COUNT(*) FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_ALL = "SELECT * FROM Tratamiento";
+    private final static String SQL_FIND_BY_ID = "SELECT * FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_FIND_BY_DESCRIPCION = "SELECT * FROM Tratamiento WHERE descripcion = ?";
     private final static String SQL_FIND_DESCRIPCION_BY_ID = "SELECT descripcion FROM Tratamiento WHERE idTratamiento = ?";
     private final static String SQL_INSERT = "INSERT INTO Tratamiento (descripcion, precio, idDentista) VALUES(?, ?, ?)";
@@ -81,7 +82,7 @@ public List<Object> findAll() {
         tratamiento.setDentista(dentistaDAO.findById(idDentista));
     }
 
-    return tratamientos; // Devolver la lista de tratamientos
+    return tratamientos;
 }
 
     /**
@@ -113,6 +114,32 @@ public List<Object> findAll() {
             e.printStackTrace();
         }
         return new ArrayList<>(tratamientos);
+    }
+
+    /**
+     * Devuelve un tratamiento según su id, en versión Lazy
+     *
+     * @param idTratamiento el id del tratamiento a buscar
+     * @return tratamiento o null si no existe
+     */
+    public Tratamiento findById(int idTratamiento) {
+        Tratamiento tratamiento = null;
+        try (Connection con = ConnectionDB.getConnection();
+             PreparedStatement pst = con.prepareStatement(SQL_FIND_BY_ID)) {
+            pst.setInt(1, idTratamiento);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                tratamiento = new Tratamiento();
+                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+                tratamiento.setDescripcion(rs.getString("descripcion"));
+                tratamiento.setPrecio(rs.getDouble("precio"));
+
+            }
+        } catch (SQLException e) {
+            logger.severe("Error al obtener el tratamiento por ID: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return tratamiento;
     }
 
     /**

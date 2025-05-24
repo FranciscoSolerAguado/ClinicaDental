@@ -3,6 +3,7 @@ package controller;
 import DAO.PacienteDAO;
 import DAO.PacienteDAO;
 import DAO.TratamientoDAO;
+import DAO.TratamientoPacienteDAO;
 import exceptions.PacienteNoEncontradoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,15 +33,21 @@ public class PacienteController {
      * Método que se ejecuta al inicializar la vista.
      * Carga los nombres de los pacientes en el ListView.
      */
-    @FXML
-    public void initialize() {
-        // Cargar los nombres de los pacientes en el ListView
-        pacienteDAO.findAll().forEach(paciente -> {
-            if (paciente instanceof Paciente) { // Verifica que el objeto sea de tipo Paciente
-                pacienteListView.getItems().add(((Paciente) paciente).getNombre()); //En el list view se muestra el nombre del paciente
-            }
-        });
-    }
+@FXML
+public void initialize() {
+    TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
+    TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
+
+    // Inicializar las dependencias de PacienteDAO
+    pacienteDAO.initialize(tratamientoDAO, tratamientoPacienteDAO);
+
+    // Cargar los nombres de los pacientes en el ListView
+    pacienteDAO.findAll().forEach(paciente -> {
+        if (paciente instanceof Paciente) { // Verifica que el objeto sea de tipo Paciente
+            pacienteListView.getItems().add(((Paciente) paciente).getNombre()); // En el list view se muestra el nombre del paciente
+        }
+    });
+}
 
     /**
      * Vuelve a la vista principal.

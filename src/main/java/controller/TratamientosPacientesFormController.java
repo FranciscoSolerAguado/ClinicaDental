@@ -46,14 +46,15 @@ public class TratamientosPacientesFormController {
 
     /**
      * Establece el tratamiento de paciente a editar y rellena los campos del formulario.
+     *
      * @param tratamientoPaciente TratamientoPaciente cuyos datos se cargarán.
      */
     public void setTratamientoPaciente(TratamientoPaciente tratamientoPaciente) {
         this.tratamientoPaciente = tratamientoPaciente;
 
         // Rellenar los campos con los datos del tratamiento seleccionado
-        idPaciente.setValue(PacienteDAO.getInstance().findByIdEager(tratamientoPaciente.getIdPaciente()));
-        idTratamiento.setValue(TratamientoDAO.getInstance().findDescripcionById(tratamientoPaciente.getIdTratamiento()));
+        idPaciente.setValue(tratamientoPaciente.getPaciente());
+        idTratamiento.setValue(tratamientoPaciente.getTratamiento().getDescripcion());
         detalles.setText(tratamientoPaciente.getDetalles());
     }
 
@@ -174,16 +175,16 @@ public class TratamientosPacientesFormController {
 
             // Si el objeto tratamientoPaciente ya existe, actualiza
             if (tratamientoPaciente != null) {
-                tratamientoPaciente.setIdPaciente(paciente.getIdPaciente());
-                tratamientoPaciente.setIdTratamiento(tratamiento.getIdTratamiento());
+                tratamientoPaciente.setPaciente(paciente);
+                tratamientoPaciente.setTratamiento(tratamiento);
                 tratamientoPaciente.setDetalles(detalles.getText());
 
                 TratamientoPacienteDAO.getInstance().update(tratamientoPaciente);
             } else {
                 // Si no existe, crea uno nuevo
                 TratamientoPaciente nuevoTratamientoPaciente = new TratamientoPaciente(
-                        paciente.getIdPaciente(),
-                        tratamiento.getIdTratamiento(),
+                        paciente,
+                        tratamiento,
                         LocalDate.now(),
                         detalles.getText()
                 );
