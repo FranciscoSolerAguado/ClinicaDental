@@ -3,8 +3,8 @@ package model;
 import java.time.LocalDate;
 
 public class TratamientoPaciente {
-    private int idPaciente;
-    private int idTratamiento;
+    private Paciente paciente;
+    private Tratamiento tratamiento;
     private LocalDate fechaTratamiento;
     private String detalles;
     private String pacienteNombre;
@@ -12,9 +12,9 @@ public class TratamientoPaciente {
     public TratamientoPaciente() {
     }
 
-    public TratamientoPaciente(int idPaciente, int idTratamiento, LocalDate fechaTratamiento, String detalles) {
-        this.idPaciente = idPaciente;
-        this.idTratamiento = idTratamiento;
+    public TratamientoPaciente(Paciente paciente, Tratamiento tratamiento, LocalDate fechaTratamiento, String detalles) {
+        this.paciente = paciente;
+        this.tratamiento = tratamiento;
         this.fechaTratamiento = fechaTratamiento;
         this.detalles = detalles;
     }
@@ -27,20 +27,20 @@ public class TratamientoPaciente {
         this.pacienteNombre = pacienteNombre;
     }
 
-    public int getIdPaciente() {
-        return idPaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
-    public int getIdTratamiento() {
-        return idTratamiento;
+    public Tratamiento getTratamiento() {
+        return tratamiento;
     }
 
-    public void setIdTratamiento(int idTratamiento) {
-        this.idTratamiento = idTratamiento;
+    public void setTratamiento(Tratamiento tratamiento) {
+        this.tratamiento = tratamiento;
     }
 
     public LocalDate getFechaTratamiento() {
@@ -62,10 +62,11 @@ public class TratamientoPaciente {
     @Override
     public String toString() {
         return "TratamientoPaciente{" +
-                "idPaciente=" + idPaciente +
-                ", idTratamiento=" + idTratamiento +
+                "paciente=" + paciente +
+                ", tratamiento=" + tratamiento +
                 ", fechaTratamiento=" + fechaTratamiento +
                 ", detalles='" + detalles + '\'' +
+                ", pacienteNombre='" + pacienteNombre + '\'' +
                 '}';
     }
 }
