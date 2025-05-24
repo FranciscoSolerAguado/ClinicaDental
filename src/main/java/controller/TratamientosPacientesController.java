@@ -1,7 +1,5 @@
 package controller;
 
-import DAO.PacienteDAO;
-import DAO.TratamientoDAO;
 import DAO.TratamientoPacienteDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -55,11 +53,15 @@ public class TratamientosPacientesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         logger.info("Inicializando controlador TratamientoPacienteController...");
 
+        // Inicializar tratamientoPacienteDAO
+        TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
+
         // Configurar las columnas
         colPaciente.setCellValueFactory(cellData -> {
-            int idPaciente = cellData.getValue().getIdPaciente(); //Muestra el ID del paciente
-            String nombrePaciente = PacienteDAO.getInstance().findNameById(idPaciente); // Método en PacienteDAO que muestra el nombre del paciente
-            return new SimpleStringProperty(nombrePaciente != null ? nombrePaciente : "Desconocido");
+            String nombrePaciente = cellData.getValue().getPaciente() != null
+                    ? cellData.getValue().getPaciente().getNombre()
+                    : "Desconocido";
+            return new SimpleStringProperty(nombrePaciente);
             /**
              * Esta línea crea una nueva propiedad observable de tipo String para JavaFX (SimpleStringProperty).
              * El valor de la propiedad será el nombre del paciente si no es null; si es null, mostrará el texto "Desconocido".
@@ -68,9 +70,10 @@ public class TratamientosPacientesController implements Initializable {
         });
 
         colTratamiento.setCellValueFactory(cellData -> {
-            int idTratamiento = cellData.getValue().getIdTratamiento();
-            String descripcionTratamiento = TratamientoDAO.getInstance().findDescripcionById(idTratamiento); // Método en TratamientoDAO que muestra la descripción del tratamiento
-            return new SimpleStringProperty(descripcionTratamiento != null ? descripcionTratamiento : "Desconocido");
+            String descripcionTratamiento = cellData.getValue().getTratamiento() != null
+                    ? cellData.getValue().getTratamiento().getDescripcion() // Ajusta según el atributo de descripción en Tratamiento
+                    : "Desconocido";
+            return new SimpleStringProperty(descripcionTratamiento);
         });
 
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaTratamiento"));
@@ -89,18 +92,19 @@ public class TratamientosPacientesController implements Initializable {
     /**
      * Carga los tratamientos de pacientes desde la base de datos y los muestra en la tabla.
      */
-    public void cargarTratamientosPacientes() {
-        logger.info("Cargando tratamientos de pacientes...");
-        try {
-            List<TratamientoPaciente> tratamientos = TratamientoPacienteDAO.getInstance().findAll();
-            logger.info("Tratamientos obtenidos: " + tratamientos);
-            tratamientosPacientesList = FXCollections.observableArrayList(tratamientos); // Convertir la lista a ObservableList
-            tratamientosPacientesTable.setItems(tratamientosPacientesList); // Establecer los datos en la tabla
-        } catch (Exception e) {
-            logger.severe("Error al cargar tratamientos de pacientes: " + e.getMessage());
-            e.printStackTrace();
-        }
+public void cargarTratamientosPacientes() {
+    logger.info("Cargando tratamientos de pacientes...");
+    try {
+        TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance(); // Asegúrate de obtener la instancia
+        List<TratamientoPaciente> tratamientos = tratamientoPacienteDAO.findAll();
+        logger.info("Tratamientos obtenidos: " + tratamientos);
+        tratamientosPacientesList = FXCollections.observableArrayList(tratamientos); // Convertir la lista a ObservableList
+        tratamientosPacientesTable.setItems(tratamientosPacientesList); // Establecer los datos en la tabla
+    } catch (Exception e) {
+        logger.severe("Error al cargar tratamientos de pacientes: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
     /**
      * Método para manejar el evento de volver al menú principal.
@@ -175,8 +179,11 @@ public class TratamientosPacientesController implements Initializable {
         }
 
         try {
-            TratamientoPacienteDAO.getInstance().delete(seleccionado.getIdPaciente(), seleccionado.getIdTratamiento(), java.sql.Date.valueOf(seleccionado.getFechaTratamiento()));
-            tratamientosPacientesList.remove(seleccionado);
+            TratamientoPacienteDAO.getInstance().delete(
+                    seleccionado.getPaciente().getIdPaciente(),
+                    seleccionado.getTratamiento().getIdTratamiento(),
+                    java.sql.Date.valueOf(seleccionado.getFechaTratamiento())
+            );
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Éxito");
             alerta.setHeaderText("Tratamiento eliminado");

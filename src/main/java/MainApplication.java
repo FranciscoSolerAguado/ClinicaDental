@@ -1,3 +1,6 @@
+import DAO.PacienteDAO;
+import DAO.TratamientoDAO;
+import DAO.TratamientoPacienteDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +17,17 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+private void initializeDAOs() {
+    // Crear instancias de los DAOs
+    TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
+    TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
+    PacienteDAO pacienteDAO = PacienteDAO.getInstance();
+
+    // Configurar dependencias entre los DAOs
+    pacienteDAO.initialize(tratamientoDAO, tratamientoPacienteDAO);
+    tratamientoPacienteDAO.initialize(pacienteDAO);
+}
 
     public static void main(String[] args) {
         launch();

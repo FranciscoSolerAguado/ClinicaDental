@@ -167,3 +167,17 @@ may 23, 2025 2:43:32 P. M. DAO.TratamientoDAO findAll
 SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
 may 23, 2025 2:43:49 P. M. DAO.TratamientoDAO findAll
 SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 24, 2025 10:42:48 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Column 'idDentista' not found.
+may 24, 2025 10:42:52 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Column 'idDentista' not found.
+may 24, 2025 10:59:58 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:06 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:09 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:10 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:03:08 A. M. DAO.TratamientoPacienteDAO findAll
+SEVERE: Error al obtener todos los tratamientos de pacientes: Operation not allowed after ResultSet closed
