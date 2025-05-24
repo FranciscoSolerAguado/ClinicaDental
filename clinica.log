@@ -131,3 +131,295 @@ may 15, 2025 12:11:30 P. M. DAO.DentistaDAO insert
 SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
 may 15, 2025 12:11:33 P. M. DAO.DentistaDAO insert
 SEVERE: Error al insertar dentista: Duplicate entry '68029347F' for key 'dni'
+may 23, 2025 2:17:08 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:19 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:33 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:54 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:57 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:25:37 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:27:02 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:28:34 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: No value specified for parameter 1
+may 23, 2025 2:29:39 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:30:21 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:31:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:31:16 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:32:58 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:39:23 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:42:06 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:42:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:43:32 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:43:49 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 24, 2025 10:42:48 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Column 'idDentista' not found.
+may 24, 2025 10:42:52 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Column 'idDentista' not found.
+may 24, 2025 10:59:58 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:06 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:09 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:10 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:03:08 A. M. DAO.TratamientoPacienteDAO findAll
+SEVERE: Error al obtener todos los tratamientos de pacientes: Operation not allowed after ResultSet closed
+may 24, 2025 12:00:17 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:02:31 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:06:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:06:39 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:11:31 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:11:31 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:11:31 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:11:36 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:11:51 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:11:54 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:11:59 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:13:21 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:13:21 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:13:21 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:13:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:13:40 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:13:44 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:17:06 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:17:06 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:17:06 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:17:10 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:17:45 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:17:45 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:17:45 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:17:50 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:18:04 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:18:04 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:18:04 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:18:28 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:18:44 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:18:44 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:18:44 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:18:49 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:19:04 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:19:04 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:19:04 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:19:09 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:19:21 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:19:21 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:19:21 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:19:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:21:20 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:21:20 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:21:20 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:21:25 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:21:35 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:21:35 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:21:35 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:21:40 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:21:48 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:21:51 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 23, 2025 2:17:08 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:19 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:33 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:54 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:18:57 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:25:37 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:27:02 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:28:34 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: No value specified for parameter 1
+may 23, 2025 2:29:39 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:30:21 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:31:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:31:16 P. M. DAO.TratamientoDAO findTratamientosByDentista
+SEVERE: Error al obtener tratamientos por dentista: Operation not allowed after ResultSet closed
+may 23, 2025 2:32:58 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:39:23 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:42:06 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:42:09 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:43:32 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 23, 2025 2:43:49 P. M. DAO.TratamientoDAO findAll
+SEVERE: Error al obtener todos los tratamientos: Operation not allowed after ResultSet closed
+may 24, 2025 10:42:48 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Column 'idDentista' not found.
+may 24, 2025 10:42:52 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Column 'idDentista' not found.
+may 24, 2025 10:59:58 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:06 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:09 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:00:10 A. M. DAO.TratamientoPacienteDAO findTratamientosByPaciente
+SEVERE: Error al buscar tratamientos por paciente: Operation not allowed after ResultSet closed
+may 24, 2025 11:03:08 A. M. DAO.TratamientoPacienteDAO findAll
+SEVERE: Error al obtener todos los tratamientos de pacientes: Operation not allowed after ResultSet closed
+may 24, 2025 12:00:17 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:02:31 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:06:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:06:39 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:11:31 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:11:31 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:11:31 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:11:36 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:11:51 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:11:54 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:11:59 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:13:21 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:13:21 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:13:21 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:13:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:13:40 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:13:44 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:17:06 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:17:06 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:17:06 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:17:10 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:17:45 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:17:45 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:17:45 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:17:50 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:18:04 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:18:04 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:18:04 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:18:28 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:18:44 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:18:44 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:18:44 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:18:49 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:19:04 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:19:04 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:19:04 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:19:09 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:19:21 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:19:21 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:19:21 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:19:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+may 24, 2025 12:23:03 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+may 24, 2025 12:23:03 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+may 24, 2025 12:23:03 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+may 24, 2025 12:23:09 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
