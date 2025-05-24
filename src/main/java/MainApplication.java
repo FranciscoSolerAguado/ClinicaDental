@@ -1,6 +1,3 @@
-import DAO.PacienteDAO;
-import DAO.TratamientoDAO;
-import DAO.TratamientoPacienteDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
