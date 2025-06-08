@@ -1,78 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #444444;"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.InicioController">
+<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dde3ed;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InicioController">
     <children>
-        <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="111.0" minWidth="88.0" prefWidth="88.0"/>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="127.0" minWidth="104.0" prefWidth="127.0"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="111.0" minWidth="88.0" prefWidth="88.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="127.0" minWidth="104.0" prefWidth="127.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints vgrow="ALWAYS"/>
-                <RowConstraints maxHeight="190.0" minHeight="37.0" prefHeight="109.0" vgrow="ALWAYS"/>
-                <RowConstraints maxHeight="230.0" minHeight="0.0" prefHeight="153.0" vgrow="ALWAYS"/>
-                <RowConstraints maxHeight="199.0" minHeight="34.0" prefHeight="71.0" vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints maxHeight="190.0" minHeight="37.0" prefHeight="109.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="230.0" minHeight="0.0" prefHeight="153.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="199.0" minHeight="34.0" prefHeight="71.0" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <Label fx:id="welcomeLabel" styleClass="welcome-text" text="¡Bienvenido a la Clínica Dental!"
-                       GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2"
-                       GridPane.valignment="CENTER">
+                <Label fx:id="welcomeLabel" styleClass="welcome-text" text="¡Bienvenido a la Clínica Dental!" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                     <font>
-                        <Font name="Arial Bold" size="28.0"/>
+                        <Font name="Arial Bold" size="28.0" />
                     </font>
                     <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
                             <stops>
                                 <Stop>
                                     <color>
-                                        <Color red="0.03728070110082626" green="0.4945906400680542"
-                                               blue="0.8947368264198303"/>
+                                        <Color red="0.03728070110082626" green="0.4945906400680542" blue="0.8947368264198303" />
                                     </color>
                                 </Stop>
                                 <Stop offset="1.0">
                                     <color>
-                                        <Color red="0.5098039507865906" green="0.686274528503418"
-                                               blue="0.843137264251709"/>
+                                        <Color red="0.1411764770746231" green="0.5529412031173706" blue="0.6431372761726379" />
                                     </color>
                                 </Stop>
                             </stops>
                         </LinearGradient>
                     </textFill>
                 </Label>
-                <Label prefHeight="17.0" prefWidth="210.0" text="Hecho por Francisco J. Soler Aguado" textFill="#FFFFFF"
-                       GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT"
-                       GridPane.rowIndex="3"/>
-                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="white" height="3.0" GridPane.columnSpan="5"
-                           GridPane.rowIndex="0" GridPane.valignment="BOTTOM"/>
-                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="white" height="3.0" GridPane.columnSpan="5"
-                           GridPane.rowIndex="3" GridPane.valignment="TOP"/>
-                <Label text="Cargando..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                       GridPane.valignment="BOTTOM" textFill="#FFFFFF"/>
+                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="white" height="3.0" GridPane.columnSpan="5" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" />
+                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="white" height="3.0" GridPane.columnSpan="5" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                <Label text="Cargando..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             </children>
             <cursor>
-                <Cursor fx:constant="WAIT"/>
+                <Cursor fx:constant="WAIT" />
             </cursor>
         </GridPane>
     </children>
     <cursor>
-        <Cursor fx:constant="WAIT"/>
+        <Cursor fx:constant="WAIT" />
     </cursor>
 </AnchorPane>

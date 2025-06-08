@@ -1,104 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            style="-fx-background-color: #444444;" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #dde3ed;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
-        <VBox alignment="CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="Clínica Dental" textFill="#82afd7">
+                <Label text="Clínica Dental" textFill="#248da4">
                     <font>
-                        <Font size="36.0"/>
+                        <Font size="36.0" />
                     </font>
                 </Label>
-                <Button prefWidth="300.0"
-                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;"
-                        text="Dentista" onAction="#switchToDentista">
+                <Button onAction="#switchToDentista" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Dentista">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                     <tooltip>
-                        <Tooltip text="Accede a la gestión de los dentistas de la clínica."/>
+                        <Tooltip text="Accede a la gestión de los dentistas de la clínica." />
                     </tooltip>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                     <effect>
-                        <DropShadow/>
+                        <DropShadow />
                     </effect>
                 </Button>
-                <Button prefWidth="300.0"
-                        style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;"
-                        text="Paciente" onAction="#switchToPaciente">
+                <Button onAction="#switchToPaciente" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Paciente">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                     <tooltip>
-                        <Tooltip text="Consulta y administra la información de los pacientes."/>
+                        <Tooltip text="Consulta y administra la información de los pacientes." />
                     </tooltip>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                     <effect>
-                        <DropShadow/>
+                        <DropShadow />
                     </effect>
                 </Button>
-                <Button prefWidth="300.0"
-                        style="-fx-background-color: #FF5722; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;"
-                        text="Tratamiento" onAction="#switchToTratamiento">
+                <Button onAction="#switchToTratamiento" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Tratamiento">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                     <tooltip>
-                        <Tooltip text="Gestiona los tratamientos disponibles en la clínica."/>
+                        <Tooltip text="Gestiona los tratamientos disponibles en la clínica." />
                     </tooltip>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                     <effect>
-                        <DropShadow/>
+                        <DropShadow />
                     </effect>
                 </Button>
-                <Button prefWidth="300.0"
-                        style="-fx-background-color: #9C27B0; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;"
-                        text="Tratamientos a pacientes" onAction="#switchToTratamientosPacientes">
+                <Button onAction="#switchToTratamientosPacientes" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Tratamientos a pacientes">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                     <tooltip>
-                        <Tooltip text="Gestiona los tratamientos asignados a los pacientes."/>
+                        <Tooltip text="Gestiona los tratamientos asignados a los pacientes." />
                     </tooltip>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                     <effect>
-                        <DropShadow/>
+                        <DropShadow />
                     </effect>
                 </Button>
-                <Label style="-fx-text-fill: #FFFFFF;" text="Hecho por Francisco J. Soler Aguado">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                </Label>
             </children>
             <padding>
-                <Insets bottom="20.0" top="20.0"/>
+                <Insets bottom="20.0" top="20.0" />
             </padding>
             <cursor>
-                <Cursor fx:constant="DEFAULT"/>
+                <Cursor fx:constant="DEFAULT" />
             </cursor>
-
         </VBox>
     </children>
 </AnchorPane>

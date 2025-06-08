@@ -263,3 +263,111 @@ may 24, 2025 12:19:21 P. M. DAO.PacienteDAO initialize
 INFO: PacienteDAO inicializado correctamente.
 may 24, 2025 12:19:26 P. M. DAO.TratamientoPacienteDAO getInstance
 INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 11:57:10 A. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 11:57:10 A. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 11:57:10 A. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 11:57:17 A. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 11:57:19 A. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 11:57:19 A. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 11:57:23 A. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 11:57:23 A. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 11:57:25 A. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 11:57:28 A. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 2:38:46 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:38:46 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:38:46 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:39:27 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:39:27 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:39:27 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:40:05 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:40:05 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:40:05 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:40:33 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:40:33 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:40:33 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:41:05 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:41:05 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:41:05 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:41:26 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:41:26 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:41:26 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:42:13 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:42:14 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:42:14 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:42:44 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:42:44 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:42:44 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:42:49 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 2:42:49 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:42:52 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 2:42:56 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Usando instancia existente de TratamientoPacienteDAO.
+jun 08, 2025 2:42:56 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:45:40 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:45:40 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:45:40 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:47:18 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:47:18 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:47:18 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:48:23 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:48:23 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:48:23 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:49:08 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:49:08 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:49:08 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
+jun 08, 2025 2:49:20 P. M. DAO.TratamientoPacienteDAO getInstance
+INFO: Inicializando instancia de TratamientoPacienteDAO...
+jun 08, 2025 2:49:20 P. M. DAO.TratamientoPacienteDAO <init>
+INFO: TratamientoPacienteDAO inicializado correctamente.
+jun 08, 2025 2:49:20 P. M. DAO.PacienteDAO initialize
+INFO: PacienteDAO inicializado correctamente.
