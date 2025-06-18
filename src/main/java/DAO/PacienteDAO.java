@@ -36,7 +36,6 @@ public class PacienteDAO implements CRUDGenericoBBDD<Paciente> {
     public void initialize(TratamientoDAO tratamientoDAO, TratamientoPacienteDAO tratamientoPacienteDAO) {
         this.tratamientoDAO = tratamientoDAO;
         this.tratamientoPacienteDAO = tratamientoPacienteDAO;
-        logger.info("PacienteDAO inicializado correctamente.");
     }
 
     /**

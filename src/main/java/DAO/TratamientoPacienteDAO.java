@@ -21,15 +21,12 @@ public class TratamientoPacienteDAO {
 private TratamientoPacienteDAO() {
     this.tratamientoDAO = TratamientoDAO.getInstance();
     this.pacienteDAO = PacienteDAO.getInstance();
-    logger.info("TratamientoPacienteDAO inicializado correctamente.");
 }
 
     public static TratamientoPacienteDAO getInstance() {
         if (instance == null) {
-            logger.info("Inicializando instancia de TratamientoPacienteDAO...");
             instance = new TratamientoPacienteDAO();
         } else {
-            logger.info("Usando instancia existente de TratamientoPacienteDAO.");
         }
         return instance;
     }
