@@ -3,82 +3,118 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #dde3ed;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
-    <children>
-        <VBox alignment="CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <Label text="Clínica Dental" textFill="#248da4">
-                    <font>
-                        <Font size="36.0" />
-                    </font>
-                </Label>
-                <Button onAction="#switchToDentista" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Dentista">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <tooltip>
-                        <Tooltip text="Accede a la gestión de los dentistas de la clínica." />
-                    </tooltip>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                </Button>
-                <Button onAction="#switchToPaciente" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Paciente">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <tooltip>
-                        <Tooltip text="Consulta y administra la información de los pacientes." />
-                    </tooltip>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                </Button>
-                <Button onAction="#switchToTratamiento" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Tratamiento">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <tooltip>
-                        <Tooltip text="Gestiona los tratamientos disponibles en la clínica." />
-                    </tooltip>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                </Button>
-                <Button onAction="#switchToTratamientosPacientes" prefWidth="300.0" style="-fx-background-color: #4f5051; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 10;" text="Tratamientos a pacientes">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <tooltip>
-                        <Tooltip text="Gestiona los tratamientos asignados a los pacientes." />
-                    </tooltip>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                </Button>
-            </children>
-            <padding>
-                <Insets bottom="20.0" top="20.0" />
-            </padding>
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-        </VBox>
-    </children>
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #272626;"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="rootPane"
+            fx:controller="controller.MainController">
+
+    <!-- 🔝 Barra superior personalizada -->
+    <HBox prefHeight="40.0" style="-fx-background-color: #1c1a1a;"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          alignment="CENTER_LEFT" spacing="10" padding="10">
+
+        <children>
+            <!-- Icono -->
+            <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
+                <image>
+                    <Image url="@img/imgSuperior.png"/>
+                </image>
+            </ImageView>
+
+            <!-- Título -->
+            <Label text="Bienvenido a tu gestor"
+                   style="-fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-font-size: 14;"/>
+
+            <!-- Espaciador para empujar los botones a la derecha -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- 🔘 Botón minimizar -->
+            <Button text="—" onAction="#handleMinimize"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;"/>
+
+            <!-- 🔲 Botón cerrar -->
+            <Button text="✕" onAction="#handleClose"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;"/>
+        </children>
+    </HBox>
+
+    <!-- 🔽 SplitPane debajo de la barra superior -->
+    <SplitPane dividerPositions="0.12" orientation="HORIZONTAL"
+               AnchorPane.topAnchor="40.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <items>
+            <!-- Panel lateral -->
+            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #423e3e;">
+                <children>
+                    <ImageView fitHeight="81.0" fitWidth="100.0" opacity="0.75" preserveRatio="true">
+                        <image>
+                            <Image url="@img/imgSuperior.png"/>
+                        </image>
+                        <VBox.margin>
+                            <Insets top="30.0"/>
+                        </VBox.margin>
+                    </ImageView>
+                    <Label text="Gestor de tu clínica dental" textFill="WHITE">
+                        <VBox.margin>
+                            <Insets bottom="30.0"/>
+                        </VBox.margin>
+                    </Label>
+
+                    <Button prefHeight="34.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;"
+                            text="Pacientes">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </Button>
+
+                    <Button prefHeight="31.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;"
+                            text="Dentistas">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </Button>
+
+                    <Button prefHeight="31.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;"
+                            text="Tratamientos">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </Button>
+
+                    <Button prefHeight="31.0" prefWidth="181.0" wrapText="true"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;"
+                            text="Tratamientos a Pacientes">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </Button>
+                </children>
+            </VBox>
+
+            <!-- Contenido central -->
+            <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #272626;">
+                <children>
+                    <ImageView fitHeight="200" fitWidth="219.0" opacity="0.5" preserveRatio="true">
+                        <image>
+                            <Image url="@img/imgCentral.png"/>
+                        </image>
+                    </ImageView>
+
+                    <Label maxWidth="400" opacity="0.5" wrapText="true"
+                           style="-fx-text-fill: white; -fx-font-family: 'Work Sans';"
+                           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                           textAlignment="CENTER"/>
+                </children>
+            </VBox>
+        </items>
+    </SplitPane>
 </AnchorPane>
+

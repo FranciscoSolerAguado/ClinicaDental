@@ -16,9 +16,6 @@ public class InicioController {
     @FXML
     private AnchorPane rootPane;
 
-    @FXML
-    private Label welcomeLabel;
-
     /**
      * Método que se ejecuta al inicializar la vista.
      * Configura una pantalla de caraga de 3 segundos antes de cambiar a la vista principal.

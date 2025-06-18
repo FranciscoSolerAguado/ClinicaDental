@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -15,6 +18,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController {
+    @FXML
+    private AnchorPane rootPane;
+
+//    @FXML
+//    private Button btnCerrar;
 
     private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
@@ -136,4 +144,22 @@ public class MainController {
             throw e;
         }
     }
+
+
+    @FXML
+    private void handleMinimize() {
+        Stage stage = (Stage) rootPane.getScene().getWindow(); // rootPane es tu AnchorPane con fx:id
+        stage.setIconified(true);
+    }
+
+    @FXML
+    private void handleClose() {
+        Platform.exit();
+    }
+
+//    @FXML
+//    private void handleClose() {
+//        Stage stage = (Stage) btnCerrar.getScene().getWindow();
+//        stage.close();
+//    }
 }

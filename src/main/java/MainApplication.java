@@ -5,12 +5,16 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // Quitar la decoración de la ventana
+        stage.initStyle(StageStyle.UNDECORATED);
+
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("inicio.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Clinica Dental");
@@ -30,6 +34,7 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        // Inicializar DAOs antes de lanzar la app
         TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
         TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
         PacienteDAO pacienteDAO = PacienteDAO.getInstance();
@@ -39,3 +44,4 @@ public class MainApplication extends Application {
         launch(args); // Lanza la aplicación JavaFX
     }
 }
+
