@@ -2,8 +2,10 @@ package controller;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,17 +39,32 @@ public class InicioController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../main.fxml"));
             AnchorPane mainPane = loader.load();
 
+            // Obtener la escena desde el rootPane
             Scene scene = rootPane.getScene();
             scene.setRoot(mainPane);
 
-            // Ajustar la ventana a pantalla completa con bordes
+            // Obtener el Stage actual
             Stage stage = (Stage) scene.getWindow();
+
+            // Evitar modo maximizado y pantalla completa
             stage.setFullScreen(false);
-            stage.setMaximized(true);
+            stage.setMaximized(false);
+
+            // Obtener el área visible sin la barra de tareas
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+            // Establecer el tamaño del stage al 100% de esa área visible
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
 
 }
