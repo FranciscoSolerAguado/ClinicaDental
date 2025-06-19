@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -19,15 +20,33 @@ import java.util.logging.Logger;
 
 public class MainController {
     @FXML
+    private HBox topBar;
+
+    @FXML
     private AnchorPane rootPane;
 
-//    @FXML
-//    private Button btnCerrar;
 
     private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     private Stage stage;
     private Scene scene;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+    @FXML
+    private void initialize() {
+        topBar.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        topBar.setOnMouseDragged(event -> {
+            Stage stage = (Stage) topBar.getScene().getWindow();
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+    }
 
     /**
      * Cambia a la vista de Dentista.
@@ -153,13 +172,21 @@ public class MainController {
     }
 
     @FXML
+    private void handleToggleMaximize() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        if (stage.isMaximized()) {
+            stage.setMaximized(false);
+            stage.setWidth(1200);
+            stage.setHeight(800);
+            stage.centerOnScreen();
+        } else {
+            stage.setMaximized(true);
+        }
+    }
+
+    @FXML
     private void handleClose() {
         Platform.exit();
     }
 
-//    @FXML
-//    private void handleClose() {
-//        Stage stage = (Stage) btnCerrar.getScene().getWindow();
-//        stage.close();
-//    }
 }
