@@ -6,54 +6,73 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #272626;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #272626;"
+            stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MainController">
     <!-- Barra superior -->
-    <HBox fx:id="topBar" prefHeight="40.0"
-          style="-fx-background-color: #1c1a1a;"
-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          alignment="CENTER_LEFT" spacing="10.0">
+    <HBox fx:id="topBar" alignment="CENTER_LEFT" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #1c1a1a;"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
         <padding>
-            <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
 
         <children>
             <!-- Icono -->
-            <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
+            <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.5" preserveRatio="true">
                 <image>
                     <Image url="@img/imgSuperior.png"/>
                 </image>
+                <HBox.margin>
+                    <Insets bottom="10.0"/>
+                </HBox.margin>
             </ImageView>
 
             <!-- Título -->
-            <Label text="Bienvenido a tu gestor"
-                   style="-fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-font-size: 14;"/>
+            <Label opacity="0.5" style="-fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-font-size: 14px;"
+                   text="Bienvenido a tu gestor">
+                <padding>
+                    <Insets bottom="10.0"/>
+                </padding>
+            </Label>
+
 
             <!-- Espaciador -->
             <Region HBox.hgrow="ALWAYS"/>
 
             <!-- Botón Minimizar -->
-            <Button text="—" onAction="#handleMinimize"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;"
-                    mnemonicParsing="false"/>
+            <Button mnemonicParsing="false" onAction="#handleMinimize" opacity="0.5"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;" text="—">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0"/>
+                </padding>
+            </Button>
 
             <!-- Botón Maximizar / Restaurar -->
-            <Button text="❐" onAction="#handleToggleMaximize"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;"
-                    mnemonicParsing="false"/>
+            <Button mnemonicParsing="false" onAction="#handleToggleMaximize" opacity="0.5"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;" text="❐">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0"/>
+                </padding>
+            </Button>
 
             <!-- Botón Cerrar -->
-            <Button text="✕" onAction="#handleClose"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;"
-                    mnemonicParsing="false"/>
+            <Button mnemonicParsing="false" onAction="#handleClose" opacity="0.5"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;" text="✕">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0"/>
+                </padding>
+            </Button>
         </children>
     </HBox>
 
 
-
-
     <!-- SplitPane debajo de la barra superior -->
-    <SplitPane dividerPositions="0.12" orientation="HORIZONTAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+    <SplitPane dividerPositions="0.12" orientation="HORIZONTAL" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
 
         <items>
             <!-- Panel lateral -->
@@ -61,39 +80,48 @@
                 <children>
                     <ImageView fitHeight="81.0" fitWidth="100.0" opacity="0.75" preserveRatio="true">
                         <image>
-                            <Image url="@img/imgSuperior.png" />
+                            <Image url="@img/imgSuperior.png"/>
                         </image>
                         <VBox.margin>
-                            <Insets top="30.0" />
+                            <Insets top="30.0"/>
                         </VBox.margin>
                     </ImageView>
-                    <Label text="Gestor de tu clínica dental" textFill="WHITE">
+                    <Label text="Gestor de tu clínica dental" textFill="WHITE" style="-fx-font-family: 'Work Sans'; -fx-font-size: 14px;">
+                           wrapText="true" maxWidth="150.0" opacity="0.75">
                         <VBox.margin>
-                            <Insets bottom="30.0" />
+                            <Insets bottom="30.0"/>
                         </VBox.margin>
                     </Label>
 
-                    <Button prefHeight="34.0" prefWidth="181.0" style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;" text="Pacientes">
+                    <Button prefHeight="34.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT; -fx-font-size: 13px;"
+                            text="Pacientes">
                         <cursor>
-                            <Cursor fx:constant="HAND" />
+                            <Cursor fx:constant="HAND"/>
                         </cursor>
                     </Button>
 
-                    <Button prefHeight="31.0" prefWidth="181.0" style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;" text="Dentistas">
+                    <Button prefHeight="31.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT; -fx-font-size: 13px;"
+                            text="Dentistas">
                         <cursor>
-                            <Cursor fx:constant="HAND" />
+                            <Cursor fx:constant="HAND"/>
                         </cursor>
                     </Button>
 
-                    <Button prefHeight="31.0" prefWidth="181.0" style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;" text="Tratamientos">
+                    <Button prefHeight="31.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT; -fx-font-size: 13px;"
+                            text="Tratamientos">
                         <cursor>
-                            <Cursor fx:constant="HAND" />
+                            <Cursor fx:constant="HAND"/>
                         </cursor>
                     </Button>
 
-                    <Button prefHeight="31.0" prefWidth="181.0" style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT;" text="Tratamientos a Pacientes" wrapText="true">
+                    <Button prefHeight="31.0" prefWidth="181.0"
+                            style="-fx-background-color: #690230; -fx-text-fill: white; -fx-font-family: 'Work Sans'; -fx-background-radius: 5; -fx-alignment: CENTER_LEFT; -fx-font-size: 13px;"
+                            text="Tratamientos a Pacientes" wrapText="true">
                         <cursor>
-                            <Cursor fx:constant="HAND" />
+                            <Cursor fx:constant="HAND"/>
                         </cursor>
                     </Button>
                 </children>
@@ -104,11 +132,13 @@
                 <children>
                     <ImageView fitHeight="200" fitWidth="219.0" opacity="0.5" preserveRatio="true">
                         <image>
-                            <Image url="@img/imgCentral.png" />
+                            <Image url="@img/imgCentral.png"/>
                         </image>
                     </ImageView>
 
-                    <Label maxWidth="400" opacity="0.5" style="-fx-text-fill: white; -fx-font-family: 'Work Sans';" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="CENTER" wrapText="true" />
+                    <Label maxWidth="400" opacity="0.5" style="-fx-text-fill: white; -fx-font-family: 'Work Sans';"
+                           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                           textAlignment="CENTER" wrapText="true"/>
                 </children>
             </VBox>
         </items>

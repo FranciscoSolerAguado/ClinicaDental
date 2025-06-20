@@ -4,6 +4,7 @@ import DAO.TratamientoPacienteDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -12,6 +13,9 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // Carga la fuente work sans
+        Font.loadFont(getClass().getResourceAsStream("/fonts/WorkSans-Regular.ttf"), 12);
+
         // Quitar la decoración de la ventana
         stage.initStyle(StageStyle.UNDECORATED);
 
