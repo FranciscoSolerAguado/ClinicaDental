@@ -97,12 +97,18 @@ public class MainController {
         loadContent("/tratamientosPacientes.fxml");
     }
 
+    /**
+     * Método que maneja el evento de minimizar la ventana
+     */
     @FXML
     private void handleMinimize() {
         Stage stage = (Stage) rootPane.getScene().getWindow(); // rootPane es tu AnchorPane con fx:id
         stage.setIconified(true);
     }
 
+    /**
+     * Método que maneja el evento de maximizar o restaurar la ventana.
+     */
     @FXML
     private void handleToggleMaximize() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
@@ -116,6 +122,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Método que maneja el evento de cerrar la aplicación.
+     */
     @FXML
     private void handleClose() {
         Platform.exit();
