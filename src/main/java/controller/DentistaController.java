@@ -48,6 +48,11 @@ public class DentistaController {
         }
     }
 
+    /**
+     * Vuelve a la vista principal.
+     *
+     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     */
     @FXML
     private void volverAMain() {
         try {

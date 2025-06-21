@@ -119,7 +119,7 @@ public void cargarTratamientosPacientes() {
      * @param event Evento de acción.
      */
     @FXML
-    private void volver(javafx.event.ActionEvent event) {
+    private void volverAMain(javafx.event.ActionEvent event) {
         logger.info("Intentando volver al menú principal...");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));

@@ -38,19 +38,24 @@ public class TratamientoController {
 
     /**
      * Vuelve a la vista principal.
-     * @param event realiza el cambio de vista.
+     *
      * @throws IOException Si ocurre un error al cargar el archivo FXML.
      */
     @FXML
-    private void volverAMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Obtiene la ventana (Stage) actual a partir del evento
-        Scene scene = new Scene(root);
-        stage.setScene(scene);    // Establece la nueva escena en la ventana
-        stage.setMaximized(true); // Maximizar la ventana con bordes
-        stage.show();    // Muestra la ventana
-    }
+    private void volverAMain() {
+        try {
+            // Cargar la vista principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+            Parent root = loader.load();
 
+            // Obtener la escena actual y cambiar el contenido
+            Scene scene = tratamientoListView.getScene();
+            scene.setRoot(root);
+        } catch (IOException e) {
+            logger.severe("Error al cargar la vista principal: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     /**
      * Recarga la lista de tratamientos en el ListView.
      */

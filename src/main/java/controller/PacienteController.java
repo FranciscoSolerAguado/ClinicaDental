@@ -47,17 +47,22 @@ public void initialize() {
     /**
      * Vuelve a la vista principal.
      *
-     * @param event realiza el cambio de vista.
      * @throws IOException Si ocurre un error al cargar el archivo FXML.
      */
     @FXML
-    private void volverAMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setMaximized(true); // Maximizar la ventana con bordes
-        stage.show();
+    private void volverAMain() {
+        try {
+            // Cargar la vista principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+            Parent root = loader.load();
+
+            // Obtener la escena actual y cambiar el contenido
+            Scene scene = pacienteListView.getScene();
+            scene.setRoot(root);
+        } catch (IOException e) {
+            logger.severe("Error al cargar la vista principal: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
