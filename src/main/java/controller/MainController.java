@@ -55,7 +55,7 @@ public class MainController {
      * @throws IOException Si ocurre un error al cargar el archivo FXML.
      */
     @FXML
-    private void switchToDentista(ActionEvent event) throws IOException {
+    private void switchToDentistas(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Dentista...");
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/dentista.fxml"));
@@ -84,7 +84,7 @@ public class MainController {
      * @throws IOException Si ocurre un error al cargar el archivo FXML.
      */
     @FXML
-    private void switchToPaciente(ActionEvent event) throws IOException {
+    private void switchToPacientes(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Paciente...");
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/paciente.fxml"));
@@ -113,7 +113,7 @@ public class MainController {
      * @throws IOException Si ocurre un error al cargar el archivo FXML.
      */
     @FXML
-    private void switchToTratamiento(ActionEvent event) throws IOException {
+    private void switchToTratamientos(ActionEvent event) throws IOException {
         logger.info("Cambiando a la vista de Tratamiento...");
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/tratamiento.fxml"));
