@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -24,6 +25,10 @@ public class MainController {
 
     @FXML
     private AnchorPane rootPane;
+
+    //declaracion del centerContent que permite cargar el contenido de las distintas pantallas en la principal dentro del splitPane
+    @FXML
+    private VBox centerContent;
 
 
     private static final Logger logger = Logger.getLogger(MainController.class.getName());
@@ -49,121 +54,48 @@ public class MainController {
     }
 
     /**
-     * Cambia a la vista de Dentista.
-     *
-     * @param event realiza el cambio de vista.
-     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     * Método para cambiar el contenido del área central (centerContent) de la ventana principal.
      */
-    @FXML
-    private void switchToDentistas(ActionEvent event) throws IOException {
-        logger.info("Cambiando a la vista de Dentista...");
+    private void loadContent(String fxmlPath) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/dentista.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Obtiene el tamaño de la pantalla
-            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
-            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
-            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
-            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
-
-            stage.show();
-            logger.info("Vista de Dentista cargada correctamente.");
+            Node content = FXMLLoader.load(getClass().getResource(fxmlPath));
+            centerContent.getChildren().setAll(content);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al cargar la vista de Dentista.", e);
-            throw e;
+            e.printStackTrace();
         }
     }
 
     /**
-     * Cambia a la vista de Paciente.
-     *
-     * @param event realiza el cambio de vista.
-     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     * carga el contenido de pacientes.fxml en el VBox centerContent (`splitPane` en la vista principal)
      */
     @FXML
-    private void switchToPacientes(ActionEvent event) throws IOException {
-        logger.info("Cambiando a la vista de Paciente...");
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/paciente.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
-            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
-            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
-            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
-
-            stage.show();
-            logger.info("Vista de Paciente cargada correctamente.");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al cargar la vista de Paciente.", e);
-            throw e;
-        }
+    private void switchToPacientes() {
+        loadContent("/pacientes.fxml");
     }
 
     /**
-     * Cambia a la vista de Tratamiento.
-     *
-     * @param event realiza el cambio de vista.
-     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     * carga el contenido de dentistas.fxml en el VBox centerContent (`splitPane` en la vista principal)
      */
     @FXML
-    private void switchToTratamientos(ActionEvent event) throws IOException {
-        logger.info("Cambiando a la vista de Tratamiento...");
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/tratamiento.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
-            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
-            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
-            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
-
-            stage.show();
-            logger.info("Vista de Tratamiento cargada correctamente.");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al cargar la vista de Tratamiento.", e);
-            throw e;
-        }
+    private void switchToDentistas() {
+        loadContent("/dentistas.fxml");
     }
 
     /**
-     * Cambia a la vista de Tratamientos a Pacientes.
-     *
-     * @param event realiza el cambio de vista.
-     * @throws IOException Si ocurre un error al cargar el archivo FXML.
+     * carga el contenido de tratamientos.fxml en el VBox centerContent (`splitPane` en la vista principal)
      */
     @FXML
-    private void switchToTratamientosPacientes(ActionEvent event) throws IOException {
-        logger.info("Cambiando a la vista de Tratamientos a Pacientes...");
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/tratamientosPacientes.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX()); // Establece la posición X de la ventana
-            stage.setY(screenBounds.getMinY()); // Establece la posición Y de la ventana
-            stage.setWidth(screenBounds.getWidth()); // Establece el ancho de la ventana
-            stage.setHeight(screenBounds.getHeight()); // Establece la altura de la ventana
-
-            stage.show();
-            logger.info("Vista de Tratamientos a Pacientes cargada correctamente.");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al cargar la vista de Tratamientos a Pacientes.", e);
-            throw e;
-        }
+    private void switchToTratamientos() {
+        loadContent("/tratamientos.fxml");
     }
 
+    /**
+     * carga el contenido de tratamientosPacientes.fxml en el VBox centerContent (`splitPane` en la vista principal)
+     */
+    @FXML
+    private void switchToTratamientosPacientes() {
+        loadContent("/tratamientosPacientes.fxml");
+    }
 
     @FXML
     private void handleMinimize() {
