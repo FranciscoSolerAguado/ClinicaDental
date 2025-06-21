@@ -12,7 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.Tratamiento;
-import model.Tratamiento;
 
 import java.io.IOException;
 
@@ -44,7 +43,7 @@ public class TratamientoController {
      */
     @FXML
     private void volverAMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Obtiene la ventana (Stage) actual a partir del evento
         Scene scene = new Scene(root);
         stage.setScene(scene);    // Establece la nueva escena en la ventana
@@ -136,7 +135,7 @@ public class TratamientoController {
     @FXML
     private void abrirFormularioTratamiento() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientoForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/tratamientoForm.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador del formulario
@@ -232,7 +231,7 @@ public class TratamientoController {
                 throw new TratamientoNoEncontradoException("No se encontró el tratamiento con la descripción: " + descripcionSeleccionada);
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientoEditForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/tratamientoEditForm.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador del formulario

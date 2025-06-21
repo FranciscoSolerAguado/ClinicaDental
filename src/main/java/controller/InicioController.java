@@ -36,7 +36,7 @@ public class InicioController {
     private void ponerPantallaCompleta() {
         try {
             // Cargar el archivo main.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/main.fxml"));
             AnchorPane mainPane = loader.load();
 
             // Obtener la escena desde el rootPane

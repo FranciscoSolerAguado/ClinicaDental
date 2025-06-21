@@ -1,7 +1,6 @@
 package controller;
 
 import DAO.PacienteDAO;
-import DAO.PacienteDAO;
 import DAO.TratamientoDAO;
 import DAO.TratamientoPacienteDAO;
 import exceptions.PacienteNoEncontradoException;
@@ -15,12 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.Paciente;
-import model.Paciente;
-import model.Tratamiento;
-import model.TratamientoPaciente;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class PacienteController {
@@ -57,7 +52,7 @@ public void initialize() {
      */
     @FXML
     private void volverAMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -151,7 +146,7 @@ public void initialize() {
     @FXML
     private void abrirFormularioPaciente() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pacienteForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pacienteForm.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador del formulario
@@ -247,7 +242,7 @@ public void initialize() {
                 throw new PacienteNoEncontradoException("No se encontró el paciente con el nombre: " + nombreSeleccionado);
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pacienteEditForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pacienteEditForm.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador del formulario
@@ -301,7 +296,7 @@ public void initialize() {
                 throw new PacienteNoEncontradoException("No se encontró el paciente con el nombre: " + nombreSeleccionado);
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pacienteTratamientos.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pacienteTratamientos.fxml"));
             Parent root = loader.load();
 
             PacienteTratamientoController controller = loader.getController();

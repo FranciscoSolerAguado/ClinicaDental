@@ -19,7 +19,7 @@ public class MainApplication extends Application {
         // Quitar la decoración de la ventana
         stage.initStyle(StageStyle.UNDECORATED);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("inicio.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/fxml/inicio.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Clinica Dental");
         stage.setScene(scene);

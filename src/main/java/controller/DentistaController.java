@@ -52,7 +52,7 @@ public class DentistaController {
     private void volverAMain() {
         try {
             // Cargar la vista principal
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = loader.load();
 
             // Obtener la escena actual y cambiar el contenido
@@ -120,7 +120,7 @@ public class DentistaController {
     @FXML
     private void abrirFormularioDentista() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dentistaForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dentistaForm.fxml"));
             Parent root = loader.load(); // Cargar el formulario de añadir dentista
 
             // Obtener el controlador del formulario
@@ -210,7 +210,7 @@ public class DentistaController {
                 throw new DentistaNoEncontradoException("No se encontró el dentista con el nombre: " + nombreSeleccionado);
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dentistaEditForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dentistaEditForm.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador del formulario

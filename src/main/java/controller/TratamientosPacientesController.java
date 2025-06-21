@@ -122,7 +122,7 @@ public void cargarTratamientosPacientes() {
     private void volver(javafx.event.ActionEvent event) {
         logger.info("Intentando volver al menú principal...");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -148,7 +148,7 @@ public void cargarTratamientosPacientes() {
     @FXML
     private void abrirFormularioTratamientoPaciente(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientosPacientesForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/tratamientosPacientesForm.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador del formulario
@@ -227,7 +227,7 @@ private void eliminarTratamientoPaciente() {
         }
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tratamientosPacientesEditForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/tratamientosPacientesEditForm.fxml"));
             Parent root = loader.load();
 
             TratamientosPacientesFormController controller = loader.getController();

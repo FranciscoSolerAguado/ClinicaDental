@@ -1,22 +1,16 @@
 package controller;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController {
@@ -70,7 +64,7 @@ public class MainController {
      */
     @FXML
     private void switchToPacientes() {
-        loadContent("/pacientes.fxml");
+        loadContent("/fxml/pacientes.fxml");
     }
 
     /**
@@ -78,7 +72,7 @@ public class MainController {
      */
     @FXML
     private void switchToDentistas() {
-        loadContent("/dentistas.fxml");
+        loadContent("/fxml/dentistas.fxml");
     }
 
     /**
@@ -86,7 +80,7 @@ public class MainController {
      */
     @FXML
     private void switchToTratamientos() {
-        loadContent("/tratamientos.fxml");
+        loadContent("/fxml/tratamientos.fxml");
     }
 
     /**
@@ -94,7 +88,7 @@ public class MainController {
      */
     @FXML
     private void switchToTratamientosPacientes() {
-        loadContent("/tratamientosPacientes.fxml");
+        loadContent("/fxml/tratamientosPacientes.fxml");
     }
 
     /**
