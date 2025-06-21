@@ -14,57 +14,57 @@
     <children>
         <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
-                     <children>
-                              <Button fx:id="btnAdd" onAction="#abrirFormularioTratamientoPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: white;" text="Añadir">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </VBox.margin>
-                        </Button>
-                              <Button fx:id="btnEdit" onAction="#editarTratamientoPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: white;" text="Editar">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </VBox.margin>
-                        </Button>
-                              <Button fx:id="btnDelete" onAction="#eliminarTratamientoPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: white;" text="Eliminar">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </VBox.margin>
-                        </Button>
-                         <Button fx:id="btnBack" onAction="#volverAMain" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
-                             <font>
-                                 <Font size="16.0" />
-                             </font>
-                             <cursor>
-                                 <Cursor fx:constant="HAND" />
-                             </cursor>
-                             <VBox.margin>
-                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                             </VBox.margin>
-                         </Button>
-                     </children>
-                  </VBox>
-                      <TableView fx:id="tratamientosPacientesTable" prefHeight="600.0" prefWidth="779.0" HBox.hgrow="ALWAYS">
-                          <columns>
-                              <TableColumn fx:id="colPaciente" prefWidth="200.0" text="Paciente" />
-                              <TableColumn fx:id="colTratamiento" prefWidth="260.79998779296875" text="Tratamiento" />
-                              <TableColumn fx:id="colFecha" prefWidth="89.5999755859375" text="Fecha" />
-                              <TableColumn fx:id="colDetalles" prefWidth="207.20004882812498" text="Detalles" />
-                          </columns>
-                      </TableView>
-               </children>
-            </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
+                            <children>
+                                <Button fx:id="btnAdd" onAction="#abrirFormularioTratamientoPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: white;" text="Añadir">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <Button fx:id="btnEdit" onAction="#editarTratamientoPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: white;" text="Editar">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <Button fx:id="btnDelete" onAction="#eliminarTratamientoPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: white;" text="Borrar">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <TableView fx:id="tratamientosPacientesTable" prefHeight="600.0" prefWidth="779.0" HBox.hgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colPaciente" prefWidth="200.0" text="Paciente" />
+                                <TableColumn fx:id="colTratamiento" prefWidth="260.79998779296875" text="Tratamiento" />
+                                <TableColumn fx:id="colFecha" prefWidth="89.5999755859375" text="Fecha" />
+                                <TableColumn fx:id="colDetalles" prefWidth="207.20004882812498" text="Detalles" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </HBox>
             </children>
         </VBox>
     </children>

@@ -13,68 +13,68 @@
 
     <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox prefHeight="28.0" prefWidth="800.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
-               <children>
-                     <Button fx:id="btnAdd" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="#abrirFormularioPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir" VBox.vgrow="ALWAYS">
-                         <cursor>
-                             <Cursor fx:constant="HAND" />
-                         </cursor>
+            <children>
+                <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
+                    <children>
+                        <Button fx:id="btnAdd" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="#abrirFormularioPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir" VBox.vgrow="ALWAYS">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnEdit" alignment="CENTER" contentDisplay="CENTER" onAction="#editarPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" onAction="#eliminarPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                  <Button fx:id="btnMostrarMas" alignment="CENTER" onAction="#mostrarMas" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
-                     </Button>
-                     <Button fx:id="btnEdit" alignment="CENTER" contentDisplay="CENTER" onAction="#editarPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
-                         <cursor>
-                             <Cursor fx:constant="HAND" />
-                         </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     </Button>
-                     <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" onAction="#eliminarPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
-                         <cursor>
-                             <Cursor fx:constant="HAND" />
-                         </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     </Button>
-                     <Button fx:id="btnMostrarMas" alignment="CENTER" contentDisplay="CENTER" onAction="#mostrarMas" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
-                         <cursor>
-                             <Cursor fx:constant="HAND" />
-                         </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     </Button>
-                     <Button fx:id="btnMostrarTratamientos" alignment="CENTER" contentDisplay="CENTER" onAction="#mostrarTratamientosPaciente" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar tratamientos">
-                         <cursor>
-                             <Cursor fx:constant="HAND" />
-                         </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     </Button>
-                   <Button fx:id="btnBack" onAction="#volverAMain" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
-                       <font>
-                           <Font size="16.0" />
-                       </font>
-                       <cursor>
-                           <Cursor fx:constant="HAND" />
-                       </cursor>
-                       <VBox.margin>
-                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                       </VBox.margin>
-                   </Button>
-               </children>
-            </VBox>
-            <ListView fx:id="pacienteListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #690230; -fx-text-fill: #FFFFFF;" HBox.hgrow="ALWAYS">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </ListView>
-         </children>
+                  </Button>
+                        <Button fx:id="btnMostrarTratamientos" alignment="CENTER" contentDisplay="CENTER" onAction="#mostrarTratamientosPaciente" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Tratamientos">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <ListView fx:id="pacienteListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #690230; -fx-text-fill: #FFFFFF;" HBox.hgrow="ALWAYS">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </ListView>
+            </children>
         </HBox>
         <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

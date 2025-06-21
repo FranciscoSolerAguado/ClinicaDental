@@ -12,67 +12,67 @@
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #272626;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TratamientoController">
 
     <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
-               <children>
-                     <Button fx:id="btnAdd" onAction="#abrirFormularioTratamiento" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                     <Button fx:id="btnEdit" onAction="#editarTratamiento" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                     <Button fx:id="btnDelete" onAction="#eliminarTratamiento" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                     <Button fx:id="btnMostrarMas" onAction="#mostrarMas" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                   <Button fx:id="btnBack" onAction="#volverAMain" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
-                       <font>
-                           <Font size="16.0" />
-                       </font>
-                       <cursor>
-                           <Cursor fx:constant="HAND" />
-                       </cursor>
-                       <VBox.margin>
-                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                       </VBox.margin>
-                   </Button>
-               </children>
-            </VBox>
-      
-                 <!-- Lista de dentistas -->
-              <ListView fx:id="tratamientoListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #690230; -fx-text-fill: #FFFFFF;" HBox.hgrow="ALWAYS">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </ListView>
-         </children>
-      </HBox>
-      <padding>
-         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-      </padding>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
+                    <children>
+                        <Button fx:id="btnAdd" onAction="#abrirFormularioTratamiento" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnEdit" onAction="#editarTratamiento" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnDelete" onAction="#eliminarTratamiento" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnMostrarMas" onAction="#mostrarMas" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+
+                <!-- Lista de dentistas -->
+                <ListView fx:id="tratamientoListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #690230; -fx-text-fill: #FFFFFF;" HBox.hgrow="ALWAYS">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </ListView>
+            </children>
+        </HBox>
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </padding>
     </VBox>
 
 </AnchorPane>
