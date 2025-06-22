@@ -16,7 +16,7 @@
             <children>
                 <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
                     <children>
-                        <Button fx:id="btnAdd" onAction="#abrirFormularioDentista" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir">
+                        <Button fx:id="btnAdd" onAction="#abrirFormularioDentista" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
@@ -24,7 +24,7 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnEdit" onAction="#editarDentista" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
+                        <Button fx:id="btnEdit" onAction="#editarDentista" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
@@ -32,7 +32,7 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnDelete" onAction="#eliminarDentista" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
+                        <Button fx:id="btnDelete" onAction="#eliminarDentista" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
@@ -40,7 +40,7 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnMostrarMas" alignment="CENTER" minHeight="25.0" onAction="#mostrarMas" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
+                        <Button fx:id="btnMostrarMas" alignment="CENTER" minHeight="25.0" onAction="#mostrarMas" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
@@ -48,10 +48,7 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Volver">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
+                        <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Cerrar">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
