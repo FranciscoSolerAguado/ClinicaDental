@@ -26,12 +26,12 @@
         </DatePicker>
 
         <HBox alignment="CENTER" spacing="10.0">
-            <Button onAction="#guardarDentista" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Guardar">
+            <Button onAction="#guardar" style="-fx-background-color: #690230; -fx-text-fill: white;" text="Guardar">
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>
             </Button>
-            <Button onAction="#cancelar" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Cancelar">
+            <Button onAction="#cancelar" style="-fx-background-color:  #272626; -fx-text-fill: white;" text="Cancelar">
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>

@@ -53,7 +53,7 @@ public class DentistaFormController {
      * @param event realiza el guardado.
      */
     @FXML
-    private void guardarDentista(ActionEvent event) {
+    private void guardar(ActionEvent event) {
         logger.info("Iniciando el proceso de guardar un dentista...");
         try {
             String nombre = nombreField.getText();

@@ -155,7 +155,7 @@ public class TratamientosPacientesFormController {
      * @param event Evento de acción.
      */
     @FXML
-    private void guardarTratamientoPaciente(ActionEvent event) {
+    private void guardar(ActionEvent event) {
         try {
             // Validar campos
             if (idPaciente.getValue() == null) {

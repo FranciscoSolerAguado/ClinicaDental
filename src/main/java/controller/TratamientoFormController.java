@@ -95,7 +95,7 @@ public class TratamientoFormController {
      * @param event Evento de acción.
      */
     @FXML
-    private void guardarTratamiento(ActionEvent event) {
+    private void guardar(ActionEvent event) {
         logger.info("Iniciando el proceso de guardar un tratamiento...");
         try {
             String descripcion = descripcionField.getText();

@@ -48,7 +48,7 @@ public class PacienteFormController {
      * @param event Evento que dispara la acción.
      */
     @FXML
-    private void guardarPaciente(ActionEvent event) {
+    private void guardar(ActionEvent event) {
         logger.info("Iniciando el proceso de guardar un paciente...");
         try {
             String nombre = nombreField.getText();
