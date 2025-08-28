@@ -8,64 +8,74 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #272626;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DentistaController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #272626;"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.DentistaController">
 
-    <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
                 <VBox alignment="CENTER" prefHeight="280.0" prefWidth="150.0">
                     <children>
-                        <Button fx:id="btnAdd" onAction="#abrirFormularioDentista" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir">
+                        <Button fx:id="btnAdd" onAction="#abrirFormularioDentista" prefHeight="25.0" prefWidth="85.5"
+                                style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Añadir">
                             <cursor>
-                                <Cursor fx:constant="HAND" />
+                                <Cursor fx:constant="HAND"/>
                             </cursor>
                             <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnEdit" onAction="#editarDentista" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
+                        <Button fx:id="btnEdit" onAction="#editarDentista" prefHeight="25.0" prefWidth="85.5"
+                                style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Editar">
                             <cursor>
-                                <Cursor fx:constant="HAND" />
+                                <Cursor fx:constant="HAND"/>
                             </cursor>
                             <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnDelete" onAction="#eliminarDentista" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
+                        <Button fx:id="btnDelete" onAction="#eliminarDentista" prefHeight="25.0" prefWidth="85.5"
+                                style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Borrar">
                             <cursor>
-                                <Cursor fx:constant="HAND" />
+                                <Cursor fx:constant="HAND"/>
                             </cursor>
                             <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnMostrarMas" alignment="CENTER" minHeight="25.0" onAction="#mostrarMas" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
+                        <Button fx:id="btnMostrarMas" alignment="CENTER" minHeight="25.0" onAction="#mostrarMas"
+                                prefHeight="25.0" prefWidth="85.5"
+                                style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Mostrar más">
                             <cursor>
-                                <Cursor fx:constant="HAND" />
+                                <Cursor fx:constant="HAND"/>
                             </cursor>
                             <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.5" style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Cerrar">
+                        <Button fx:id="btnBack" onAction="#volverAMain" prefHeight="25.0" prefWidth="85.5"
+                                style="-fx-background-color: #423e3e; -fx-text-fill: #FFFFFF;" text="Cerrar">
                             <cursor>
-                                <Cursor fx:constant="HAND" />
+                                <Cursor fx:constant="HAND"/>
                             </cursor>
                             <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </VBox.margin>
                         </Button>
                     </children>
                 </VBox>
-                <ListView fx:id="dentistaListView" prefHeight="600.0" prefWidth="779.0" style="-fx-background-color: #690230; -fx-text-fill: #FFFFFF;" HBox.hgrow="ALWAYS">
+                <ListView fx:id="dentistaListView" prefHeight="600.0" prefWidth="779.0"
+                          style="-fx-background-color: #690230; -fx-text-fill: #FFFFFF;" HBox.hgrow="ALWAYS">
                     <opaqueInsets>
-                        <Insets />
+                        <Insets/>
                     </opaqueInsets>
                 </ListView>
             </children>
         </HBox>
         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
     </VBox>
 
