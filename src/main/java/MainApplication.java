@@ -23,6 +23,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Clinica Dental");
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED); //necesario para poder usar el boton de maximizar o ventana
         stage.show();
     }
 

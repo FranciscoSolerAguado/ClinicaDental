@@ -3,11 +3,13 @@ package controller;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -103,16 +105,27 @@ public class MainController {
     /**
      * Método que maneja el evento de maximizar o restaurar la ventana.
      */
+    private boolean isMaximized = false;
+
     @FXML
     private void handleToggleMaximize() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        if (stage.isMaximized()) {
-            stage.setMaximized(false);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        if (isMaximized) {
+            // Restaurar tamaño y centrar
             stage.setWidth(1200);
             stage.setHeight(800);
-            stage.centerOnScreen();
+            stage.setX(screenBounds.getMinX() + (screenBounds.getWidth() - 1000) / 2);
+            stage.setY(screenBounds.getMinY() + (screenBounds.getHeight() - 700) / 2);
+            isMaximized = false;
         } else {
-            stage.setMaximized(true);
+            // Maximizar manualmente
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+            isMaximized = true;
         }
     }
 
