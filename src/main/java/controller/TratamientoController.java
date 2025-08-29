@@ -27,12 +27,14 @@ public class TratamientoController {
      */
     @FXML
     public void initialize() {
+        logger.info("Inicializando la vista de Tratamientos...");
         // Cargar los nombres de los tratamientos en el ListView
         tratamientoDAO.findAll().forEach(tratamiento -> {
             if (tratamiento instanceof Tratamiento) {
                 tratamientoListView.getItems().add(((Tratamiento) tratamiento).getDescripcion());
             }
         });
+        logger.info("Lista de tratamientos cargada correctamente.");
     }
 
 

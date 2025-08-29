@@ -158,7 +158,7 @@ public class TratamientoFormController {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
             alerta.setHeaderText("Error al añadir el tratamiento");
-            alerta.setContentText("La descripción no puede estar vacía.");
+            alerta.setContentText("El precio debe ser un número");
             alerta.showAndWait();
         } catch (PrecioNegativoException e) {
             logger.log(Level.SEVERE, "Error al guardar el tratamiento: " + e.getMessage(), e);

@@ -92,7 +92,7 @@ public class DentistaController {
                 throw new DentistaNoEncontradoException("No se encontró el dentista con el nombre: " + nombreSeleccionado);
             }
 
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION); // Crear una alerta para mostrar la información del dentista
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION); // Crea una alerta para mostrar la información del dentista
             alerta.setTitle("Información del Dentista");
             alerta.setHeaderText("Detalles del dentista seleccionado");
             alerta.setContentText(

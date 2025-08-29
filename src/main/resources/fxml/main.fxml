@@ -50,7 +50,7 @@
 
             <!-- Botón Maximizar / Restaurar -->
             <Button mnemonicParsing="false" onAction="#handleToggleMaximize" opacity="0.5"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;" text="❐">
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16;" text="❐">
                 <HBox.margin>
                     <Insets/>
                 </HBox.margin>
@@ -143,7 +143,7 @@
                     </ImageView>
 
                     <Label maxWidth="400" opacity="0.5" style="-fx-text-fill: white; -fx-font-family: 'Work Sans';"
-                           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                           text="Controla todos tu pacientes, dentistas, tratamientos con este gestor de tu clínica dental."
                            textAlignment="CENTER" wrapText="true"/>
                 </children>
             </VBox>

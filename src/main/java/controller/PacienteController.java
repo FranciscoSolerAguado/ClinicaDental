@@ -30,6 +30,7 @@ public class PacienteController {
      */
 @FXML
 public void initialize() {
+    logger.info("Inicializando la vista de Pacientes...");
     TratamientoDAO tratamientoDAO = TratamientoDAO.getInstance();
     TratamientoPacienteDAO tratamientoPacienteDAO = TratamientoPacienteDAO.getInstance();
 
@@ -42,6 +43,7 @@ public void initialize() {
             pacienteListView.getItems().add(((Paciente) paciente).getNombre()); // En el list view se muestra el nombre del paciente
         }
     });
+    logger.info("Lista de pacientes cargada correctamente.");
 }
 
     /**
